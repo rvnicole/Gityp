@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
+import SideNavBar from "@/src/components/menu/SideNavBar";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -19,7 +20,7 @@ export default function RootLayout({
       <body className={inter.className}>
         <div className="w-full flex">
           <aside>
-            SideBar
+            <SideNavBar />
           </aside>
 
           <main className="w-full">
