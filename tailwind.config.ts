@@ -16,15 +16,18 @@ const config: Config = {
         foregroundColor: 'hsl(var(--foreground))',
         primaryColor: {
           DEFAULT: 'hsl(var(--primary))',
-          foreground: 'hsl(var(--primary-foreground))'
+          foreground: 'hsl(var(--primary-foreground))',
+          hover: 'var(--primary-hover)'
         },
         secondaryColor: {
           DEFAULT: 'hsl(var(--secondary))',
-          foreground: 'hsl(var(--secondary-foreground))'
+          foreground: 'hsl(var(--secondary-foreground))',
+          hover: 'var(--secondary-hover)'
         },
         destructiveColor: {
           DEFAULT: 'hsl(var(--destructive))',
-          foreground: 'hsl(var(--destructive-foreground))'
+          foreground: 'hsl(var(--destructive-foreground))',
+          hover: 'var(--destructive-hover)'
         },
         mutedColor: {
           DEFAULT: 'hsl(var(--muted))',
