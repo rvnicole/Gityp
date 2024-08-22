@@ -20,10 +20,34 @@ export function OutlineButton({ children, onClick, attributes }: ButtonsProps) {
     )
 }
 
+export function OutlineRoundButton({ children, onClick, attributes }: ButtonsProps) {
+    return (
+        <button 
+            className="bg-white hover:bg-borderColor text-secondaryColor-foreground border border-borderColor px-3 rounded-full"
+            onClick={onClick}
+            {...attributes}
+        >
+            {children}
+        </button>
+    )
+}
+
 export function PrimaryButton({ children, onClick, attributes }: ButtonsProps) {
     return (
         <button 
             className="bg-primaryColor hover:bg-primaryColor-hover text-white border border-primaryColor hover:border-primaryColor-hover py-1 px-3 rounded"
+            onClick={onClick}
+            {...attributes}
+        >
+            {children}
+        </button>
+    )
+}
+
+export function PrimaryRoundButton({ children, onClick, attributes }: ButtonsProps) {
+    return (
+        <button 
+            className="bg-primaryColor hover:bg-primaryColor-hover text-white border border-primaryColor hover:border-primaryColor-hover px-3 rounded-full"
             onClick={onClick}
             {...attributes}
         >
@@ -44,10 +68,34 @@ export function SecondaryButton({ children, onClick, attributes }: ButtonsProps)
     )
 }
 
+export function SecondaryRoundButton({ children, onClick, attributes }: ButtonsProps) {
+    return (
+        <button 
+            className="bg-secondaryColor hover:bg-secondaryColor-hover text-secondaryColor-foreground border border-secondaryColor hover:border-secondaryColor-hover px-3 rounded-full"
+            onClick={onClick}
+            {...attributes}
+        >
+            {children}
+        </button>
+    )
+}
+
 export function DestructiveButton({ children, onClick, attributes }: ButtonsProps) {
     return (
         <button 
             className="bg-destructiveColor hover:bg-destructiveColor-hover text-destructiveColor-foreground border border-destructiveColor hover:border-destructiveColor-hover py-1 px-3 rounded"
+            onClick={onClick}
+            {...attributes}
+        >
+            {children}
+        </button>
+    )
+}
+
+export function DestructiveRoundButton({ children, onClick, attributes }: ButtonsProps) {
+    return (
+        <button 
+            className="bg-destructiveColor hover:bg-destructiveColor-hover text-destructiveColor-foreground border border-destructiveColor hover:border-destructiveColor-hover px-3 rounded-full"
             onClick={onClick}
             {...attributes}
         >
