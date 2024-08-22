@@ -20,10 +20,12 @@ export default function PresupuestoForm(){
     const [ openServiceForm, setOpenServiceForm ] = useState(true);
     const [ montos, setMontos ] = useState(montosIniciales);    
     const { register, handleSubmit, reset, formState: { errors }, watch } = useForm<PresupuestoFormData>();
+    const iva = watch('iva');
     useMemo(()=>{ 
+        console.log('Se ejecuta', iva);
         const subtotal = servicios.reduce((acumulado, servicio) => acumulado + +servicio.costo, 0);
-        setMontos({...montosIniciales, subtotal, total: subtotal * montos.iva/100 + subtotal }); 
-    } , [servicios]);
+        setMontos({...montosIniciales, subtotal, iva, total: subtotal * iva/100 + subtotal }); 
+    } , [servicios, iva]);
 
     const handleAdd = ( formData: PresupuestoFormData ) => {
         console.log(formData);
@@ -88,7 +90,7 @@ export default function PresupuestoForm(){
                         <label className="font-bold text-center">Costo</label>
                         <label className="font-bold">Nota</label>
                         {
-                            servicios.map( servicio => <ServicesData servicio={servicio}/> )
+                            servicios.map( servicio => <ServicesData key={servicio.id} servicio={servicio}/> )
                         }
                     </div>
                 </fieldset>

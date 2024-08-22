@@ -19,12 +19,12 @@ export default function ServicioFormDetails({ servicios, setServicios, fatherFor
 
     const handleServiceFormData = ( formData: ServiceFormData ) => {
         if( fatherForm && setOpenServiceForm ){
-            console.log('Agregando servicio');
-            console.log(formData);
-            setServicios([...servicios, formData]);
+            const data = {
+                ...formData,
+                id: crypto.randomUUID()
+            };
+            setServicios([...servicios, data]);
             setOpenServiceForm(false);
-
-
         }
         return;
     }
