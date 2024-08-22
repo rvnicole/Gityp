@@ -4,3 +4,9 @@ export const formatCurrency = ( amount: number ) => {
         currency: "MXN"
     }).format(amount);
 };
+
+export const formatDate = (date: Date) => {
+    return Intl.DateTimeFormat('es-MX',{
+        dateStyle:"short"
+    }).format(new Date(date))
+};

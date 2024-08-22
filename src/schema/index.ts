@@ -65,3 +65,25 @@ export const GestionCobrosSchema = z.object({
     estado: z.string(),
     comentarios: z.string()
 });
+
+// Schema Forms
+export const ServiceFormSchema = ServicioSchema.pick({
+    fechaEjecucion: true,
+    descripcion: true,
+    idConductor: true,
+    tipoServicio: true,
+    estado: true,
+    costo: true,
+    nota: true
+}).merge(z.object({
+    controlForm: z.string()
+}));
+
+export const PresupuestoFormSchema = PresupuestoSchema.pick({
+    fecha: true,
+    proveedor: true,
+    solicito: true,
+    subtotal: true,
+    iva: true,
+    total: true
+});
