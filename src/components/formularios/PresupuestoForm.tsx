@@ -27,6 +27,10 @@ export default function PresupuestoForm(){
 
     const handleAdd = ( formData: PresupuestoFormData ) => {
         console.log(formData);
+        const fullFormData = {
+            formData,
+            servicios
+        }
         if( servicios.length < 1 ){
             alert('Debe agregar al menos un servicio');
         };
