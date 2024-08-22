@@ -1,17 +1,28 @@
-import { useState } from "react";
+import { useMemo, useState } from "react";
 import { useRouter } from "next/navigation";
 import { useForm } from "react-hook-form";
 import { PresupuestoFormData, ServiceFormData } from "@/src/types";
 import { OutlineButton, PrimaryButton, SecondaryButton } from "../ui/Buttons";
 import ServicioFormDetails from "./ServicioFormDetails";
 import ServicesData from "./ServiceData";
+import { formatCurrency } from "@/src/lib";
 
 const nameForm = 'presupuesto';
+const montosIniciales = {
+    subtotal: 0,
+    iva: 16,
+    total: 0
+}
 
 export default function PresupuestoForm(){
     const router = useRouter();
     const [ servicios, setServicios ] = useState<ServiceFormData[]>([]);
     const [ openServiceForm, setOpenServiceForm ] = useState(true);
+    const [ montos, setMontos ] = useState(montosIniciales);
+    useMemo(()=>{ 
+        const subtotal = servicios.reduce((acumulado, servicio) => acumulado + +servicio.costo, 0);
+        setMontos({...montosIniciales, subtotal, total: subtotal * montos.iva/100 + subtotal }); 
+    } , [servicios]);
     const { register, handleSubmit, reset, formState: { errors } } = useForm<PresupuestoFormData>();
 
     const handleAdd = ( formData: PresupuestoFormData ) => {
@@ -97,8 +108,9 @@ export default function PresupuestoForm(){
                 <label htmlFor="subtotal">Subtotal: </label>
                 <input 
                     readOnly 
-                    type="number" 
+                    type="text" 
                     className="p-1 placeholder:text-inputColor rounded w-24"
+                    value={formatCurrency(montos.subtotal)}
                     { ...register('subtotal')}
                 />
             </div>
@@ -106,16 +118,19 @@ export default function PresupuestoForm(){
                 <label htmlFor="iva">IVA: </label>
                 <input 
                     type="number" 
-                    className={`p-1 border border-borderColor placeholder:text-inputColor rounded focus:outline-none focus:ring-2 focus:border-ringColor`}
+                    className={`w-16 p-1 border border-borderColor placeholder:text-inputColor rounded focus:outline-none focus:ring-2 focus:border-ringColor`}
+                    value={montos.iva}
                     { ...register('iva')}
                 />
+                <span>%</span>
             </div>
             <div className="px-5">
                 <label htmlFor="total">Total: </label>
                 <input 
                     readOnly 
-                    type="number" 
+                    type="text" 
                     className="p-1 placeholder:text-inputColor rounded w-24"
+                    value={formatCurrency(montos.total)}
                     { ...register('total')}
                 />
             </div>
