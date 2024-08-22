@@ -1,9 +1,9 @@
 "use client"
 
 import { useState } from "react";
-import Link from "next/link";
 import { ArrowRightCircleIcon, ArrowLeftCircleIcon } from "@heroicons/react/24/solid";
 import { HomeIcon, CalculatorIcon, ClipboardDocumentCheckIcon, CalendarDaysIcon, DocumentCurrencyDollarIcon, CurrencyDollarIcon, Cog8ToothIcon} from "@heroicons/react/24/outline";
+import MenuOption from "./MenuOption";
 
 export default function SideNavBar() {
     const [showMenu, setShowMenu] = useState<boolean>(false);
@@ -14,61 +14,61 @@ export default function SideNavBar() {
                 <div 
                     className={`${showMenu ? "w-56" : "w-14"} bg-backgroundColor h-[96.5vh] flex flex-col justify-center rounded-xl text-mutedColor-foreground border border-borderColor`}
                 >
-                    <Link
-                        className="flex items-center p-2 mx-1 rounded-xl hover:text-accentColor-foreground hover:bg-accentColor"
-                        href={'/'}
+                    <MenuOption
+                        option="Inicio"
+                        url="/"
+                        showMenu={showMenu}
                     >
                         <HomeIcon className="size-8"/>
-                        { showMenu && <p className="px-2">Inicio</p>}
-                    </Link>
+                    </MenuOption>
 
-                    <Link
-                        className="flex items-center p-2 mx-1 rounded-xl hover:text-accentColor-foreground hover:bg-accentColor"
-                        href={'/presupuestos'}
+                    <MenuOption
+                        option="Presupuestos"
+                        url="/presupuestos"
+                        showMenu={showMenu}
                     >
                         <CalculatorIcon className="size-8"/>
-                        { showMenu && <p className="px-2">Presupuestos</p>}
-                    </Link>
+                    </MenuOption>
 
-                    <Link
-                        className="flex items-center p-2 mx-1 rounded-xl hover:text-accentColor-foreground hover:bg-accentColor"
-                        href={'/ordenes-servicios'}
+                    <MenuOption
+                        option="Ordenes de Servicio"
+                        url="/ordenes-servicios"
+                        showMenu={showMenu}
                     >
                         <ClipboardDocumentCheckIcon className="size-8"/>
-                        { showMenu && <p className="px-2">Ordenes de<br /> Servicio</p>}
-                    </Link>
+                    </MenuOption>
 
-                    <Link
-                        className="flex items-center p-2 mx-1 rounded-xl hover:text-accentColor-foreground hover:bg-accentColor"
-                        href={'/servicios'}
+                    <MenuOption
+                        option="Servicios"
+                        url="/servicios"
+                        showMenu={showMenu}
                     >
                         <CalendarDaysIcon className="size-8"/>
-                        { showMenu && <p className="px-2">Servicios</p>}
-                    </Link>
+                    </MenuOption>
 
-                    <Link
-                        className="flex items-center p-2 mx-1 rounded-xl hover:text-accentColor-foreground hover:bg-accentColor"
-                        href={'/facturacion'}
+                    <MenuOption
+                        option="Facturación"
+                        url="/facturacion"
+                        showMenu={showMenu}
                     >
                         <DocumentCurrencyDollarIcon className="size-8"/>
-                        { showMenu && <p className="px-2">Facturación</p>}
-                    </Link>
+                    </MenuOption>
 
-                    <Link
-                        className="flex items-center p-2 mx-1 rounded-xl hover:text-accentColor-foreground hover:bg-accentColor"
-                        href={'/gestion-cobros'}
+                    <MenuOption
+                        option="Gestión de Cobros"
+                        url="/gestion-cobros"
+                        showMenu={showMenu}
                     >
                         <CurrencyDollarIcon className="size-8"/>
-                        { showMenu && <p className="px-2">Gestión de <br /> Cobros</p>}
-                    </Link>
+                    </MenuOption>
 
-                    <Link
-                        className="flex items-center p-2 mx-1 rounded-xl hover:text-accentColor-foreground hover:bg-accentColor"
-                        href={'/configuracion'}
+                    <MenuOption
+                        option="Configuración"
+                        url="/configuracion"
+                        showMenu={showMenu}
                     >
                         <Cog8ToothIcon className="size-8"/>
-                        { showMenu && <p className="px-2">Configuración</p>}
-                    </Link>                    
+                    </MenuOption>                    
                 </div>
 
                 <div className="m-auto">
