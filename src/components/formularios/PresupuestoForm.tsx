@@ -18,12 +18,12 @@ export default function PresupuestoForm(){
     const router = useRouter();
     const [ servicios, setServicios ] = useState<ServiceFormData[]>([]);
     const [ openServiceForm, setOpenServiceForm ] = useState(true);
-    const [ montos, setMontos ] = useState(montosIniciales);
+    const [ montos, setMontos ] = useState(montosIniciales);    
+    const { register, handleSubmit, reset, formState: { errors }, watch } = useForm<PresupuestoFormData>();
     useMemo(()=>{ 
         const subtotal = servicios.reduce((acumulado, servicio) => acumulado + +servicio.costo, 0);
         setMontos({...montosIniciales, subtotal, total: subtotal * montos.iva/100 + subtotal }); 
     } , [servicios]);
-    const { register, handleSubmit, reset, formState: { errors } } = useForm<PresupuestoFormData>();
 
     const handleAdd = ( formData: PresupuestoFormData ) => {
         console.log(formData);
@@ -123,7 +123,7 @@ export default function PresupuestoForm(){
                 <input 
                     type="number" 
                     className={`w-16 p-1 border border-borderColor placeholder:text-inputColor rounded focus:outline-none focus:ring-2 focus:border-ringColor`}
-                    value={montos.iva}
+                    defaultValue={montos.iva}
                     { ...register('iva')}
                 />
                 <span>%</span>
