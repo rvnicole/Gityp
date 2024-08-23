@@ -5,6 +5,7 @@ import { PresupuestoFormData, ServiceFormData } from "@/src/types";
 import { PrimaryButton, SecondaryButton } from "../ui/Buttons";
 import { formatCurrency } from "@/src/lib";
 import PresupuestoForm from "./PresupuestoForm";
+import Link from "next/link";
 
 const montosIniciales = {
     subtotal: 0,
@@ -88,8 +89,13 @@ export default function AddPresupuesto(){
                 />
             </div>
             <div className="flex justify-end gap-5 px-5">
-                <SecondaryButton onClick={() => router.replace('/')}>Cancelar</SecondaryButton>
-                <PrimaryButton onClick={handleSubmit(handleAdd)}>Crear presupuesto</PrimaryButton>
+                <Link 
+                    href={`${location.pathname}`}
+                    className="bg-secondaryColor hover:bg-secondaryColor-hover text-secondaryColor-foreground border border-secondaryColor hover:border-secondaryColor-hover py-1 px-3 rounded cursor-pointer"
+                >
+                        Cancelar
+                </Link>
+                <PrimaryButton>Crear presupuesto</PrimaryButton>
             </div>
         </form>
     )
