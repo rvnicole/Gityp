@@ -13,6 +13,7 @@ export default function CardTable({documentType, documents, documentTitle}: Card
             {
                 documents.map( document => (
                     <CardDocument 
+                        key={document.id}
                         documentTitle={documentTitle}
                         document={document}
                         documentType={documentType}

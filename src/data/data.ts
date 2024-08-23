@@ -15,3 +15,10 @@ export const estadosPresupuesto = {
     accept: 'Aprobado',
     reject: 'Rechazado'
 };
+
+export const estadosOrdenServicio = {
+    assign: 'Asignado',
+    inprogress: 'En progreso',
+    complete: 'Completado',
+    unrealized: 'No realizado'
+};
