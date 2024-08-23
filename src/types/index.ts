@@ -20,3 +20,8 @@ export type GestionCobros = z.infer<typeof GestionCobrosSchema>;
 // Types formularios
 export type PresupuestoFormData = z.infer<typeof PresupuestoFormSchema>;
 export type ServiceFormData = z.infer<typeof ServiceFormSchema>
+
+
+// Types Card Document
+export type CardDocumentInfo = Pick<Presupuesto, 'id'|'fecha'|'proveedor'|'solicito'|'total'|'estado'> & { ordenCompra?: string};
+export type CardDocumentType = 'presupuestos'|'ordenes-servicios'|'servicios'|'facturacion'|'gestion-cobros';
