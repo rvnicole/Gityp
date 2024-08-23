@@ -103,3 +103,27 @@ export function DestructiveRoundButton({ children, onClick, attributes }: Button
         </button>
     )
 }
+
+export function ConfirmButton({ children, onClick, attributes }: ButtonsProps) {
+    return (
+        <button 
+            className="bg-lime-500 hover:bg-lime-400 text-destructiveColor-foreground py-1 px-3 rounded"
+            onClick={onClick}
+            {...attributes}
+        >
+            {children}
+        </button>
+    )
+}
+
+export function ConfirmRoundButton({ children, onClick, attributes }: ButtonsProps) {
+    return (
+        <button 
+            className="bg-lime-500 hover:bg-lime-400 text-destructiveColor-foreground px-3 rounded-full"
+            onClick={onClick}
+            {...attributes}
+        >
+            {children}
+        </button>
+    )
+}
