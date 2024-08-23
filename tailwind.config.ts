@@ -46,7 +46,8 @@ const config: Config = {
           foreground: 'hsl(var(--card-foreground))'
         },
         charColor: {
-          char4: 'var(--char4)'
+          char4: 'var(--char4)',
+          char5: 'var(--char5)'
         }
       },
     },
