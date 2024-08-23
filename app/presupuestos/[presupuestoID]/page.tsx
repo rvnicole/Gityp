@@ -1,4 +1,5 @@
 import DocumentDetail from "@/src/components/documentView/DocumentDetail";
+import ModalEdit from "@/src/components/ui/ModalEdit";
 
 export default function PresupuestoIDPage({ params }: { params: {presupuestoID: string}}) {
     const { presupuestoID } = params;
@@ -8,6 +9,7 @@ export default function PresupuestoIDPage({ params }: { params: {presupuestoID: 
             <DocumentDetail 
                 documentID={presupuestoID}
             />
+            <ModalEdit documentType="presupuesto" />
         </>
     )
 }

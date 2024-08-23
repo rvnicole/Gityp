@@ -8,5 +8,5 @@ export const formatCurrency = ( amount: number ) => {
 export const formatDate = (date: Date) => {
     return Intl.DateTimeFormat('es-MX',{
         dateStyle:"short"
-    }).format(new Date(date))
+    }).format(date)
 };

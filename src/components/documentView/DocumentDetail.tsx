@@ -1,5 +1,5 @@
 import { ArrowUturnLeftIcon } from "@heroicons/react/24/solid";
-import { DestructiveRoundButton, OutlineRoundButton } from "../ui/Buttons";
+import { BackButton, DestructiveRoundButton, OutlineRoundButton } from "../ui/Buttons";
 import Link from "next/link";
 
 type DocumentDetailProps = {
@@ -10,17 +10,15 @@ export default function DocumentDetail({ documentID }: DocumentDetailProps) {
     return (
         <div className="py-3">
             <div className="md:flex justify-between p-3">
-                <div className="text-white bg-inputColor p-1 rounded-full hover:bg-primaryColor hidden md:block">
-                    <Link
-                        href="/presupuestos"
-                    >
+                <div>
+                    <BackButton>
                         <ArrowUturnLeftIcon className="size-5 m-auto"/>
-                    </Link>
+                    </BackButton>
                 </div>
 
                 <div className="grid md:grid-cols-2 gap-3">
                     <Link
-                        href={""}
+                        href={`${documentID}?modal=edit`}
                     >
                         <OutlineRoundButton>Editar</OutlineRoundButton>
                     </Link>

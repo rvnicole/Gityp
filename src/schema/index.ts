@@ -76,9 +76,9 @@ export const ServiceFormSchema = ServicioSchema.pick({
     estado: true,
     costo: true,
     nota: true
-}).merge(z.object({
+})/*.merge(z.object({
     controlForm: z.string()
-}));
+}));*/
 
 export const PresupuestoFormSchema = PresupuestoSchema.pick({
     fecha: true,

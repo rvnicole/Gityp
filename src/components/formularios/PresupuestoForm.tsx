@@ -1,3 +1,4 @@
+import { useSearchParams } from "next/navigation";
 import { Dispatch, SetStateAction, useState } from "react";
 import { FieldErrors, UseFormRegister } from "react-hook-form";
 import { PresupuestoFormData, ServiceFormData } from "@/src/types";
@@ -19,6 +20,7 @@ export const initialValuesService = {
 }
 
 type PresupuestoFormProps = {
+    fecha?: string,
     register: UseFormRegister<PresupuestoFormData>, 
     errors: FieldErrors<PresupuestoFormData>, 
     servicios: ServiceFormData[], 
@@ -27,23 +29,38 @@ type PresupuestoFormProps = {
     setOpenServiceForm: Dispatch<SetStateAction<boolean>>
 };
 
-export default function PresupuestoForm({ register, errors, servicios, setServicios, openServiceForm, setOpenServiceForm }: PresupuestoFormProps){
+export default function PresupuestoForm({ fecha, register, errors, servicios, setServicios, openServiceForm, setOpenServiceForm }: PresupuestoFormProps){
     const [ servicioEdit, setServicioEdit ] = useState<ServiceFormData>(initialValuesService);
+    const searchParams = useSearchParams();
+    const params = new URLSearchParams(searchParams);
+    const modo = params.get('modal');
 
     return (
         <>
             <div className="flex justify-between px-5">
                 <div>
                     <label htmlFor="fecha">Fecha: </label>
-                    <input 
-                        id="fecha" 
-                        type="date" 
-                        className={`p-1 border border-borderColor placeholder:text-inputColor rounded focus:outline-none focus:ring-2 focus:border-ringColor ${errors.fecha && "border-2 border-destructiveColor"}`}
-                        { ...register('fecha', {
-                            required: true
-                        })}
-                    />
-                    <span className="inline text-destructiveColor p-2">*</span>
+                    {
+                        modo === 'edit' ? 
+                            <input 
+                                id="fecha" 
+                                type="text"                                 
+                                readOnly
+                                value={fecha}
+                            />
+                        :
+                        <>
+                            <input 
+                                id="fecha" 
+                                type="date" 
+                                className={`p-1 border border-borderColor placeholder:text-inputColor rounded focus:outline-none focus:ring-2 focus:border-ringColor ${errors.fecha && "border-2 border-destructiveColor"}`}
+                                { ...register('fecha', {
+                                    required: true
+                                })}
+                            />
+                            <span className="inline text-destructiveColor p-2">*</span>
+                        </>                            
+                    }                    
                 </div>
                 <div>
                     <label htmlFor="proveedor">Proveedor: </label>

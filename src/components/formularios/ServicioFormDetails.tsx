@@ -17,7 +17,6 @@ type ServicioFormProps = {
 }
 
 export default function ServicioFormDetails({ servicios, setServicios, fatherForm, setOpenServiceForm, servicioEdit, setServicioEdit }: ServicioFormProps){
-    console.log('nuevas props', servicioEdit);
     const { register, handleSubmit, reset, formState: { errors } } =  useForm<ServiceFormData>( servicioEdit && { defaultValues: servicioEdit } );
     useEffect(()=>{
         if(servicioEdit){
@@ -42,7 +41,6 @@ export default function ServicioFormDetails({ servicios, setServicios, fatherFor
             
             const updateServices = servicios.map( servicio =>{
                 if( servicio.id === servicioEdit.id ){
-                    console.log('Encuentra el servicio', servicio, servicioEdit);
                     return {
                         ...servicio,
                         ...formData
@@ -174,12 +172,13 @@ export default function ServicioFormDetails({ servicios, setServicios, fatherFor
                     </div>
                     {
                         fatherForm && 
-                        <>
+                        <>  {/*
                             <input 
                                 type="hidden" 
                                 value="controlForm"
                                 { ...register( 'controlForm' )}
                             />
+                            */}
                             <div className="flex justify-start gap-5 flex-row-reverse">
                                 <OutlineButton onClick={handleSubmit(handleServiceFormData)}>Agregar</OutlineButton>
                                 <SecondaryButton onClick={handleCloseForm}>Cancelar</SecondaryButton>                       

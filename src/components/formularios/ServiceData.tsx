@@ -26,7 +26,7 @@ export default function ServicesData( { servicio, setServicioEdit, servicios, se
     return (
         <>
             
-                <span className="bg-accentColor p-3">{formatDate(servicio.fechaEjecucion)}</span>
+                <span className="bg-accentColor p-3">{formatDate(new Date(servicio.fechaEjecucion))}</span>
                 { /*
                 <input 
                     readOnly 
