@@ -4,7 +4,6 @@ import { PresupuestoFormData, ServiceFormData } from "@/src/types";
 import { OutlineButton } from "../ui/Buttons";
 import ServicioFormDetails from "./ServicioFormDetails";
 import ServicesData from "./ServiceData";
-import { date } from "zod";
 
 const nameForm = 'presupuesto';
 export const initialValuesService = {
@@ -15,8 +14,8 @@ export const initialValuesService = {
     tipoServicio: '',
     idConductor: '',
     nota: '',
-    estado: '',
-    controlForm: '',
+    estado: 'assign',
+    controlForm: ''
 }
 
 type PresupuestoFormProps = {
