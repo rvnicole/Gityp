@@ -22,3 +22,13 @@ export const estadosOrdenServicio = {
     complete: 'Completado',
     unrealized: 'No realizado'
 };
+
+export const estadosFactura = {
+    sealed: 'Sellado',
+    notsealed: 'No sellado'
+};
+
+export const estadosCobro = {
+    paid: 'Pagado',
+    pending: 'Pendiente de pago'
+};

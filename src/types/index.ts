@@ -9,7 +9,6 @@ import {
     PresupuestoFormSchema,
     ServiceFormSchema
 } from "../schema";
-import { estadosPresupuesto } from "../data/data";
 
 export type Servicio = z.infer<typeof ServicioSchema>;
 export type Presupuesto = z.infer<typeof PresupuestoSchema>;
@@ -30,3 +29,6 @@ export type CardDocumentInfo = Pick<Presupuesto, 'id'|'fecha'|'proveedor'|'solic
 
 // Types Estados
 export type EstadoPresupuesto = 'pending'|'accept'|'reject';
+export type EstadoOrdenServicio = 'assign'|'inprogress'|'complete'|'unrealized';
+export type EstadoFactura = 'sealed'|'notsealed';
+export type EstadoCobro = 'paid'|'pending';

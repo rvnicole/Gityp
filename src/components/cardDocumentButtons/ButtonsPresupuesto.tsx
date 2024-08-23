@@ -23,7 +23,9 @@ export default function ButtonsPresupuestos({ estadoDocument }: ButtonsPresupues
 
     return (
         <>
-            <p className={`${estado === "accept" ? "text-lime-500 font-bold" : "text-mutedColor-foreground"} pt-2 italic`}>{estadosPresupuesto[estado]}</p>
+            <p className={`${estado === "accept" ? "text-lime-500 font-bold" : "text-mutedColor-foreground"} pt-2 italic`}>
+                {estadosPresupuesto[estado]}
+            </p>
 
             { estado === "pending" && (
                 <div className="flex justify-center gap-3 mt-4">

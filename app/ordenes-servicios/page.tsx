@@ -7,32 +7,36 @@ export default function OrdenesServiciosPage() {
             fecha: new Date(),
             proveedor: 'Pruebas',
             solicito: 'Fulanita',
+            ordenCompra: '67890',
             total: 1000,
-            estado: 'pending'
+            estado: 'assign'
         },
         {
             id: '6699c12b1f9d4e7812fa7273',
             fecha: new Date(),
             proveedor: 'Pruebas',
             solicito: 'Fulanita',
+            ordenCompra: '67890',
             total: 1000,
-            estado: 'pending'
+            estado: 'inprogress'
         },
         {
             id: '6699c12b1f9d4e7812fa7273',
             fecha: new Date(),
             proveedor: 'Pruebas',
             solicito: 'Fulanita',
+            ordenCompra: '67890',
             total: 1000,
-            estado: 'pending'
+            estado: 'complete'
         },
         {
             id: '6699c12b1f9d4e7812fa7273',
             fecha: new Date(),
             proveedor: 'Pruebas',
             solicito: 'Fulanita',
+            ordenCompra: '67890',
             total: 1000,
-            estado: 'pending'
+            estado: 'unrealized'
         }
     ];
 

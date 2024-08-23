@@ -1,8 +1,19 @@
 import Link from "next/link";
-import ButtonsPresupuestos from "../cardDocumentButtons/ButtonsPresupuesto";
-import type { CardDocumentInfo, DocumentTypeTitle, DocumentTypeURL, EstadoPresupuesto } from "@/src/types";
 import ContentDocument from "../cardDocumentContent/ContentDocument";
 import ContentService from "../cardDocumentContent/ContentService";
+import ButtonsPresupuestos from "../cardDocumentButtons/ButtonsPresupuesto";
+import ButtonsOrdenServicio from "../cardDocumentButtons/ButtonsOrdenServicio";
+import ButtonsFactura from "../cardDocumentButtons/ButtonsFactura";
+import ButtonsCobro from "../cardDocumentButtons/ButtonsCobro";
+import type { 
+    CardDocumentInfo, 
+    DocumentTypeTitle, 
+    DocumentTypeURL, 
+    EstadoCobro, 
+    EstadoFactura, 
+    EstadoOrdenServicio, 
+    EstadoPresupuesto
+} from "@/src/types";
 
 type CardDocumentProps = {
     document: CardDocumentInfo;
@@ -31,6 +42,24 @@ export default function CardDocument({document, documentType, documentTitle}: Ca
             {documentType === 'presupuestos' && (
                 <ButtonsPresupuestos 
                     estadoDocument={document.estado as EstadoPresupuesto} 
+                />
+            )}
+
+            {documentType === 'ordenes-servicios' && (
+                <ButtonsOrdenServicio
+                    estadoDocument={document.estado as EstadoOrdenServicio} 
+                />
+            )}
+
+            {documentType === 'facturacion' && (
+                <ButtonsFactura
+                    estadoDocument={document.estado as EstadoFactura} 
+                />
+            )}
+
+            {documentType === 'gestion-cobros' && (
+                <ButtonsCobro
+                    estadoDocument={document.estado as EstadoCobro} 
                 />
             )}
         </div>
