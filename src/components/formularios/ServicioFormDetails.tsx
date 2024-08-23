@@ -1,8 +1,9 @@
 import { FieldErrors, FieldValues, useForm, UseFormRegister } from "react-hook-form";
 import { tiposServicio, estadosServicio } from "@/src/data/data";
 import { OutlineButton, SecondaryButton } from "../ui/Buttons";
-import { Dispatch, SetStateAction, useState } from "react";
+import { Dispatch, SetStateAction, useEffect, useState } from "react";
 import { PresupuestoFormData, ServiceFormData, Servicio } from "@/src/types";
+import { initialValuesService } from "./PresupuestoForm";
 
 type ServicioFormProps = {
     servicios: ServiceFormData[],
@@ -10,15 +11,22 @@ type ServicioFormProps = {
     fatherForm?: string,
     setOpenServiceForm?: Dispatch<SetStateAction<boolean>>, 
     register: UseFormRegister<PresupuestoFormData>,
-    errors: FieldErrors<FieldValues>
+    errors: FieldErrors<FieldValues>,
+    servicioEdit?: ServiceFormData,
+    setServicioEdit?: Dispatch<SetStateAction<ServiceFormData>>
 }
 
-export default function ServicioFormDetails({ servicios, setServicios, fatherForm, setOpenServiceForm }: ServicioFormProps){
+export default function ServicioFormDetails({ servicios, setServicios, fatherForm, setOpenServiceForm, servicioEdit, setServicioEdit }: ServicioFormProps){
+    console.log('nuevas props', servicioEdit);
+    const { register, handleSubmit, reset, formState: { errors } } =  useForm<ServiceFormData>( servicioEdit && { defaultValues: servicioEdit } );
+    useEffect(()=>{
+        if(servicioEdit){
+            reset(servicioEdit);
+        }
+    },[servicioEdit]);
 
-    const { register, handleSubmit, reset, formState: { errors } } =  useForm<ServiceFormData>();
-
-    const handleServiceFormData = ( formData: ServiceFormData ) => {
-        if( fatherForm && setOpenServiceForm ){
+    const addService = ( formData: ServiceFormData ) => {
+        if( setOpenServiceForm ){
             const data = {
                 ...formData,
                 id: crypto.randomUUID()
@@ -27,7 +35,44 @@ export default function ServicioFormDetails({ servicios, setServicios, fatherFor
             setOpenServiceForm(false);
         }
         return;
-    }
+    };
+
+    const editService = ( formData: ServiceFormData ) => {
+        if( setOpenServiceForm && servicioEdit ){
+            
+            const updateServices = servicios.map( servicio =>{
+                if( servicio.id === servicioEdit.id ){
+                    console.log('Encuentra el servicio', servicio, servicioEdit);
+                    return {
+                        ...servicio,
+                        ...formData
+                    };
+                };
+                return servicio;
+            });
+            setServicios([...updateServices]);
+            setOpenServiceForm(false);
+            setServicioEdit!(initialValuesService);
+        }
+    };
+
+    const handleServiceFormData = ( formData: ServiceFormData ) => {
+        if( servicioEdit && servicioEdit.id ){
+            editService(formData);
+        }
+        else{
+            addService(formData);
+        };        
+    };
+    
+    // Cierre desde el formulario de presupuesto
+    const handleCloseForm = () =>{
+        if(setOpenServiceForm && setServicioEdit){
+            setOpenServiceForm(false);
+            setServicioEdit(initialValuesService);
+        } 
+
+    };
 
     return (
 
@@ -128,16 +173,19 @@ export default function ServicioFormDetails({ servicios, setServicios, fatherFor
                         />
                     </div>
                     {
-                        fatherForm && <input 
-                            type="hidden" 
-                            value="controlForm"
-                            { ...register( 'controlForm' )}
-                        />
-                    }
-                    <div className="flex justify-end gap-5">
-                        <SecondaryButton onClick={ setOpenServiceForm ? ()=>setOpenServiceForm(false) : ()=>{}}>Cancelar</SecondaryButton>
-                        <OutlineButton onClick={handleSubmit(handleServiceFormData)}>Agregar</OutlineButton>
-                    </div>
+                        fatherForm && 
+                        <>
+                            <input 
+                                type="hidden" 
+                                value="controlForm"
+                                { ...register( 'controlForm' )}
+                            />
+                            <div className="flex justify-start gap-5 flex-row-reverse">
+                                <OutlineButton onClick={handleSubmit(handleServiceFormData)}>Agregar</OutlineButton>
+                                <SecondaryButton onClick={handleCloseForm}>Cancelar</SecondaryButton>                       
+                            </div>
+                        </>
+                    }                    
                 </div>                
         </fieldset>
         

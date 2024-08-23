@@ -86,5 +86,6 @@ export const PresupuestoFormSchema = PresupuestoSchema.pick({
     solicito: true,
     subtotal: true,
     iva: true,
-    total: true
+    total: true,
+    comentarios: true
 });

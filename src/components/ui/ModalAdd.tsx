@@ -3,20 +3,20 @@ import { useSearchParams, useRouter } from 'next/navigation';
 import { Dialog, Transition } from '@headlessui/react';
 import { Fragment } from 'react';
 import { Factura, GestionCobros, OrdenServicio, Presupuesto, Servicio } from '@/src/types';
-import PresupuestoForm from '../formularios/PresupuestoForm';
 import GestionCobroForm from '../formularios/GestionCobroForm';
 import OrdenServicioForm from '../formularios/OrdenServicioForm';
 import FacturaForm from '../formularios/FacturaForm';
 import ServicioForm from '../formularios/ServicioForm';
+import AddPresupuesto from '../formularios/AddPresupuesto';
 
 type ModalProps = {
   documentType: 'presupuesto' | 'factura' |  'ordenServicio' | 'gestionCobro' | 'servicio',
   defaultValues?: Presupuesto | OrdenServicio | Servicio | Factura | GestionCobros
 };
 
-const forms = {
+const formsAdd = {
   'presupuesto': { 
-    "tsx": <PresupuestoForm />, 
+    "tsx": <AddPresupuesto />, 
     "title": 'Presupuesto' 
   },
   'factura': { 
@@ -37,9 +37,9 @@ const forms = {
   }
 }
 
-const selectForm = ( documentType: ModalProps['documentType'] ) => forms[documentType].tsx;
+const selectForm = ( documentType: ModalProps['documentType'] ) => formsAdd[documentType].tsx;
 
-export default function Modal({documentType}: ModalProps) {
+export default function ModalAdd({documentType}: ModalProps) {
   const router = useRouter();
   const searchParams = useSearchParams();
   const modo = searchParams.get('modal');
@@ -88,7 +88,7 @@ export default function Modal({documentType}: ModalProps) {
               >
                 <Dialog.Panel className="w-full max-w-5xl transform overflow-hidden rounded-2xl bg-white p-6 text-left align-middle shadow-xl transition-all">
                     <div>
-                      <h2 className='font-bold text-2xl'>Crear { forms[documentType].title }</h2>
+                      <h2 className='font-bold text-2xl'>Crear { formsAdd[documentType].title }</h2>
                       <h3 className='text-cardColor-foreground'>Ingrese la siguiente información:</h3>
                       { 
                         selectForm(documentType)

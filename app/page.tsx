@@ -1,10 +1,10 @@
-import Modal from "@/src/components/ui/Modal";
-import Image from "next/image";
+import ModalAdd from "@/src/components/ui/ModalAdd";
+
 
 export default function Home() {
   return (
     <>
-      <Modal documentType="presupuesto" />
+      <ModalAdd documentType="presupuesto" />
     </>
   );
 }

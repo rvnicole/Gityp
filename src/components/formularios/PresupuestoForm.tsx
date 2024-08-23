@@ -1,48 +1,37 @@
-import { useMemo, useState } from "react";
-import { useRouter } from "next/navigation";
-import { useForm } from "react-hook-form";
+import { Dispatch, SetStateAction, useState } from "react";
+import { FieldErrors, UseFormRegister } from "react-hook-form";
 import { PresupuestoFormData, ServiceFormData } from "@/src/types";
-import { OutlineButton, PrimaryButton, SecondaryButton } from "../ui/Buttons";
+import { OutlineButton } from "../ui/Buttons";
 import ServicioFormDetails from "./ServicioFormDetails";
 import ServicesData from "./ServiceData";
-import { formatCurrency } from "@/src/lib";
 
 const nameForm = 'presupuesto';
-const montosIniciales = {
-    subtotal: 0,
-    iva: 16,
-    total: 0
+export const initialValuesService = {
+    id: '',
+    fechaEjecucion: new Date(),
+    descripcion: '',
+    costo: 0,
+    tipoServicio: '',
+    idConductor: '',
+    nota: '',
+    estado: 'assign',
+    controlForm: ''
 }
 
-export default function PresupuestoForm(){
-    const router = useRouter();
-    const [ servicios, setServicios ] = useState<ServiceFormData[]>([]);
-    const [ openServiceForm, setOpenServiceForm ] = useState(true);
-    const [ montos, setMontos ] = useState(montosIniciales);    
-    const { register, handleSubmit, reset, formState: { errors }, watch } = useForm<PresupuestoFormData>();
-    const iva = watch('iva');
-    useMemo(()=>{ 
-        console.log('Se ejecuta', iva);
-        const subtotal = servicios.reduce((acumulado, servicio) => acumulado + +servicio.costo, 0);
-        setMontos({...montosIniciales, subtotal, iva, total: subtotal * iva/100 + subtotal }); 
-    } , [servicios, iva]);
+type PresupuestoFormProps = {
+    register: UseFormRegister<PresupuestoFormData>, 
+    errors: FieldErrors<PresupuestoFormData>, 
+    servicios: ServiceFormData[], 
+    setServicios: Dispatch<SetStateAction<ServiceFormData[]>>, 
+    openServiceForm: boolean, 
+    setOpenServiceForm: Dispatch<SetStateAction<boolean>>
+};
 
-    const handleAdd = ( formData: PresupuestoFormData ) => {
-        console.log(formData);
-        const fullFormData = {
-            formData,
-            servicios
-        }
-        if( servicios.length < 1 ){
-            alert('Debe agregar al menos un servicio');
-        };
-    }
+export default function PresupuestoForm({ register, errors, servicios, setServicios, openServiceForm, setOpenServiceForm }: PresupuestoFormProps){
+    const [ servicioEdit, setServicioEdit ] = useState<ServiceFormData>(initialValuesService);
 
     return (
-        <form 
-            onSubmit={handleSubmit(handleAdd)}
-            className="mt-10 space-y-5"
-        >
+        <>
             <div className="flex justify-between px-5">
                 <div>
                     <label htmlFor="fecha">Fecha: </label>
@@ -82,21 +71,30 @@ export default function PresupuestoForm(){
                 servicios.length > 0 &&
                 <fieldset className="px-5">
                     <legend className="font-bold mb-3 text-lg">Lista de servicios: </legend>
-                    <div className="grid grid-cols-5 border border-b border-mutedColor gap-y-1">
+                    <div className="grid grid-cols-6 border border-b border-mutedColor gap-y-1">
                         <label className="font-bold">Fecha de ejecución</label>                        
                         { /*<label className="font-bold text-center">Conductor</label>*/ }
                         <label className="font-bold text-center">Tipo</label> 
                         <label className="font-bold ">Descripcion</label>  
                         <label className="font-bold text-center">Costo</label>
                         <label className="font-bold">Nota</label>
+                        <label className="font-bold text-center">Acciones</label>
                         {
-                            servicios.map( servicio => <ServicesData key={servicio.id} servicio={servicio}/> )
+                            servicios.map( servicio => 
+                                    <ServicesData 
+                                        key={servicio.id} 
+                                        servicio={servicio}
+                                        setServicioEdit={setServicioEdit}
+                                        servicios={servicios}
+                                        setServicios={setServicios}
+                                    /> 
+                            )
                         }
                     </div>
                 </fieldset>
             }
             {
-                openServiceForm ? 
+                openServiceForm || servicioEdit.id ? 
                     <ServicioFormDetails 
                         servicios={servicios}
                         setServicios={setServicios}
@@ -104,46 +102,14 @@ export default function PresupuestoForm(){
                         setOpenServiceForm={setOpenServiceForm}
                         register={register}
                         errors={errors}
+                        servicioEdit={servicioEdit}
+                        setServicioEdit={setServicioEdit}
                     />
                 :
                     <div className="px-5">
                         <OutlineButton onClick={()=>setOpenServiceForm(true)}>Agregar servicio</OutlineButton>
                     </div>
             }
-            <div className="px-5">
-                <label htmlFor="subtotal">Subtotal: </label>
-                <input 
-                    readOnly 
-                    type="text" 
-                    className="p-1 placeholder:text-inputColor rounded w-24"
-                    value={formatCurrency(montos.subtotal)}
-                    { ...register('subtotal')}
-                />
-            </div>
-            <div className="px-5">
-                <label htmlFor="iva">IVA: </label>
-                <input 
-                    type="number" 
-                    className={`w-16 p-1 border border-borderColor placeholder:text-inputColor rounded focus:outline-none focus:ring-2 focus:border-ringColor`}
-                    defaultValue={montos.iva}
-                    { ...register('iva')}
-                />
-                <span>%</span>
-            </div>
-            <div className="px-5">
-                <label htmlFor="total">Total: </label>
-                <input 
-                    readOnly 
-                    type="text" 
-                    className="p-1 placeholder:text-inputColor rounded w-24"
-                    value={formatCurrency(montos.total)}
-                    { ...register('total')}
-                />
-            </div>
-            <div className="flex justify-end gap-5 px-5">
-                <SecondaryButton onClick={() => router.replace('/')}>Cancelar</SecondaryButton>
-                <PrimaryButton onClick={handleSubmit(handleAdd)}>Crear presupuesto</PrimaryButton>
-            </div>
-        </form>
+        </>
     )
 }
