@@ -13,11 +13,11 @@ type ButtonsPresupuestosProps = {
 export default function ButtonsPresupuestos({ estadoDocument }: ButtonsPresupuestosProps) {
     const [estado, setEstado] = useState<EstadoPresupuesto>(estadoDocument);
 
-    const handleClickAprobado = () => {
+    const handleClickAccept = () => {
         setEstado('accept');
     }
 
-    const handleClickRechazado = () => {
+    const handleClickReject = () => {
         setEstado('reject');
     }
 
@@ -28,13 +28,13 @@ export default function ButtonsPresupuestos({ estadoDocument }: ButtonsPresupues
             { estado === "pending" && (
                 <div className="flex justify-center gap-3 mt-4">
                     <ConfirmButton
-                        onClick={handleClickAprobado}
+                        onClick={handleClickAccept}
                     >
                         <CheckCircleIcon className="size-7 text-white"  />
                     </ConfirmButton>
                     
                     <SecondaryButton
-                        onClick={handleClickRechazado}
+                        onClick={handleClickReject}
                     >
                         <XCircleIcon className="size-7 text-secondaryColor-foreground" />
                     </SecondaryButton>

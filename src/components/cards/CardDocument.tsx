@@ -1,7 +1,8 @@
 import Link from "next/link";
-import { formatCurrency, formatDate } from "@/src/lib";
 import ButtonsPresupuestos from "../cardDocumentButtons/ButtonsPresupuesto";
 import type { CardDocumentInfo, DocumentTypeTitle, DocumentTypeURL, EstadoPresupuesto } from "@/src/types";
+import ContentDocument from "../cardDocumentContent/ContentDocument";
+import ContentService from "../cardDocumentContent/ContentService";
 
 type CardDocumentProps = {
     document: CardDocumentInfo;
@@ -17,32 +18,14 @@ export default function CardDocument({document, documentType, documentTitle}: Ca
             <Link 
                 href={`/${documentType}/${document.id}`}
             >
-                <p className="text-right">{formatDate(document.fecha)}</p>
-                                     
-                <p className="font-bold text-lg pt-3">
-                    {documentTitle}{' '}
-                    <span className="text-2xl">#1234</span>
-                </p>
-
-                <div className="w-full p-1 bg-charColor-char4 rounded-lg my-2"></div>
-
-                <p className="font-semibold">Solicito: {' '}
-                    <span className="font-normal">{document.solicito}</span>
-                </p>
-
-                { document.proveedor && (
-                    <p className="font-semibold">Proveedor: {' '}
-                        <span className="font-normal">{document.proveedor}</span>
-                    </p>
+                {documentType === 'servicios' ? (
+                    <ContentService />
+                ) : (
+                    <ContentDocument
+                        document={document}
+                        documentTitle={documentTitle}
+                    /> 
                 )}
-
-                { document.ordenCompra && (
-                    <p className="font-semibold">No. OC:{' '}
-                        <span className="font-normal">{document.ordenCompra}</span>
-                    </p>
-                )}
-
-                <p className="font-semibold py-2 text-right text-xl">{formatCurrency(document.total)}</p>
             </Link>
 
             {documentType === 'presupuestos' && (
@@ -50,7 +33,6 @@ export default function CardDocument({document, documentType, documentTitle}: Ca
                     estadoDocument={document.estado as EstadoPresupuesto} 
                 />
             )}
-
         </div>
     )
 }
