@@ -51,6 +51,13 @@ export default function AddPresupuesto(){
                 setOpenServiceForm={setOpenServiceForm}
             />
             <div className="px-5">
+                <label htmlFor="comentarios">Comentarios:</label>
+                <textarea 
+                    className="p-1 border border-borderColor placeholder:text-inputColor rounded w-full focus:outline-none focus:ring-2 focus:border-ringColor"
+                    { ...register('comentarios')}
+                />
+            </div>
+            <div className="px-5">
                 <label htmlFor="subtotal">Subtotal: </label>
                 <input 
                     readOnly 
