@@ -3,9 +3,47 @@ import { useRouter } from "next/navigation";
 import { useForm } from "react-hook-form";
 import { PresupuestoFormData, ServiceFormData } from "@/src/types";
 import { PrimaryButton, SecondaryButton } from "../ui/Buttons";
-import { formatCurrency } from "@/src/lib";
+import { formatCurrency, formatDate } from "@/src/lib";
 import PresupuestoForm from "./PresupuestoForm";
 import Link from "next/link";
+
+
+// OBJETO DE EJEMPLO
+const objEjemploPresupuesto = {
+    id: '0904',
+    fecha: new Date(),
+    proveedor: '1230',
+    solicito: 'Fernando Rocha',
+    subtotal: 5000,
+    iva: 16,
+    total: 5800,
+    servicios: [
+        {
+            id: '0123',
+            idOrdenServicio: '',
+            fechaEjecucion: new Date(),
+            descripcion: 'Servicio de transporte paquetería para entrega de muestras de helado',
+            costo: 3500,
+            tipoServicio: 'paqueteria',
+            idConductor: 'conductor',
+            nota: 'El servicio requiere hielo seco',
+            estado: 'assign',
+            controlForm:''
+        },
+        {
+            id: '0124',
+            idOrdenServicio: '',
+            fechaEjecucion: new Date(),
+            descripcion: 'Servicio de transporte paquetería, entrega de refrigerador',
+            costo: 2000,
+            tipoServicio: 'paqueteria',
+            idConductor: 'conductor',
+            nota: 'El congelador no viene emplayado',
+            estado: 'assign',
+            controlForm: ''
+        }
+    ]
+}
 
 const montosIniciales = {
     subtotal: 0,
@@ -13,19 +51,21 @@ const montosIniciales = {
     total: 0
 }
 
-export default function AddPresupuesto(){
+export default function EditPresupuesto(){
     const router = useRouter();
-    const [ servicios, setServicios ] = useState<ServiceFormData[]>([]);
-    const [ openServiceForm, setOpenServiceForm ] = useState(true);
-    const [ montos, setMontos ] = useState(montosIniciales); 
-    const { register, handleSubmit, reset, formState: { errors }, watch } = useForm<PresupuestoFormData>();
+    const ser = objEjemploPresupuesto.servicios;
+    const [ servicios, setServicios ] = useState<ServiceFormData[]>(ser);
+    const [ openServiceForm, setOpenServiceForm ] = useState(false);
+    const [ montos, setMontos ] = useState({ subtotal: objEjemploPresupuesto.subtotal, iva: objEjemploPresupuesto.iva, total: objEjemploPresupuesto.total }); 
+    const { register, handleSubmit, reset, formState: { errors }, watch } = useForm<PresupuestoFormData>({ defaultValues: objEjemploPresupuesto });
     const iva = watch('iva') ? watch('iva') : montos.iva;
+    const fecha = formatDate(objEjemploPresupuesto.fecha);
     useMemo(()=>{ 
         const subtotal = servicios.reduce((acumulado, servicio) => acumulado + +servicio.costo, 0);
         setMontos({...montosIniciales, subtotal, iva, total: subtotal * iva/100 + subtotal }); 
     } , [servicios, iva]);
 
-    const handleAdd = ( formData: PresupuestoFormData ) => {
+    const handleEdit = ( formData: PresupuestoFormData ) => {
         if( servicios.length < 1 ){
             alert('Debe agregar al menos un servicio');
             return;
@@ -40,10 +80,11 @@ export default function AddPresupuesto(){
 
     return (
         <form 
-            onSubmit={handleSubmit(handleAdd)}
+            onSubmit={handleSubmit(handleEdit)}
             className="mt-10 space-y-5"
         >
             <PresupuestoForm 
+                fecha={fecha}
                 register={register}
                 errors={errors}
                 servicios={servicios}

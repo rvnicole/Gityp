@@ -1,6 +1,7 @@
 "use client"
 
-import { ButtonHTMLAttributes, ReactNode } from "react";
+import { useRouter } from "next/navigation";
+import { ButtonHTMLAttributes, Children, ReactNode } from "react";
 
 type ButtonsProps = {
     children: ReactNode;
@@ -127,3 +128,15 @@ export function ConfirmRoundButton({ children, onClick, attributes }: ButtonsPro
         </button>
     )
 }
+
+export function BackButton({ children, onClick, attributes }: ButtonsProps){
+    const router = useRouter();
+    return (
+        <button
+            className="text-white bg-inputColor p-1 rounded-full hover:bg-primaryColor hidden md:block"
+            onClick={() => router.back()}
+        >
+            {children}
+        </button>
+    );
+};

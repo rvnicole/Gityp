@@ -7,16 +7,16 @@ import GestionCobroForm from '../formularios/GestionCobroForm';
 import OrdenServicioForm from '../formularios/OrdenServicioForm';
 import FacturaForm from '../formularios/FacturaForm';
 import ServicioForm from '../formularios/ServicioForm';
-import AddPresupuesto from '../formularios/AddPresupuesto';
+import EditPresupuesto from '../formularios/EditPresupuesto';
 
 type ModalProps = {
   documentType: 'presupuesto' | 'factura' |  'ordenServicio' | 'gestionCobro' | 'servicio',
   defaultValues?: Presupuesto | OrdenServicio | Servicio | Factura | GestionCobros
 };
 
-const formsAdd = {
+const formsEdit = {
   'presupuesto': { 
-    "tsx": <AddPresupuesto />, 
+    "tsx": <EditPresupuesto />, 
     "title": 'Presupuesto' 
   },
   'factura': { 
@@ -37,9 +37,9 @@ const formsAdd = {
   }
 }
 
-const selectForm = ( documentType: ModalProps['documentType'] ) => formsAdd[documentType].tsx;
+const selectForm = ( documentType: ModalProps['documentType'] ) => formsEdit[documentType].tsx;
 
-export default function ModalAdd({documentType}: ModalProps) {
+export default function ModalEdit({documentType}: ModalProps) {
   const router = useRouter();
   const searchParams = useSearchParams();
   const modo = searchParams.get('modal');
@@ -75,7 +75,7 @@ export default function ModalAdd({documentType}: ModalProps) {
               >
                 <Dialog.Panel className="w-full max-w-5xl transform overflow-hidden rounded-2xl bg-white p-6 text-left align-middle shadow-xl transition-all">
                     <div>
-                      <h2 className='font-bold text-2xl'>Crear { formsAdd[documentType].title }</h2>
+                      <h2 className='font-bold text-2xl'>Crear { formsEdit[documentType].title }</h2>
                       <h3 className='text-cardColor-foreground'>Ingrese la siguiente información:</h3>
                       { 
                         selectForm(documentType)
