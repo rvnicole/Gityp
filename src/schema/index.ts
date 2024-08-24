@@ -89,3 +89,7 @@ export const PresupuestoFormSchema = PresupuestoSchema.pick({
     total: true,
     comentarios: true
 });
+
+export const OrdenServicioFormSchema = OrdenServicioSchema.pick({
+    ordenCompra: true
+});

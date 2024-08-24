@@ -7,7 +7,8 @@ import {
     PresupuestoSchema, 
     ServicioSchema,
     PresupuestoFormSchema,
-    ServiceFormSchema
+    ServiceFormSchema,
+    OrdenServicioFormSchema
 } from "../schema";
 
 export type Servicio = z.infer<typeof ServicioSchema>;
@@ -22,7 +23,8 @@ export type DocumentTypeURL = 'presupuestos'|'ordenes-servicios'|'servicios'|'fa
 
 // Types formularios
 export type PresupuestoFormData = z.infer<typeof PresupuestoFormSchema>;
-export type ServiceFormData = z.infer<typeof ServiceFormSchema>
+export type ServiceFormData = z.infer<typeof ServiceFormSchema>;
+export type OrdenServicioFormData = z.infer<typeof OrdenServicioFormSchema>;
 
 // Types Card Document
 export type CardDocumentInfo = Pick<Presupuesto, 'id'|'fecha'|'proveedor'|'solicito'|'total'|'estado'> & { ordenCompra?: string};

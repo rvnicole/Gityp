@@ -3,11 +3,11 @@ import { useSearchParams, useRouter } from 'next/navigation';
 import { Dialog, Transition } from '@headlessui/react';
 import { Fragment } from 'react';
 import { Factura, GestionCobros, OrdenServicio, Presupuesto, Servicio } from '@/src/types';
-import GestionCobroForm from '../formularios/GestionCobroForm';
-import OrdenServicioForm from '../formularios/OrdenServicioForm';
-import FacturaForm from '../formularios/FacturaForm';
-import ServicioForm from '../formularios/ServicioForm';
-import AddPresupuesto from '../formularios/AddPresupuesto';
+import GestionCobroForm from '../formularios/gestionCobroForms/GestionCobroForm';
+import OrdenServicioForm from '../formularios/ordenServicioForms/OrdenServicioForm';
+import FacturaForm from '../formularios/facturaForms/FacturaForm';
+import ServicioForm from '../formularios/servicioForms/ServicioForm';
+import AddPresupuesto from '../formularios/presupuestoForms/AddPresupuesto';
 
 type ModalProps = {
   documentType: 'presupuesto' | 'factura' |  'ordenServicio' | 'gestionCobro' | 'servicio',

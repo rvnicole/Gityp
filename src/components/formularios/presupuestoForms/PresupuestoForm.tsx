@@ -2,9 +2,9 @@ import { useSearchParams } from "next/navigation";
 import { Dispatch, SetStateAction, useState } from "react";
 import { FieldErrors, UseFormRegister } from "react-hook-form";
 import { PresupuestoFormData, ServiceFormData } from "@/src/types";
-import { OutlineButton } from "../ui/Buttons";
-import ServicioFormDetails from "./ServicioFormDetails";
-import ServicesData from "./ServiceData";
+import { OutlineButton } from "../../ui/Buttons";
+import ServicioFormDetails from "../servicioForms/ServicioFormDetails";
+import ServicesData from "../servicioForms/ServiceData";
 
 const nameForm = 'presupuesto';
 export const initialValuesService = {
@@ -117,8 +117,6 @@ export default function PresupuestoForm({ fecha, register, errors, servicios, se
                         setServicios={setServicios}
                         fatherForm={nameForm}
                         setOpenServiceForm={setOpenServiceForm}
-                        register={register}
-                        errors={errors}
                         servicioEdit={servicioEdit}
                         setServicioEdit={setServicioEdit}
                     />

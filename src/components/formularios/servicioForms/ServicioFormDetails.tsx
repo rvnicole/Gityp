@@ -1,17 +1,15 @@
 import { FieldErrors, FieldValues, useForm, UseFormRegister } from "react-hook-form";
 import { tiposServicio, estadosServicio } from "@/src/data/data";
-import { OutlineButton, SecondaryButton } from "../ui/Buttons";
-import { Dispatch, SetStateAction, useEffect, useState } from "react";
-import { PresupuestoFormData, ServiceFormData, Servicio } from "@/src/types";
-import { initialValuesService } from "./PresupuestoForm";
+import { OutlineButton, SecondaryButton } from "../../ui/Buttons";
+import { Dispatch, SetStateAction, useEffect } from "react";
+import { ServiceFormData } from "@/src/types";
+import { initialValuesService } from "../presupuestoForms/PresupuestoForm";
 
 type ServicioFormProps = {
-    servicios: ServiceFormData[],
-    setServicios: Dispatch<SetStateAction<ServiceFormData[]>>,
+    servicios?: ServiceFormData[],
+    setServicios?: Dispatch<SetStateAction<ServiceFormData[]>>,
     fatherForm?: string,
     setOpenServiceForm?: Dispatch<SetStateAction<boolean>>, 
-    register: UseFormRegister<PresupuestoFormData>,
-    errors: FieldErrors<FieldValues>,
     servicioEdit?: ServiceFormData,
     setServicioEdit?: Dispatch<SetStateAction<ServiceFormData>>
 }
@@ -25,7 +23,7 @@ export default function ServicioFormDetails({ servicios, setServicios, fatherFor
     },[servicioEdit]);
 
     const addService = ( formData: ServiceFormData ) => {
-        if( setOpenServiceForm ){
+        if( setOpenServiceForm && setServicios && servicios){
             const data = {
                 ...formData,
                 id: crypto.randomUUID()
@@ -37,7 +35,7 @@ export default function ServicioFormDetails({ servicios, setServicios, fatherFor
     };
 
     const editService = ( formData: ServiceFormData ) => {
-        if( setOpenServiceForm && servicioEdit ){
+        if( setOpenServiceForm && servicioEdit && setServicios && servicios  ){
             
             const updateServices = servicios.map( servicio =>{
                 if( servicio.id === servicioEdit.id ){

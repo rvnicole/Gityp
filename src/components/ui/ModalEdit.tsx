@@ -3,11 +3,11 @@ import { useSearchParams, useRouter } from 'next/navigation';
 import { Dialog, Transition } from '@headlessui/react';
 import { Fragment } from 'react';
 import { Factura, GestionCobros, OrdenServicio, Presupuesto, Servicio } from '@/src/types';
-import GestionCobroForm from '../formularios/GestionCobroForm';
-import OrdenServicioForm from '../formularios/OrdenServicioForm';
-import FacturaForm from '../formularios/FacturaForm';
-import ServicioForm from '../formularios/ServicioForm';
-import EditPresupuesto from '../formularios/EditPresupuesto';
+import GestionCobroForm from '../formularios/gestionCobroForms/GestionCobroForm';
+import OrdenServicioForm from '../formularios/ordenServicioForms/OrdenServicioForm';
+import FacturaForm from '../formularios/facturaForms/FacturaForm';
+import ServicioForm from '../formularios/servicioForms/ServicioForm';
+import EditPresupuesto from '../formularios/presupuestoForms/EditPresupuesto';
 
 type ModalProps = {
   documentType: 'presupuesto' | 'factura' |  'ordenServicio' | 'gestionCobro' | 'servicio',
@@ -75,7 +75,7 @@ export default function ModalEdit({documentType}: ModalProps) {
               >
                 <Dialog.Panel className="w-full max-w-5xl transform overflow-hidden rounded-2xl bg-white p-6 text-left align-middle shadow-xl transition-all">
                     <div>
-                      <h2 className='font-bold text-2xl'>Crear { formsEdit[documentType].title }</h2>
+                      <h2 className='font-bold text-2xl'>Editar { formsEdit[documentType].title }</h2>
                       <h3 className='text-cardColor-foreground'>Ingrese la siguiente información:</h3>
                       { 
                         selectForm(documentType)
