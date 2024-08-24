@@ -31,6 +31,7 @@ export type CardDocumentInfo = Pick<Presupuesto, 'id'|'fecha'|'proveedor'|'solic
 
 // Types Estados
 export type EstadoPresupuesto = 'pending'|'accept'|'reject';
-export type EstadoOrdenServicio = 'assign'|'inprogress'|'complete'|'unrealized';
+export type EstadoOrdenServicio = 'assign'|'inProgress'|'complete'|'noShow';
+export type EstadoServicio = 'assign'|'inProgress'|'complete'|'noShow';
 export type EstadoFactura = 'sealed'|'notsealed';
 export type EstadoCobro = 'paid'|'pending';

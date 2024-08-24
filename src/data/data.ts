@@ -18,9 +18,16 @@ export const estadosPresupuesto = {
 
 export const estadosOrdenServicio = {
     assign: 'Asignado',
-    inprogress: 'En progreso',
+    inProgress: 'En progreso',
     complete: 'Completado',
-    unrealized: 'No realizado'
+    noShow: 'No realizado'
+};
+
+export const estadosServicios = {
+    assign: 'Asignado',
+    inProgress: 'En progreso',
+    complete: 'Completado',
+    noShow: 'No realizado'
 };
 
 export const estadosFactura = {
