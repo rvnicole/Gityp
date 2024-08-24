@@ -27,6 +27,7 @@ export default function ButtonsCobro({ estadoDocument }: ButtonsCobroProps) {
                 <div className="flex justify-center gap-3 mt-4">
                     <ConfirmButton
                         onClick={handleClickPaid}
+                        attributes={{ title: "Pagado"}}
                     >
                         <BanknotesIcon className="size-7 text-white"  />
                     </ConfirmButton>

@@ -31,12 +31,14 @@ export default function ButtonsPresupuestos({ estadoDocument }: ButtonsPresupues
                 <div className="flex justify-center gap-3 mt-4">
                     <ConfirmButton
                         onClick={handleClickAccept}
+                        attributes={{ title: "Aprobado"}}
                     >
                         <CheckCircleIcon className="size-7 text-white"  />
                     </ConfirmButton>
                     
                     <SecondaryButton
                         onClick={handleClickReject}
+                        attributes={{ title: "Rechazado"}}
                     >
                         <XCircleIcon className="size-7 text-secondaryColor-foreground" />
                     </SecondaryButton>

@@ -37,6 +37,7 @@ export default function ButtonsServicio({ estadoDocument }: ButtonsServicioProps
                     { estado !== "inProgress" && (
                         <PrimaryButton
                             onClick={handleClickInProgress}
+                            attributes={{ title: "En progreso"}}
                         >
                             <PlayIcon className="size-7 text-white" />
                         </PrimaryButton>
@@ -44,12 +45,14 @@ export default function ButtonsServicio({ estadoDocument }: ButtonsServicioProps
 
                     <ConfirmButton
                         onClick={handleClickComplete}
+                        attributes={{ title: "Completado"}}
                     >
                         <HandThumbUpIcon className="size-7 text-white"  />
                     </ConfirmButton>
 
                     <SecondaryButton
                         onClick={handleClickNoShow}
+                        attributes={{ title: "No realizado"}}
                     >
                         <NoSymbolIcon className="size-7 text-secondaryColor-foreground" />
                     </SecondaryButton>

@@ -27,6 +27,7 @@ export default function ButtonsFactura({ estadoDocument }: ButtonsPresupuestosPr
                 <div className="flex justify-center gap-3 mt-4">
                     <ConfirmButton
                         onClick={handleClickSealed}
+                        attributes={{ title: "Sellado"}}
                     >
                         <CheckBadgeIcon className="size-7 text-white"  />
                     </ConfirmButton>
