@@ -1,8 +1,8 @@
-import type { CardDocumentInfo, DocumentTypeURL, DocumentTypeTitle } from "@/src/types";
+import type { CardDocumentInfo, DocumentTypeURL, DocumentTypeTitle, Servicio } from "@/src/types";
 import CardDocument from "./CardDocument";
 
 type CardTableProps = {
-    documents: CardDocumentInfo[];
+    documents: CardDocumentInfo[] | Servicio[];
     documentType: DocumentTypeURL;
     documentTitle: DocumentTypeTitle;
 }

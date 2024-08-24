@@ -18,7 +18,7 @@ export default function OrdenesServiciosPage() {
             solicito: 'Fulanita',
             ordenCompra: '67890',
             total: 1000,
-            estado: 'inprogress'
+            estado: 'inProgress'
         },
         {
             id: '6699c12b1f9d4e7812fa7273',
