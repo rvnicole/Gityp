@@ -23,7 +23,7 @@ export default function RootLayout({
             <SideNavBar />
           </aside>
 
-          <main className="w-full mr-5 mt-3">
+          <main className="w-full mr-5 my-3">
             {children}
           </main>          
         </div>

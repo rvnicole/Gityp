@@ -1,14 +1,16 @@
 import { ArrowUturnLeftIcon } from "@heroicons/react/24/solid";
 import { BackButton, DestructiveRoundButton, OutlineRoundButton } from "../ui/Buttons";
+import { ReactNode } from "react";
 import Link from "next/link";
 
 type DocumentDetailProps = {
     documentID: string;
+    children: ReactNode;
 }
 
-export default function DocumentDetail({ documentID }: DocumentDetailProps) {
+export default function DocumentDetail({documentID, children}: DocumentDetailProps) {
     return (
-        <div className="py-3">
+        <div>
             <div className="md:flex justify-between p-3">
                 <div>
                     <BackButton>
@@ -16,7 +18,7 @@ export default function DocumentDetail({ documentID }: DocumentDetailProps) {
                     </BackButton>
                 </div>
 
-                <div className="grid md:grid-cols-2 gap-3">
+                <div className="grid grid-cols-2 gap-3 text-end">
                     <Link
                         href={`${documentID}?modal=edit`}
                     >
@@ -32,7 +34,7 @@ export default function DocumentDetail({ documentID }: DocumentDetailProps) {
             </div>
 
             <div className="bg-backgroundColor border border-borderColor rounded-xl p-5">
-
+                { children }
             </div>
         </div>
     )
