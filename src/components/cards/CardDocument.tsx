@@ -14,7 +14,8 @@ import type {
     EstadoFactura, 
     EstadoOrdenServicio, 
     EstadoPresupuesto,
-    EstadoServicio
+    EstadoServicio,
+    FechasDuplicadasType
 } from "@/src/types";
 import ButtonsServicio from "../cardDocumentButtons/ButtonsServicio";
 
@@ -22,9 +23,10 @@ type CardDocumentProps = {
     document: CardDocumentInfo | Servicio;
     documentType: DocumentTypeURL;
     documentTitle: DocumentTypeTitle;
+    fechasDuplicadas?: FechasDuplicadasType
 }
 
-export default function CardDocument({document, documentType, documentTitle}: CardDocumentProps) {
+export default function CardDocument({document, documentType, documentTitle, fechasDuplicadas}: CardDocumentProps) {
     return (
         <div className="p-7 bg-backgroundColor border border-borderColor rounded-xl text-mutedColor-foreground hover:shadow-lg hover:shadow-charColor-char4">
             <Link 
@@ -34,6 +36,7 @@ export default function CardDocument({document, documentType, documentTitle}: Ca
                     <ContentService 
                         document={document as Servicio}
                         documentTitle={documentTitle}
+                        fechasDuplicadas={fechasDuplicadas!}
                     />
                 ) : (
                     <ContentDocument

@@ -8,6 +8,7 @@ import OrdenServicioForm from '../formularios/ordenServicioForms/OrdenServicioFo
 import FacturaForm from '../formularios/facturaForms/FacturaForm';
 import ServicioForm from '../formularios/servicioForms/ServicioForm';
 import AddPresupuesto from '../formularios/presupuestoForms/AddPresupuesto';
+import AddService from '../formularios/servicioForms/AddService';
 
 type ModalProps = {
   documentType: 'presupuesto' | 'factura' |  'ordenServicio' | 'gestionCobro' | 'servicio',
@@ -32,7 +33,7 @@ const formsAdd = {
     "title": "Seguimiento de Gestión de cobro" 
   },
   'servicio': {
-    "tsx": <ServicioForm />, 
+    "tsx": <AddService />, 
     "title": 'Servicio'
   }
 }

@@ -1,16 +1,33 @@
 import { formatCurrency, formatDate } from "@/src/lib";
-import { DocumentTypeTitle, Servicio } from "@/src/types";
+import { DocumentTypeTitle, FechasDuplicadasType, Servicio } from "@/src/types";
 
 type ContentDocumentProps = {
     document: Servicio;
     documentTitle: DocumentTypeTitle;
+    fechasDuplicadas: FechasDuplicadasType
 }
 
-export default function ContentService({document, documentTitle}: ContentDocumentProps) {
+type ColoresDuplicados = {
+    [key: number]: string;
+}
+
+const coloresDuplicados: ColoresDuplicados= {
+    2: "bg-yellow-400",
+    3: "bg-orange-400",
+    4: "bg-destructiveColor"
+}
+
+export default function ContentService({document, documentTitle, fechasDuplicadas}: ContentDocumentProps) {
+    const numFechasDuplicados = Number(fechasDuplicadas[formatDate(document.fechaEjecucion)]);
+
     return (
         <div>
-            <p className="text-right">{formatDate(document.fechaEjecucion)}</p>
-                                     
+            {
+                numFechasDuplicados > 1 ? 
+                    <p className="text-right"><span className={`${coloresDuplicados[numFechasDuplicados]} bg- text-white font-semibold px-2 py-1 rounded-2xl`}>{formatDate(document.fechaEjecucion)}</span></p>
+                :
+                    <p className="text-right">{formatDate(document.fechaEjecucion)}</p>
+            }                                     
             <p className="font-bold text-lg pt-3">{documentTitle}{' '}
                 <span className="text-2xl">#1234</span>
             </p>
