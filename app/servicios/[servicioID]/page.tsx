@@ -8,7 +8,9 @@ export default function ServicioIDPage({ params }: { params: {servicioID: string
         <>
             <DocumentDetail 
                 documentID={servicioID}
-            />
+            >
+                Detalles
+            </DocumentDetail>
             <ModalEdit documentType="servicio" />
         </>
     )
