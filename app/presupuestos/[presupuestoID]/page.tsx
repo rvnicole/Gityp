@@ -17,7 +17,7 @@ export default function PresupuestoIDPage({ params }: { params: {presupuestoID: 
         comentarios: 'Ut suscipit mollis felis, accumsan ultricies mauris sollicitudin eget. Ut suscipit mollis felis, accumsan ultricies mauris sollicitudin eget.',
         servicios: [
             {
-                id: '6699c12b1f9d4e7812fa7272',
+                id: '6699c12b1f9d4e7812fa7271',
                 ordenServicio: {
                     id: '6699c12b1f9d4e7812fa7271',
                     solicito: 'Fulanita',
@@ -28,7 +28,7 @@ export default function PresupuestoIDPage({ params }: { params: {presupuestoID: 
                 descripcion: 'Ut suscipit mollis felis, accumsan ultricies mauris sollicitudin eget.',
                 costo: 1000,
                 tipoServicio: 'paqueteria',
-                idConductor: 'Persona Conductora',
+                idConductor: 'conductor',
                 nota: 'Ut vitae nulla hendrerit.',
                 estado: 'assign'
             },
@@ -44,12 +44,12 @@ export default function PresupuestoIDPage({ params }: { params: {presupuestoID: 
                 descripcion: 'Ut suscipit mollis felis, accumsan ultricies mauris sollicitudin eget.',
                 costo: 1000,
                 tipoServicio: 'paqueteria',
-                idConductor: 'Persona Conductora',
+                idConductor: 'conductor',
                 nota: 'Ut vitae nulla hendrerit.',
                 estado: 'assign'
             },
             {
-                id: '6699c12b1f9d4e7812fa7272',
+                id: '6699c12b1f9d4e7812fa7273',
                 ordenServicio: {
                     id: '6699c12b1f9d4e7812fa7271',
                     solicito: 'Fulanita',
@@ -60,7 +60,7 @@ export default function PresupuestoIDPage({ params }: { params: {presupuestoID: 
                 descripcion: 'Ut suscipit mollis felis, accumsan ultricies mauris sollicitudin eget.',
                 costo: 1000,
                 tipoServicio: 'paqueteria',
-                idConductor: 'Persona Conductora',
+                idConductor: 'conductor',
                 nota: 'Ut vitae nulla hendrerit.',
                 estado: 'assign'
             }
@@ -77,7 +77,10 @@ export default function PresupuestoIDPage({ params }: { params: {presupuestoID: 
                 />
             </DocumentDetail>
 
-            <ModalEdit documentType="presupuesto" />
+            <ModalEdit 
+                documentType="presupuesto" 
+                defaultValues={presupuesto}
+            />
         </>
     )
 }

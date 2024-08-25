@@ -69,6 +69,7 @@ export const GestionCobrosSchema = z.object({
 // Schema Forms
 export const ServiceFormSchema = ServicioSchema.pick({
     id: true,
+    ordenServicio: true,
     fechaEjecucion: true,
     descripcion: true,
     idConductor: true,
