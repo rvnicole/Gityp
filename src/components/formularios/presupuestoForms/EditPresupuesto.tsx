@@ -1,5 +1,4 @@
 import { useMemo, useState } from "react";
-import { useRouter } from "next/navigation";
 import { useForm } from "react-hook-form";
 import { PresupuestoFormData, ServiceFormData } from "@/src/types";
 import { PrimaryButton, SecondaryButton } from "../../ui/Buttons";
@@ -52,8 +51,7 @@ const montosIniciales = {
 }
 
 export default function EditPresupuesto(){
-    const router = useRouter();
-    const ser = objEjemploPresupuesto.servicios;
+    const ser = objEjemploPresupuesto.servicios; // ESTES ES PARA EL TEST SUSTITUIR POR LOS DATOS DE LA BD
     const [ servicios, setServicios ] = useState<ServiceFormData[]>(ser);
     const [ openServiceForm, setOpenServiceForm ] = useState(false);
     const [ montos, setMontos ] = useState({ subtotal: objEjemploPresupuesto.subtotal, iva: objEjemploPresupuesto.iva, total: objEjemploPresupuesto.total }); 
@@ -136,7 +134,7 @@ export default function EditPresupuesto(){
                 >
                         Cancelar
                 </Link>
-                <PrimaryButton>Crear presupuesto</PrimaryButton>
+                <PrimaryButton>Guardar</PrimaryButton>
             </div>
         </form>
     )

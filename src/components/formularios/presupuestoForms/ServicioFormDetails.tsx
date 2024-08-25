@@ -1,16 +1,17 @@
 import { useForm} from "react-hook-form";
 import { Dispatch, SetStateAction, useEffect } from "react";
 import { ServiceFormData } from "@/src/types";
-import { initialValuesService } from "../presupuestoForms/PresupuestoForm";
-import ServicioForm from "./ServicioForm";
+import { initialValuesService } from "./PresupuestoForm";
+import ServicioForm from "../servicioForms/ServicioForm";
+import { OutlineButton, SecondaryButton } from "../../ui/Buttons";
 
 type ServicioFormProps = {
-    servicios?: ServiceFormData[],
-    setServicios?: Dispatch<SetStateAction<ServiceFormData[]>>,
-    fatherForm?: string,
-    setOpenServiceForm?: Dispatch<SetStateAction<boolean>>, 
-    servicioEdit?: ServiceFormData,
-    setServicioEdit?: Dispatch<SetStateAction<ServiceFormData>>
+    servicios: ServiceFormData[],
+    setServicios: Dispatch<SetStateAction<ServiceFormData[]>>,
+    fatherForm: string,
+    setOpenServiceForm: Dispatch<SetStateAction<boolean>>, 
+    servicioEdit: ServiceFormData,
+    setServicioEdit: Dispatch<SetStateAction<ServiceFormData>>
 }
 
 export default function ServicioFormDetails({ servicios, setServicios, fatherForm, setOpenServiceForm, servicioEdit, setServicioEdit }: ServicioFormProps){
@@ -73,10 +74,10 @@ export default function ServicioFormDetails({ servicios, setServicios, fatherFor
         <ServicioForm 
             register={register}
             errors={errors}
-            handleCloseForm={handleCloseForm}
-            handleServiceFormData={handleServiceFormData}
-            handleSubmit={handleSubmit}
-        />
+        > 
+            <OutlineButton onClick={handleSubmit(handleServiceFormData)}>Agregar</OutlineButton>
+            <SecondaryButton onClick={handleCloseForm}>Cancelar</SecondaryButton>
+        </ServicioForm>
         
     )
 }

@@ -3,8 +3,8 @@ import { Dispatch, SetStateAction, useState } from "react";
 import { FieldErrors, UseFormRegister } from "react-hook-form";
 import { PresupuestoFormData, ServiceFormData } from "@/src/types";
 import { OutlineButton } from "../../ui/Buttons";
-import ServicioFormDetails from "../servicioForms/ServicioFormDetails";
-import ServicesData from "../servicioForms/ServiceData";
+import ServicioFormDetails from "./ServicioFormDetails";
+import ServicesData from "./ServiceData";
 
 const nameForm = 'presupuesto';
 export const initialValuesService = {

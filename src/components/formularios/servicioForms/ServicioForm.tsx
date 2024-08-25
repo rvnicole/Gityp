@@ -1,17 +1,14 @@
 import { estadosServicio, tiposServicio } from "@/src/data/data";
 import { ServiceFormData } from "@/src/types";
-import { OutlineButton, SecondaryButton } from "../../ui/Buttons";
-import { FieldErrors, UseFormHandleSubmit, UseFormRegister } from "react-hook-form";
+import { FieldErrors, UseFormRegister } from "react-hook-form";
 
 type ServicioFormProps = {
     register: UseFormRegister<ServiceFormData>,
     errors: FieldErrors<ServiceFormData>,
-    handleSubmit: UseFormHandleSubmit<ServiceFormData>,
-    handleCloseForm: () => void,
-    handleServiceFormData: (formData: ServiceFormData) => void
+    children: JSX.Element[]
 }
 
-export default function ServicioForm({ register, errors, handleSubmit, handleCloseForm, handleServiceFormData  }: ServicioFormProps){
+export default function ServicioForm({ register, errors, children  }: ServicioFormProps){
 
     return (
         <fieldset className="px-5 border border-slate-200">
@@ -111,8 +108,7 @@ export default function ServicioForm({ register, errors, handleSubmit, handleClo
                         />
                     </div>
                     <div className="flex justify-start gap-5 flex-row-reverse">
-                        <OutlineButton onClick={handleSubmit(handleServiceFormData)}>Agregar</OutlineButton>
-                        <SecondaryButton onClick={handleCloseForm}>Cancelar</SecondaryButton>                       
+                        { children }                       
                     </div>                 
                 </div>                
         </fieldset>

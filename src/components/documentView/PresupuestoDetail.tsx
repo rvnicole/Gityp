@@ -18,22 +18,22 @@ export default function PresupuestoDetail({ presupuesto }: PresupuestoDetailProp
 
             <div className="flex md:justify-end text-white text-xs md:text-sm font-semibold">
                 { presupuesto.estado === "pending" && (
-                    <div className="px-3 py-1 bg-mutedColor-foreground rounded-full">
-                        {estadosPresupuesto[presupuesto.estado as EstadoPresupuesto]} {' '}
+                    <div className="flex items-center px-3 py-1 bg-mutedColor-foreground rounded-full">
+                        <p className="px-3">{estadosPresupuesto[presupuesto.estado as EstadoPresupuesto]} {' '}</p>
                         <ClockIcon className="size-6 inline-block"/>
                     </div>
                 )}
 
                 { presupuesto.estado === "reject" && (
-                    <div className="px-3 py-1 bg-mutedColor-foreground rounded-full">
-                        {estadosPresupuesto[presupuesto.estado as EstadoPresupuesto]} {' '}
+                    <div className="flex items-center px-3 py-1 bg-mutedColor-foreground rounded-full">
+                        <p className="px-3">{estadosPresupuesto[presupuesto.estado as EstadoPresupuesto]} {' '}</p>
                         <XCircleIcon className="size-6 inline-block"/>
                     </div>
                 )}
 
                 { presupuesto.estado === "accept" && (
-                    <div className="px-3 py-1 bg-lime-500 rounded-full">
-                        {estadosPresupuesto[presupuesto.estado as EstadoPresupuesto]} {' '}
+                    <div className="flex items-center px-3 py-1 bg-lime-500 rounded-full">
+                        <p className="px-3">{estadosPresupuesto[presupuesto.estado as EstadoPresupuesto]} {' '}</p>
                         <CheckCircleIcon className="size-6 inline-block" />
                     </div>
                 )}
