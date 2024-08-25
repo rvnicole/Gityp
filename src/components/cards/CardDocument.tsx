@@ -29,10 +29,8 @@ type CardDocumentProps = {
 export default function CardDocument({document, documentType, documentTitle, fechasDuplicadas}: CardDocumentProps) {
     return (
         <div className="p-7 bg-backgroundColor border border-borderColor rounded-xl text-mutedColor-foreground hover:shadow-lg hover:shadow-charColor-char4">
-            <Link 
-                href={`/${documentType}/${document.id}`}
-            >
-                {documentType === 'servicios' ? (
+            
+            {documentType === 'servicios' ? (
                     <ContentService 
                         document={document as Servicio}
                         documentTitle={documentTitle}
@@ -43,35 +41,40 @@ export default function CardDocument({document, documentType, documentTitle, fec
                         document={document as CardDocumentInfo}
                         documentTitle={documentTitle}
                     /> 
-                )}
-            </Link>
+            )}
+
 
             {documentType === 'presupuestos' && (
                 <ButtonsPresupuestos 
-                    estadoDocument={document.estado as EstadoPresupuesto} 
+                    documentID={document.id}
+                    estadoDocument={document.estado as EstadoPresupuesto}
                 />
             )}
 
             {documentType === 'ordenes-servicios' && (
                 <ButtonsOrdenServicio
+                    documentID={document.id}
                     estadoDocument={document.estado as EstadoOrdenServicio} 
                 />
             )}
 
             {documentType === 'facturacion' && (
                 <ButtonsFactura
+                    documentID={document.id}
                     estadoDocument={document.estado as EstadoFactura} 
                 />
             )}
 
             {documentType === 'gestion-cobros' && (
                 <ButtonsCobro
+                    documentID={document.id}
                     estadoDocument={document.estado as EstadoCobro} 
                 />
             )}
 
             {documentType === 'servicios' && (
                 <ButtonsServicio
+                    documentID={document.id}
                     estadoDocument={document.estado as EstadoServicio} 
                 />
             )}

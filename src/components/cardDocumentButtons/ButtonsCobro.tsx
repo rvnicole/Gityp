@@ -1,17 +1,20 @@
 "use client"
 
 import { useState } from "react";
-import { ConfirmButton } from "../ui/Buttons";
-import { BanknotesIcon } from "@heroicons/react/24/outline";
+import { useRouter } from 'next/navigation';
+import { ConfirmButton, OutlineButton } from "../ui/Buttons";
+import { BanknotesIcon, EyeIcon} from "@heroicons/react/24/outline";
 import { estadosCobro } from "@/src/data/data";
-import type { EstadoCobro } from "@/src/types";
+import type { CardDocumentInfo, EstadoCobro } from "@/src/types";
 
 type ButtonsCobroProps = {
+    documentID: CardDocumentInfo['id'];
     estadoDocument: EstadoCobro;
 }
 
-export default function ButtonsCobro({ estadoDocument }: ButtonsCobroProps) {
+export default function ButtonsCobro({documentID, estadoDocument}: ButtonsCobroProps) {
     const [estado, setEstado] = useState<EstadoCobro>(estadoDocument);
+    const router = useRouter();
 
     const handleClickPaid = () => {
         setEstado('paid');
@@ -23,16 +26,25 @@ export default function ButtonsCobro({ estadoDocument }: ButtonsCobroProps) {
                 {estadosCobro[estado]}
             </p>
 
-            { estado === "pending" && (
-                <div className="flex justify-center gap-3 mt-4">
-                    <ConfirmButton
-                        onClick={handleClickPaid}
-                        attributes={{ title: "Pagado"}}
-                    >
-                        <BanknotesIcon className="size-7 text-white"  />
-                    </ConfirmButton>
-                </div>
-            )}             
+            <div className="flex justify-center gap-3 mt-4">
+                <OutlineButton 
+                    onClick={() => router.push(`/gestion-cobros/${documentID}`)}
+                    attributes={{ title: "Ver Cobro"}}
+                >
+                    <EyeIcon className="size-7"/>
+                </OutlineButton>
+
+                { estado === "pending" && (
+                    <>
+                        <ConfirmButton
+                            onClick={handleClickPaid}
+                            attributes={{ title: "Pagado"}}
+                        >
+                            <BanknotesIcon className="size-7 text-white"  />
+                        </ConfirmButton>
+                    </>
+                )}       
+            </div>      
         </>
     )
 }

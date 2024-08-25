@@ -1,17 +1,20 @@
 "use client"
 
 import { useState } from "react";
-import { ConfirmButton } from "../ui/Buttons";
-import { CheckBadgeIcon } from "@heroicons/react/24/outline";
+import { useRouter } from 'next/navigation';
+import { ConfirmButton, OutlineButton } from "../ui/Buttons";
+import { CheckBadgeIcon, EyeIcon } from "@heroicons/react/24/outline";
 import { estadosFactura } from "@/src/data/data";
-import type { EstadoFactura } from "@/src/types";
+import type { CardDocumentInfo, EstadoFactura } from "@/src/types";
 
 type ButtonsPresupuestosProps = {
+    documentID: CardDocumentInfo['id'];
     estadoDocument: EstadoFactura;
 }
 
-export default function ButtonsFactura({ estadoDocument }: ButtonsPresupuestosProps) {
+export default function ButtonsFactura({documentID, estadoDocument}: ButtonsPresupuestosProps) {
     const [estado, setEstado] = useState<EstadoFactura>(estadoDocument);
+    const router = useRouter();
 
     const handleClickSealed = () => {
         setEstado('sealed');
@@ -23,16 +26,25 @@ export default function ButtonsFactura({ estadoDocument }: ButtonsPresupuestosPr
                 {estadosFactura[estado]}
             </p>
 
-            { estado === "notsealed" && (
-                <div className="flex justify-center gap-3 mt-4">
-                    <ConfirmButton
-                        onClick={handleClickSealed}
-                        attributes={{ title: "Sellado"}}
-                    >
-                        <CheckBadgeIcon className="size-7 text-white"  />
-                    </ConfirmButton>
-                </div>
-            )}             
+            <div className="flex justify-center gap-3 mt-4">
+                <OutlineButton 
+                    onClick={() => router.push(`/facturacion/${documentID}`)}
+                    attributes={{ title: "Ver Factura"}}
+                >
+                    <EyeIcon className="size-7"/>
+                </OutlineButton>
+
+                { estado === "notsealed" && (
+                    <>
+                        <ConfirmButton
+                            onClick={handleClickSealed}
+                            attributes={{ title: "Sellado"}}
+                        >
+                            <CheckBadgeIcon className="size-7 text-white"  />
+                        </ConfirmButton>
+                    </>
+                )} 
+            </div>            
         </>
     )
 }

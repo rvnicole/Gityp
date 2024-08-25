@@ -28,9 +28,9 @@ export default function ContentDocument({document, documentTitle}: ContentDocume
             )}
                      
             { document.ordenCompra && (
-                <p className="font-semibold">No. OC:{' '}
-                    <span className="font-normal">{document.ordenCompra}</span>
-                </p>
+                <p className="inline-block font-semibold py-1 px-3 my-1 bg-mutedColor-foreground text-white rounded-full">PO{' '}
+                <span className="font-normal">{document.ordenCompra}</span>
+            </p> 
             )}
             
             <p className="font-semibold py-2 text-right text-xl">{formatCurrency(document.total)}</p>
