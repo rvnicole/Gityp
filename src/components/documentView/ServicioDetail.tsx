@@ -8,7 +8,7 @@ type ServicioDetailProps = {
 }
 
 export default function ServicioDetail({ servicio }: ServicioDetailProps) {
-    return (
+    if(servicio.ordenServicio) return (
         <div className="grid grid-cols-1 gap-5 md:grid-cols-3 text-secondaryColor-foreground">
             <div className="md:col-span-2 md:row-span-2">
                 <h3 className="mb-4 font-bold text-xl md:text-3xl text-foregroundColor break-words">Servicio #{servicio.id}</h3>
