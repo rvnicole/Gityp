@@ -3,12 +3,11 @@ import { useSearchParams, useRouter } from 'next/navigation';
 import { Dialog, Transition } from '@headlessui/react';
 import { Fragment } from 'react';
 import { Factura, GestionCobros, OrdenServicio, Presupuesto, Servicio } from '@/src/types';
-import GestionCobroForm from '../formularios/gestionCobroForms/GestionCobroForm';
 import OrdenServicioForm from '../formularios/ordenServicioForms/OrdenServicioForm';
-import FacturaForm from '../formularios/facturaForms/FacturaForm';
-import ServicioForm from '../formularios/servicioForms/ServicioForm';
 import EditPresupuesto from '../formularios/presupuestoForms/EditPresupuesto';
 import EditService from '../formularios/servicioForms/EditService';
+import EditFactura from '../formularios/facturaForms/EditFactura';
+import EditGestionCobro from '../formularios/gestionCobroForms/EditGestionCobro';
 
 type ModalProps = {
   documentType: 'presupuesto' | 'factura' |  'ordenServicio' | 'gestionCobro' | 'servicio',
@@ -23,7 +22,7 @@ const selectForm = ( {documentType, defaultValues}: ModalProps ) => {
       "title": 'Presupuesto' 
     },
     'factura': { 
-      "tsx": <FacturaForm defaultValues={defaultValues as Factura} />, 
+      "tsx": <EditFactura defaultValues={defaultValues as Factura} />, 
       "title": 'Factura' 
     },
     'ordenServicio': { 
@@ -31,7 +30,7 @@ const selectForm = ( {documentType, defaultValues}: ModalProps ) => {
       "title": 'Orden de servicio' 
     },
     'gestionCobro': { 
-      "tsx": <GestionCobroForm defaultValues={defaultValues as GestionCobros}/>, 
+      "tsx": <EditGestionCobro defaultValues={defaultValues as GestionCobros}/>, 
       "title": "Seguimiento de Gestión de cobro" 
     },
     'servicio': {

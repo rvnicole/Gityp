@@ -1,4 +1,5 @@
 import CardTable from "@/src/components/cards/CardTable";
+import ModalAdd from "@/src/components/ui/ModalAdd";
 
 export default function GetionCobrosPage() {
     const documents = [
@@ -86,6 +87,7 @@ export default function GetionCobrosPage() {
                 documents={documents}
                 documentType="gestion-cobros"
             />
+            <ModalAdd documentType="gestionCobro" />
         </>
     )
 }

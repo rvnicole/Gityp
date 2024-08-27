@@ -1,24 +1,16 @@
-import { Factura, FacturaFormData } from "@/src/types"
-import Link from "next/link";
-import { useForm } from "react-hook-form"
-import { PrimaryButton } from "../../ui/Buttons";
+import { FacturaFormData } from "@/src/types"
+import { FieldErrors, UseFormRegister } from "react-hook-form"
 
 type FacturaFormProps = {
-    defaultValues: Factura
+    register: UseFormRegister<FacturaFormData>
+    errors: FieldErrors<FacturaFormData>
 }
 
-export default function FacturaForm({defaultValues}: FacturaFormProps){
-    const { register, handleSubmit, reset, formState: { errors } } = useForm<FacturaFormData>( defaultValues && {defaultValues});
-
-    const handleEdit = () => {
-        console.log('editando');
-    };
+export default function FacturaForm({register, errors}: FacturaFormProps){
+    
 
     return (
-        <form 
-            onSubmit={handleSubmit(handleEdit)}
-            className="space-y-5 text-mutedColor-foreground"
-        >
+        <>
             <div className="px-5 mt-5">
                 <label htmlFor="fecha">Fecha sellado: </label>
                 <input 
@@ -48,7 +40,7 @@ export default function FacturaForm({defaultValues}: FacturaFormProps){
                     <select 
                         id="emisor"
                         className={`text-foregroundColor p-1 border border-borderColor placeholder:text-inputColor rounded focus:outline-none focus:ring-2 focus:border-ringColor ${errors.emisor && "border-2 border-destructiveColor"}`}
-                        { ...register('emisor', {
+                        { ...register('emisor.id', {
                             required: true
                         })}
                     >
@@ -73,7 +65,7 @@ export default function FacturaForm({defaultValues}: FacturaFormProps){
                     <select 
                         id="receptor"
                         className={`p-1 border border-borderColor placeholder:text-inputColor rounded focus:outline-none focus:ring-2 focus:border-ringColor ${errors.receptor && "border-2 border-destructiveColor"}`}
-                        { ...register('receptor', {
+                        { ...register('receptor.id', {
                             required: true
                         })}
                     >
@@ -92,15 +84,6 @@ export default function FacturaForm({defaultValues}: FacturaFormProps){
                     </div>
                 </div>
             </div>
-            <div className="flex justify-center flex-col sm:justify-end sm:flex-row gap-5 p-5">
-                <Link 
-                    href={`${location.pathname}`}
-                    className="text-center bg-secondaryColor hover:bg-secondaryColor-hover text-secondaryColor-foreground border border-secondaryColor hover:border-secondaryColor-hover py-1 px-3 rounded cursor-pointer"
-                >
-                        Cancelar
-                </Link>
-                <PrimaryButton>Guardar</PrimaryButton>
-            </div>
-        </form>
+        </>
     )
 }

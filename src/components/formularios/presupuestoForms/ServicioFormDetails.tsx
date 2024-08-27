@@ -1,7 +1,7 @@
 import { useForm} from "react-hook-form";
 import { Dispatch, SetStateAction, useEffect } from "react";
 import { ServiceFormData } from "@/src/types";
-import { initialValuesService } from "./PresupuestoForm";
+import { initialValuesService } from "./PresupuestoForm"; 
 import ServicioForm from "../servicioForms/ServicioForm";
 import { OutlineButton, SecondaryButton } from "../../ui/Buttons";
 
@@ -14,7 +14,7 @@ type ServicioFormProps = {
     setServicioEdit: Dispatch<SetStateAction<ServiceFormData>>
 }
 
-export default function ServicioFormDetails({ servicios, setServicios, fatherForm, setOpenServiceForm, servicioEdit, setServicioEdit }: ServicioFormProps){
+export default function ServicioFormDetails({ servicios, setServicios, setOpenServiceForm, servicioEdit, setServicioEdit }: ServicioFormProps){
     const { register, handleSubmit, reset, formState: { errors } } =  useForm<ServiceFormData>( servicioEdit && { defaultValues: servicioEdit } );
     useEffect(()=>{
         if(servicioEdit){
