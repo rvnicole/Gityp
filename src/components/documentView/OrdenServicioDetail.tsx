@@ -1,4 +1,4 @@
-import { CalendarIcon, EyeIcon, PlayIcon, HandThumbUpIcon, NoSymbolIcon} from "@heroicons/react/24/outline";
+import { CalendarIcon, PlayIcon, HandThumbUpIcon, NoSymbolIcon, ArrowTopRightOnSquareIcon} from "@heroicons/react/24/outline";
 import TableServicesDetails from "./TableServicesDetails";
 import { EstadoOrdenServicio, OrdenServicio } from "@/src/types";
 import { estadosOrdenServicio } from "@/src/data/data";
@@ -14,19 +14,16 @@ export default function OrdenServicioDetail({ ordenServicio }: OrdenServicioDeta
             <div className="md:col-span-2 md:row-span-2">
                 <h3 className="mb-4 font-bold text-xl md:text-3xl text-foregroundColor break-words">Orden de Servicio #{ordenServicio.id}</h3>
                 <p><span className="font-semibold">Solicito:{' '}</span>{ordenServicio.solicito}</p>
+                <p><span className="font-semibold">PO:{' '}</span>{ordenServicio.ordenCompra}</p>
 
-                <div className="flex gap-1 align-middle">
-                    <p className="font-semibold">PO:{' '}</p>
-                    <p>{ordenServicio.ordenCompra}</p>
-                    <a 
-                        className="my-auto hover:text-primaryColor"
-                        href={ordenServicio.urlOrdenCompra}
-                        target="_blank"
-                        title="Ver Orden de Compra"
-                    >
-                        <EyeIcon className="size-5"/>
-                    </a>
-                </div>
+                <a
+                    className="flex gap-1 justify-center items-center w-24 max-h-8 my-1 p-1 rounded-full text-sm text-white bg-charColor-char5 hover:bg-primaryColor"
+                    href={ordenServicio.urlOrdenCompra}
+                    target="_blank"
+                >
+                    Ver PO
+                    <ArrowTopRightOnSquareIcon className="size-5 inline"/>
+                </a>
             </div>
 
             <div className="max-h-8	flex md:justify-end text-white text-xs md:text-sm font-semibold">
@@ -59,18 +56,18 @@ export default function OrdenServicioDetail({ ordenServicio }: OrdenServicioDeta
                 )}
             </div>
 
-            <div className="flex md:justify-end gap-5">
-                <div className="font-semibold">
-                    <p>Fecha:</p>
-                    <p>Proveedor:</p>
-                    <p>Presupuesto:</p>
-                </div>
+            <div className="flex flex-col md:justify-end gap-1">
+                <p className="font-semibold">Fecha: {' '}
+                    <span className="font-normal">{formatDate(ordenServicio.fecha)}</span>
+                </p>
 
-                <div>
-                    <p>{formatDate(ordenServicio.fecha)}</p>
-                    <p>{ordenServicio.proveedor}</p>
-                    <p>#{ordenServicio.presupuesto.id}</p>
-                </div>
+                <p className="font-semibold">Proveedor: {' '}
+                    <span className="font-normal">{ordenServicio.proveedor}</span>
+                </p>
+
+                <p className="font-semibold">Presupuesto: {' '}
+                    <span className="font-normal">#{ordenServicio.presupuesto.id}</span>
+                </p>               
             </div>
 
             <div className="md:col-span-3">

@@ -40,7 +40,7 @@ export default function ContentCobro({document}: ContentCobroProps) {
             )}
 
             { document.edicom ?
-                (<p className="font-semibold text-primaryColor">Cargado en Edicom</p>)
+                (<p className="font-semibold text-charColor-char4">Cargado en Edicom</p>)
                 : (<p className="font-semibold">Sin cargar en Edicom</p>)
             }
                      

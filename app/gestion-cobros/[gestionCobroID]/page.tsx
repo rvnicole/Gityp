@@ -1,4 +1,5 @@
 
+import CobroDetail from "@/src/components/documentView/CobroDetail";
 import DocumentDetail from "@/src/components/documentView/DocumentDetail";
 import ModalEdit from "@/src/components/ui/ModalEdit";
 
@@ -156,7 +157,7 @@ export default function GestionCobroIDPage({ params }: { params: {gestionCobroID
         factura: factura,
         ie: '1203940959',
         edicom: true,
-        pagado: true,
+        pagado: false,
         comentarios: 'Este es un comentario'
     };
 
@@ -166,7 +167,9 @@ export default function GestionCobroIDPage({ params }: { params: {gestionCobroID
             <DocumentDetail 
                 documentID={gestionCobroID}
             >
-                Aqui va el componente de vista de GESTION DE COBRO
+                <CobroDetail 
+                    cobro={gestionCobro}
+                />
             </DocumentDetail>
             
             <ModalEdit 
