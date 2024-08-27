@@ -7,147 +7,138 @@ import { FechasDuplicadasType } from "@/src/types";
 
 const documents = [
     {
-        id: '6699c12b1f9d4e7812fa7272',
+        id: '6699c12b1f9d4e78128a7272',
         ordenServicio: {
             id: '6699c12b1f9d4e7812fa7271',
             solicito: 'Fulanita',
             urlOrdenCompra: '/ejemplo',
-            ordenCompra: '67890'
+            ordenCompra: '67890',
+            proveedor: '1233'
         },
         fechaEjecucion: new Date('2024/02/08'),
-        descripcion: 'Ut suscipit mollis felis, accumsan ultricies mauris sollicitudin eget.',
         costo: 1000,
         tipoServicio: 'paqueteria',
         idConductor: 'Persona Conductora',
-        nota: 'Ut vitae nulla hendrerit.',
         estado: 'assign'
     },
     {
-        id: '6699c12b1f9d4e7812fa7272',
+        id: '6699c12b1f9d4e7812fa5272',
         ordenServicio: {
             id: '6699c12b1f9d4e7812fa7271',
             solicito: 'Fulanita',
             urlOrdenCompra: '/ejemplo',
-            ordenCompra: '67890'
+            ordenCompra: '67890',
+            proveedor: '1233'
         },
         fechaEjecucion: new Date('2024/02/08'),
-        descripcion: 'Ut suscipit mollis felis, accumsan ultricies mauris sollicitudin eget.',
         costo: 1000,
         tipoServicio: 'paqueteria',
         idConductor: 'Persona Conductora',
-        nota: 'Ut vitae nulla hendrerit.',
         estado: 'assign'
     },
     {
-        id: '6699c12b1f9d4e7812fa7272',
+        id: '6699c12b1f9d4e7812fa7275',
         ordenServicio: {
             id: '6699c12b1f9d4e7812fa7271',
             solicito: 'Fulanita',
             urlOrdenCompra: '/ejemplo',
-            ordenCompra: '67890'
+            ordenCompra: '67890',
+            proveedor: '1233'
         },
         fechaEjecucion: new Date(),
-        descripcion: 'Ut suscipit mollis felis, accumsan ultricies mauris sollicitudin eget.',
         costo: 1000,
         tipoServicio: 'paqueteria',
         idConductor: 'Persona Conductora',
-        nota: 'Ut vitae nulla hendrerit.',
         estado: 'assign'
     },
     {
-        id: '6699c12b1f9d4e7812fa7272',
+        id: '6699c12b1f9d4e7812fa7273',
         ordenServicio: {
             id: '6699c12b1f9d4e7812fa7271',
             solicito: 'Fulanita',
             urlOrdenCompra: '/ejemplo',
-            ordenCompra: '67890'
+            ordenCompra: '67890',
+            proveedor: '1233'
         },
         fechaEjecucion: new Date(),
-        descripcion: 'Ut suscipit mollis felis, accumsan ultricies mauris sollicitudin eget.',
         costo: 1000,
         tipoServicio: 'paqueteria',
         idConductor: 'Persona Conductora',
-        nota: 'Ut vitae nulla hendrerit.',
         estado: 'assign'
     },
     {
-        id: '6699c12b1f9d4e7812fa7272',
+        id: '6699c12b1f9d4e7812fa7271',
         ordenServicio: {
             id: '6699c12b1f9d4e7812fa7271',
             solicito: 'Fulanita',
             urlOrdenCompra: '/ejemplo',
-            ordenCompra: '67890'
+            ordenCompra: '67890',
+            proveedor: '1233'
         },
         fechaEjecucion: new Date(),
-        descripcion: 'Ut suscipit mollis felis, accumsan ultricies mauris sollicitudin eget.',
         costo: 1000,
         tipoServicio: 'paqueteria',
         idConductor: 'Persona Conductora',
-        nota: 'Ut vitae nulla hendrerit.',
         estado: 'assign'
     },
     {
-        id: '6699c12b1f9d4e7812fa7272',
+        id: '6699c12b1f9d4e7812fa7270',
         ordenServicio: {
             id: '6699c12b1f9d4e7812fa7271',
             solicito: 'Fulanita',
             urlOrdenCompra: '/ejemplo',
-            ordenCompra: '67890'
+            ordenCompra: '67890',
+            proveedor: '1233'
         },
         fechaEjecucion: new Date('2023/01/03'),
-        descripcion: 'Ut suscipit mollis felis, accumsan ultricies mauris sollicitudin eget.',
         costo: 1000,
         tipoServicio: 'paqueteria',
         idConductor: 'Persona Conductora',
-        nota: 'Ut vitae nulla hendrerit.',
         estado: 'assign'
     },
     {
-        id: '6699c12b1f9d4e7812fa7272',
+        id: '6699c12b1f9d4e7812fa7279',
         ordenServicio: {
             id: '6699c12b1f9d4e7812fa7271',
             solicito: 'Fulanita',
             urlOrdenCompra: '/ejemplo',
-            ordenCompra: '67890'
+            ordenCompra: '67890',
+            proveedor: '1233'
         },
         fechaEjecucion: new Date('2023/01/03'),
-        descripcion: 'Ut suscipit mollis felis, accumsan ultricies mauris sollicitudin eget.',
         costo: 1000,
         tipoServicio: 'paqueteria',
         idConductor: 'Persona Conductora',
-        nota: 'Ut vitae nulla hendrerit.',
         estado: 'assign'
     },
     {
-        id: '6699c12b1f9d4e7812fa7272',
+        id: '6699c12b1f9d4e7812fa7278',
         ordenServicio: {
             id: '6699c12b1f9d4e7812fa7271',
             solicito: 'Fulanita',
             urlOrdenCompra: '/ejemplo',
-            ordenCompra: '67890'
+            ordenCompra: '67890',
+            proveedor: '1233'
         },
         fechaEjecucion: new Date('2023/01/03'),
-        descripcion: 'Ut suscipit mollis felis, accumsan ultricies mauris sollicitudin eget.',
         costo: 1000,
         tipoServicio: 'paqueteria',
         idConductor: 'Persona Conductora',
-        nota: 'Ut vitae nulla hendrerit.',
         estado: 'assign'
     },
     {
-        id: '6699c12b1f9d4e7812fa7272',
+        id: '6699c12b1f9d4e7812fa7274',
         ordenServicio: {
             id: '6699c12b1f9d4e7812fa7271',
             solicito: 'Fulanita',
             urlOrdenCompra: '/ejemplo',
-            ordenCompra: '67890'
+            ordenCompra: '67890',
+            proveedor: '1233'
         },
         fechaEjecucion: new Date('2023/01/03'),
-        descripcion: 'Ut suscipit mollis felis, accumsan ultricies mauris sollicitudin eget.',
         costo: 1000,
         tipoServicio: 'paqueteria',
         idConductor: 'Persona Conductora',
-        nota: 'Ut vitae nulla hendrerit.',
         estado: 'assign'
     }
 ];
@@ -168,7 +159,6 @@ export default function ServiciosPage() {
             <CardTable
                 documents={documents}
                 documentType="servicios"
-                documentTitle="Servicio"
                 fechasDuplicadas={fechasDuplicadas}
             />
             <ModalAdd documentType="servicio"/>

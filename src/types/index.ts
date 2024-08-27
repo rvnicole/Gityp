@@ -20,7 +20,6 @@ export type Factura = z.infer<typeof FacturaSchema>;
 export type EmisorReceptor = z.infer<typeof EmisorReceptorSchema>;
 export type GestionCobros = z.infer<typeof GestionCobrosSchema>;
 
-export type DocumentTypeTitle = 'Presupuesto'|'Ordenen de Servicio'|'Servicio'|'Factura'|'Cobro';
 export type DocumentTypeURL = 'presupuestos'|'ordenes-servicios'|'servicios'|'facturacion'|'gestion-cobros';
 
 // Types formularios
@@ -31,14 +30,24 @@ export type FacturaFormData = z.infer<typeof FacturaFormSchema>;
 export type GestionCobroFormData = z.infer<typeof GestionCobroFormSchema>;
 
 // Types Card Document
-export type CardDocumentInfo = Pick<Presupuesto, 'id'|'fecha'|'proveedor'|'solicito'|'total'|'estado'> & { ordenCompra?: string};
+export type CardPresupuesto = Pick<Presupuesto, 'id'|'fecha'|'proveedor'|'solicito'|'total'|'estado'>;
+export type CardOrdenServicio = Pick<OrdenServicio, 'id'|'fecha'|'proveedor'|'solicito'|'total'|'estado'|'ordenCompra'>;
+
+export type CardServicio = Pick<Servicio, 'id'|'fechaEjecucion'|'idConductor'|'tipoServicio'|'estado'|'costo'> & {
+    ordenServicio: Pick<OrdenServicio, 'id'|'proveedor'|'solicito'|'ordenCompra'>
+};
+
+export type CardFactura = Pick<Factura, 'id'|'fecha'|'estado'|'folio'> & {
+    ordenServicio: Pick<OrdenServicio, 'id'|'proveedor'|'solicito'|'total'|'ordenCompra'>;
+};
+
+export type CardCobro = Pick<GestionCobros, 'id'|'ie'|'edicom'|'pagado'> & {factura: CardFactura};
 
 // Types Estados
 export type EstadoPresupuesto = 'pending'|'accept'|'reject';
 export type EstadoOrdenServicio = 'assign'|'inProgress'|'complete'|'noShow';
 export type EstadoServicio = 'assign'|'inProgress'|'complete'|'noShow';
 export type EstadoFactura = 'sealed'|'notsealed';
-export type EstadoCobro = 'paid'|'pending';
 
 export type TipoServicio = 'personal'|'paqueteria';
 

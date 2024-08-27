@@ -22,7 +22,7 @@ export default function PresupuestoPage() {
             estado: 'pending'
         },
         {
-            id: '6699c12b1f9d4e7812fa7273',
+            id: '6699c12b1f9d4e7812fa7272',
             fecha: new Date(),
             proveedor: 'Pruebas',
             solicito: 'Fulanita',
@@ -30,7 +30,7 @@ export default function PresupuestoPage() {
             estado: 'pending'
         },
         {
-            id: '6699c12b1f9d4e7812fa7273',
+            id: '6699c12b1f9d4e7812fa7271',
             fecha: new Date(),
             proveedor: 'Pruebas',
             solicito: 'Fulanita',
@@ -50,7 +50,6 @@ export default function PresupuestoPage() {
             <CardTable
                 documents={documents}
                 documentType="presupuestos"
-                documentTitle="Presupuesto"
             />
             <ModalAdd documentType="presupuesto"/>
         </div>

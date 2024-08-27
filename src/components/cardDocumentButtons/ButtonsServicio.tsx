@@ -5,10 +5,10 @@ import { useRouter } from 'next/navigation';
 import { ConfirmButton, OutlineButton, PrimaryButton, SecondaryButton } from "../ui/Buttons";
 import { EyeIcon, PlayIcon, HandThumbUpIcon, NoSymbolIcon } from "@heroicons/react/24/outline";
 import { estadosServicios } from "@/src/data/data";
-import type { CardDocumentInfo, EstadoServicio } from "@/src/types";
+import type { CardServicio, EstadoServicio } from "@/src/types";
 
 type ButtonsServicioProps = {
-    documentID: CardDocumentInfo['id'];
+    documentID: CardServicio['id'];
     estadoDocument: EstadoServicio;
 }
 

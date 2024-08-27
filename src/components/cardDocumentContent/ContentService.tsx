@@ -1,9 +1,9 @@
 import { formatCurrency, formatDate } from "@/src/lib";
-import { DocumentTypeTitle, FechasDuplicadasType, Servicio } from "@/src/types";
+import { EstadoServicio, FechasDuplicadasType, CardServicio } from "@/src/types";
+import ButtonsServicio from "../cardDocumentButtons/ButtonsServicio";
 
-type ContentDocumentProps = {
-    document: Servicio;
-    documentTitle: DocumentTypeTitle;
+type ContentServiceProps = {
+    document: CardServicio;
     fechasDuplicadas: FechasDuplicadasType
 }
 
@@ -17,7 +17,7 @@ const coloresDuplicados: ColoresDuplicados= {
     4: "bg-destructiveColor"
 }
 
-export default function ContentService({document, documentTitle, fechasDuplicadas}: ContentDocumentProps) {
+export default function ContentService({document, fechasDuplicadas}: ContentServiceProps) {
     const numFechasDuplicados = Number(fechasDuplicadas[formatDate(document.fechaEjecucion)]);
 
     return (
@@ -28,8 +28,8 @@ export default function ContentService({document, documentTitle, fechasDuplicada
                 :
                     <p className="text-right">{formatDate(document.fechaEjecucion)}</p>
             }                                     
-            <p className="font-bold text-lg pt-3">{documentTitle}{' '}
-                <span className="text-2xl">#1234</span>
+            <p className="font-bold text-lg pt-3">Servicio{' '}
+                <span className="text-2xl break-words">#{document.id}</span>
             </p>
                      
             <div className="w-full p-1 bg-charColor-char4 rounded-lg my-2"></div>
@@ -46,6 +46,12 @@ export default function ContentService({document, documentTitle, fechasDuplicada
                 <span className="font-normal">{document.ordenServicio.solicito}</span>
             </p>
 
+            { document.ordenServicio.proveedor && (
+                <p className="font-semibold">Proveedor: {' '}
+                    <span className="font-normal">{document.ordenServicio.proveedor}</span>
+                </p>
+            )}
+
             <p className="font-semibold">OS:{' '}
                 <span className="font-normal">{document.ordenServicio.id}</span>
             </p>   
@@ -55,6 +61,11 @@ export default function ContentService({document, documentTitle, fechasDuplicada
             </p>   
             
             <p className="font-semibold py-2 text-right text-xl">{formatCurrency(document.costo)}</p>
+
+            <ButtonsServicio
+                documentID={document.id}
+                estadoDocument={document.estado as EstadoServicio} 
+            />
         </div>
     )
 }

@@ -12,7 +12,7 @@ export default function OrdenesServiciosPage() {
             estado: 'assign'
         },
         {
-            id: '6699c12b1f9d4e7812fa7273',
+            id: '6699c12b1f9d4e7812fa7274',
             fecha: new Date(),
             proveedor: 'Pruebas',
             solicito: 'Fulanita',
@@ -21,7 +21,7 @@ export default function OrdenesServiciosPage() {
             estado: 'inProgress'
         },
         {
-            id: '6699c12b1f9d4e7812fa7273',
+            id: '6699c12b1f9d4e7812fa7275',
             fecha: new Date(),
             proveedor: 'Pruebas',
             solicito: 'Fulanita',
@@ -30,13 +30,13 @@ export default function OrdenesServiciosPage() {
             estado: 'complete'
         },
         {
-            id: '6699c12b1f9d4e7812fa7273',
+            id: '6699c12b1f9d4e7812fa7276',
             fecha: new Date(),
             proveedor: 'Pruebas',
             solicito: 'Fulanita',
             ordenCompra: '67890',
             total: 1000,
-            estado: 'unrealized'
+            estado: 'inProgress'
         }
     ];
 
@@ -45,7 +45,6 @@ export default function OrdenesServiciosPage() {
             <CardTable
                 documents={documents}
                 documentType="ordenes-servicios"
-                documentTitle="Ordenen de Servicio"
             />
         </>
     )

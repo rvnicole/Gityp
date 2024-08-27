@@ -5,10 +5,10 @@ import { useRouter } from 'next/navigation';
 import { ConfirmButton, OutlineButton } from "../ui/Buttons";
 import { CheckBadgeIcon, EyeIcon } from "@heroicons/react/24/outline";
 import { estadosFactura } from "@/src/data/data";
-import type { CardDocumentInfo, EstadoFactura } from "@/src/types";
+import type { CardFactura, EstadoFactura } from "@/src/types";
 
 type ButtonsPresupuestosProps = {
-    documentID: CardDocumentInfo['id'];
+    documentID: CardFactura['id'];
     estadoDocument: EstadoFactura;
 }
 
@@ -34,15 +34,13 @@ export default function ButtonsFactura({documentID, estadoDocument}: ButtonsPres
                     <EyeIcon className="size-7"/>
                 </OutlineButton>
 
-                { estado === "notsealed" && (
-                    <>
-                        <ConfirmButton
-                            onClick={handleClickSealed}
-                            attributes={{ title: "Sellado"}}
-                        >
-                            <CheckBadgeIcon className="size-7 text-white"  />
-                        </ConfirmButton>
-                    </>
+                { estado === "notsealed" && (                    
+                    <ConfirmButton
+                        onClick={handleClickSealed}
+                        attributes={{ title: "Sellado"}}
+                    >
+                        <CheckBadgeIcon className="size-7 text-white"  />
+                    </ConfirmButton>
                 )} 
             </div>            
         </>

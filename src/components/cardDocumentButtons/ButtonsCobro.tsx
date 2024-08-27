@@ -2,29 +2,28 @@
 
 import { useState } from "react";
 import { useRouter } from 'next/navigation';
-import { ConfirmButton, OutlineButton } from "../ui/Buttons";
-import { BanknotesIcon, EyeIcon} from "@heroicons/react/24/outline";
-import { estadosCobro } from "@/src/data/data";
-import type { CardDocumentInfo, EstadoCobro } from "@/src/types";
+import { ConfirmButton, OutlineButton, SecondaryButton } from "../ui/Buttons";
+import { BanknotesIcon, DocumentCheckIcon, EyeIcon} from "@heroicons/react/24/outline";
+import type { CardCobro } from "@/src/types";
 
 type ButtonsCobroProps = {
-    documentID: CardDocumentInfo['id'];
-    estadoDocument: EstadoCobro;
+    documentID: CardCobro['id'];
+    estadoDocument: CardCobro['pagado'];
+    cargadoEdicom: CardCobro['edicom'];
 }
 
-export default function ButtonsCobro({documentID, estadoDocument}: ButtonsCobroProps) {
-    const [estado, setEstado] = useState<EstadoCobro>(estadoDocument);
+export default function ButtonsCobro({documentID, estadoDocument, cargadoEdicom}: ButtonsCobroProps) {
+    const [estado, setEstado] = useState<CardCobro['pagado']>(estadoDocument);
     const router = useRouter();
 
     const handleClickPaid = () => {
-        setEstado('paid');
+        setEstado(true);
     }
 
     return (
         <>
-            <p className={`${estado === "paid" ? "text-lime-500 font-bold" : "text-mutedColor-foreground"} pt-2 italic`}>
-                {estadosCobro[estado]}
-            </p>
+            { estado ? ( <p className="text-lime-500 font-bold pt-2 italic">Cobrado</p>) 
+                : (<p className="text-mutedColor-foreground pt-2 italic">Por cobrar</p>)}
 
             <div className="flex justify-center gap-3 mt-4">
                 <OutlineButton 
@@ -34,15 +33,22 @@ export default function ButtonsCobro({documentID, estadoDocument}: ButtonsCobroP
                     <EyeIcon className="size-7"/>
                 </OutlineButton>
 
-                { estado === "pending" && (
-                    <>
-                        <ConfirmButton
-                            onClick={handleClickPaid}
-                            attributes={{ title: "Pagado"}}
-                        >
-                            <BanknotesIcon className="size-7 text-white"  />
-                        </ConfirmButton>
-                    </>
+                { cargadoEdicom == false && (
+                    <SecondaryButton
+                        onClick={handleClickPaid}
+                        attributes={{ title: "Cargado a Edicom"}}
+                    >
+                        <DocumentCheckIcon className="size-7"/>
+                    </SecondaryButton>
+                )}
+
+                { estado === false && (                    
+                    <ConfirmButton
+                        onClick={handleClickPaid}
+                        attributes={{ title: "Pagado"}}
+                    >
+                        <BanknotesIcon className="size-7 text-white"  />
+                    </ConfirmButton>                    
                 )}       
             </div>      
         </>

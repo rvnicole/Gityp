@@ -4,10 +4,10 @@ import { useRouter } from "next/navigation";
 import { OutlineButton } from "../ui/Buttons";
 import { EyeIcon } from "@heroicons/react/24/outline";
 import { estadosOrdenServicio } from "@/src/data/data";
-import type { CardDocumentInfo, EstadoOrdenServicio } from "@/src/types";
+import type { CardOrdenServicio, EstadoOrdenServicio } from "@/src/types";
 
 type ButtonsOrdenServicioProps = {
-    documentID: CardDocumentInfo['id'];
+    documentID: CardOrdenServicio['id'];
     estadoDocument: EstadoOrdenServicio;
 }
 
