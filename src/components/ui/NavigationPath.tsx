@@ -7,7 +7,7 @@ export default function NavigationPath(){
     const paths = fullPath.substring(1).split('/');
 
     return(
-        <nav className="">
+        <nav className="text-foregroundColor font-semibold">
             <ol>
                 {
                     paths.map( (path, index) => 

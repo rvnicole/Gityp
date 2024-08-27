@@ -25,7 +25,7 @@ export default function RootLayout({
             <SideNavBar />
           </aside>
           <main className="w-full mr-5 sm:mr-10 my-3">
-            <div className="py-5 ml-2 flex justify-between">
+            <div className="py-5 ml-2 flex justify-between items-center">
               <NavigationPath />
               <SearchBar />
             </div>

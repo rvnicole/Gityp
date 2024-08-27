@@ -23,7 +23,7 @@ const selectForm = ( {documentType, defaultValues}: ModalProps ) => {
       "title": 'Presupuesto' 
     },
     'factura': { 
-      "tsx": <FacturaForm /*defaultValues={defaultValues as Factura}¨*//>, 
+      "tsx": <FacturaForm defaultValues={defaultValues as Factura} />, 
       "title": 'Factura' 
     },
     'ordenServicio': { 
@@ -31,7 +31,7 @@ const selectForm = ( {documentType, defaultValues}: ModalProps ) => {
       "title": 'Orden de servicio' 
     },
     'gestionCobro': { 
-      "tsx": <GestionCobroForm /*defaultValues={defaultValues as GestionCobros}*//>, 
+      "tsx": <GestionCobroForm defaultValues={defaultValues as GestionCobros}/>, 
       "title": "Seguimiento de Gestión de cobro" 
     },
     'servicio': {
