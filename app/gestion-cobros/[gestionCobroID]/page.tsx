@@ -2,8 +2,8 @@
 import DocumentDetail from "@/src/components/documentView/DocumentDetail";
 import ModalEdit from "@/src/components/ui/ModalEdit";
 
-export default function GestionCobroIDPage({ params }: { params: {facturaID: string}}) {
-    const { facturaID } = params;
+export default function GestionCobroIDPage({ params }: { params: {gestionCobroID: string}}) {
+    const { gestionCobroID } = params;
 
     const ordenServicio = {
         id: '6699c12b1f9d4e7812fa7274',
@@ -164,7 +164,7 @@ export default function GestionCobroIDPage({ params }: { params: {facturaID: str
     return (
         <>
             <DocumentDetail 
-                documentID={facturaID}
+                documentID={gestionCobroID}
             >
                 Aqui va el componente de vista de GESTION DE COBRO
             </DocumentDetail>

@@ -58,21 +58,17 @@ export default function ServicioDetail({ servicio }: ServicioDetailProps) {
                 )}
             </div>
 
-            <div className="flex md:justify-end gap-5">
-                <div className="font-semibold">
-                    <p>Orden de Servicio:</p>
-                </div>
-
-                <div>
-                    <p>#{servicio.ordenServicio.id}</p>
-                </div>
-            </div>
-
-            <div className="md:col-span-3 grid gap-2 font-semibold">
-                <p>Fecha de Ejecución: {' '}
+            <div className="flex flex-col md:justify-end">
+                <p className="font-semibold">Fecha de Ejecución: {' '}
                     <span className="font-normal">{formatDate(servicio.fechaEjecucion)}</span>
                 </p>
-                
+                <div className="flex items-center">
+                    <p className="font-semibold">Orden de Servicio:</p>
+                    <p>#{servicio.ordenServicio.id}</p>
+                </div>                
+            </div>
+
+            <div className="md:col-span-3 grid gap-2 font-semibold">                
                 <p>Conductor Asignado: {' '}
                     <span className="font-normal">{servicio.idConductor}</span>
                 </p>
@@ -85,7 +81,7 @@ export default function ServicioDetail({ servicio }: ServicioDetailProps) {
 
             <div className="md:col-span-3">
                 <p className="font-semibold">Descripción del Servicio:</p>
-                <p className="text-mutedColor-foreground">{servicio.descripcion}</p>
+                <p className="text-mutedColor-foreground bg-accentColor py-2">{servicio.descripcion}</p>
             </div>
 
             <div className="md:col-span-3">
@@ -99,7 +95,7 @@ export default function ServicioDetail({ servicio }: ServicioDetailProps) {
                 </div>
 
                 <div className="text-right">
-                    <p className="font-bold text-2xl">{formatCurrency(servicio.costo)}</p>
+                    <p className="font-bold text-2xl ">{formatCurrency(servicio.costo)}</p>
                 </div>
             </div>
         </div>

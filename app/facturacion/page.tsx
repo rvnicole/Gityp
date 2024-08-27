@@ -1,4 +1,5 @@
 import CardTable from "@/src/components/cards/CardTable";
+import ModalAdd from "@/src/components/ui/ModalAdd";
 
 export default function FacturacionPage() {
     const documents = [
@@ -47,6 +48,7 @@ export default function FacturacionPage() {
                 documentType="facturacion"
                 documentTitle="Factura"
             />
+            <ModalAdd documentType="factura"/>
         </>
     )
 }

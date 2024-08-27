@@ -17,8 +17,9 @@ export default function ButtonsFactura({documentID, estadoDocument}: ButtonsPres
     const router = useRouter();
 
     const handleClickSealed = () => {
+        router.push(`/facturacion/?documentID=${documentID}&modal=create`);
         setEstado('sealed');
-    }
+    };
 
     return (
         <>

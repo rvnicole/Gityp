@@ -7,14 +7,14 @@ export const ServicioSchema = z.object({
         solicito: z.string(),
         urlOrdenCompra: z.string(),
         ordenCompra: z.string()
-    }),
+    }).optional(),
     fechaEjecucion: z.date(),
     descripcion: z.string(),
     costo: z.number(),
     tipoServicio: z.string(),
     idConductor: z.string(),
     nota: z.string(),
-    estado: z.string()
+    estado: z.string() 
 });
 
 export const PresupuestoSchema = z.object({
