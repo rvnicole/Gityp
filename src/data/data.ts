@@ -39,3 +39,8 @@ export const estadosCobro = {
     paid: 'Pagado',
     pending: 'Pendiente de pago'
 };
+
+export const tipoServicio = { 
+    personal: 'Transporte de Personal',
+    paqueteria: 'Paquetería' 
+};

@@ -36,6 +36,8 @@ export type EstadoServicio = 'assign'|'inProgress'|'complete'|'noShow';
 export type EstadoFactura = 'sealed'|'notsealed';
 export type EstadoCobro = 'paid'|'pending';
 
+export type TipoServicio = 'personal'|'paqueteria';
+
 // Types Fechas duplicadas
 export type FechasDuplicadasType = {
     [key: string]: number
