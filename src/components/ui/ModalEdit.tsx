@@ -12,39 +12,43 @@ import EditService from '../formularios/servicioForms/EditService';
 
 type ModalProps = {
   documentType: 'presupuesto' | 'factura' |  'ordenServicio' | 'gestionCobro' | 'servicio',
-  defaultValues?: Presupuesto | OrdenServicio | Servicio | Factura | GestionCobros
+  defaultValues: Presupuesto | OrdenServicio | Servicio | Factura | GestionCobros
 };
 
-const formsEdit = {
-  'presupuesto': { 
-    "tsx": <EditPresupuesto />, 
-    "title": 'Presupuesto' 
-  },
-  'factura': { 
-    "tsx": <FacturaForm />, 
-    "title": 'Factura' 
-  },
-  'ordenServicio': { 
-    "tsx": <OrdenServicioForm />, 
-    "title": 'Orden de servicio' 
-  },
-  'gestionCobro': { 
-    "tsx": <GestionCobroForm />, 
-    "title": "Seguimiento de Gestión de cobro" 
-  },
-  'servicio': {
-    "tsx": <EditService />, 
-    "title": 'Servicio'
+
+const selectForm = ( {documentType, defaultValues}: ModalProps ) => {
+  const formsEdit = {
+    'presupuesto': { 
+      "tsx": <EditPresupuesto defaultValues={defaultValues as Presupuesto}/>, 
+      "title": 'Presupuesto' 
+    },
+    'factura': { 
+      "tsx": <FacturaForm defaultValues={defaultValues as Factura} />, 
+      "title": 'Factura' 
+    },
+    'ordenServicio': { 
+      "tsx": <OrdenServicioForm /*defaultValues={defaultValues as OrdenServicio}*//>, 
+      "title": 'Orden de servicio' 
+    },
+    'gestionCobro': { 
+      "tsx": <GestionCobroForm defaultValues={defaultValues as GestionCobros}/>, 
+      "title": "Seguimiento de Gestión de cobro" 
+    },
+    'servicio': {
+      "tsx": <EditService defaultValues={defaultValues as Servicio}/>, 
+      "title": 'Servicio'
+    }
   }
+  
+  return formsEdit[documentType];
 }
 
-const selectForm = ( documentType: ModalProps['documentType'] ) => formsEdit[documentType].tsx;
-
-export default function ModalEdit({documentType}: ModalProps) {
+export default function ModalEdit({documentType, defaultValues}: ModalProps) {
   const router = useRouter();
   const searchParams = useSearchParams();
   const modo = searchParams.get('modal');
   const isOpen = !!modo;
+  const formulario = selectForm({documentType, defaultValues});
 
 
   return (
@@ -76,10 +80,10 @@ export default function ModalEdit({documentType}: ModalProps) {
               >
                 <Dialog.Panel className="w-full max-w-5xl transform overflow-hidden rounded-2xl bg-white p-6 text-left align-middle shadow-xl transition-all">
                     <div>
-                      <h2 className='font-bold text-2xl'>Editar { formsEdit[documentType].title }</h2>
+                      <h2 className='font-bold text-2xl'>Editar { formulario.title }</h2>
                       <h3 className='text-cardColor-foreground'>Ingrese la siguiente información:</h3>
                       { 
-                        selectForm(documentType)
+                        formulario.tsx
                       }
                     </div>
                 </Dialog.Panel>

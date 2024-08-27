@@ -6,11 +6,11 @@ import { PrimaryButton } from "../../ui/Buttons";
 import Link from "next/link";
 
 export default function AddService(){
-    const dataListOrdenes = useMemo(()=>{},[]);
+    const dataListOrdenes = useMemo(()=>{},[]); // Este datalistordenes se llena con la misma informacion de ordenes que traen los servicios para solo hacer una llamada a la bd
     const  { register, handleSubmit, reset, formState: { errors } } = useForm<ServiceFormData & { searchOrdenes?: string }>();
 
-    const handleServiceFormData = () => {
-
+    const handleServiceFormData = ( formData: ServiceFormData & { searchOrdenes?: string } ) => {
+        console.log(formData);
     };
 
     return(

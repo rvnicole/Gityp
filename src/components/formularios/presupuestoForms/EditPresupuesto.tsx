@@ -1,6 +1,6 @@
 import { useMemo, useState } from "react";
 import { useForm } from "react-hook-form";
-import { PresupuestoFormData, ServiceFormData } from "@/src/types";
+import { Presupuesto, PresupuestoFormData, ServiceFormData } from "@/src/types";
 import { PrimaryButton, SecondaryButton } from "../../ui/Buttons";
 import { formatCurrency, formatDate } from "@/src/lib";
 import PresupuestoForm from "./PresupuestoForm";
@@ -50,12 +50,12 @@ const montosIniciales = {
     total: 0
 }
 
-export default function EditPresupuesto(){
-    const ser = objEjemploPresupuesto.servicios; // ESTES ES PARA EL TEST SUSTITUIR POR LOS DATOS DE LA BD
+export default function EditPresupuesto({ defaultValues }: { defaultValues: Presupuesto }){
+    const ser = defaultValues.servicios;
     const [ servicios, setServicios ] = useState<ServiceFormData[]>(ser);
     const [ openServiceForm, setOpenServiceForm ] = useState(false);
     const [ montos, setMontos ] = useState({ subtotal: objEjemploPresupuesto.subtotal, iva: objEjemploPresupuesto.iva, total: objEjemploPresupuesto.total }); 
-    const { register, handleSubmit, reset, formState: { errors }, watch } = useForm<PresupuestoFormData>({ defaultValues: objEjemploPresupuesto });
+    const { register, handleSubmit, reset, formState: { errors }, watch } = useForm<PresupuestoFormData>({ defaultValues });
     const iva = watch('iva') ? watch('iva') : montos.iva;
     const fecha = formatDate(objEjemploPresupuesto.fecha);
     useMemo(()=>{ 

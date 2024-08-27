@@ -32,8 +32,8 @@ export const PresupuestoSchema = z.object({
 
 export const OrdenServicioSchema = PresupuestoSchema.extend({
     presupuesto: PresupuestoSchema,
-    urlOrdenCompra: z.string(),
-    ordenCompra: z.string()
+    urlOrdenCompra: z.string().optional(),
+    ordenCompra: z.string().optional()
 });
 
 export const EmisorReceptorSchema = z.object({
@@ -58,17 +58,18 @@ export const FacturaSchema = z.object({
 export const GestionCobrosSchema = z.object({
     id: z.string(),
     factura: FacturaSchema,
-    ordenCompra: z.string(),
+    //ordenCompra: z.string(),
     ie: z.string(),
-    total: z.number(),
-    cargaEdicom: z.boolean(),
-    estado: z.string(),
+    //total: z.number(),
+    edicom: z.boolean(),
+    pagado: z.boolean(),
     comentarios: z.string()
 });
 
 // Schema Forms
 export const ServiceFormSchema = ServicioSchema.pick({
     id: true,
+    ordenServicio: true,
     fechaEjecucion: true,
     descripcion: true,
     idConductor: true,
@@ -92,4 +93,23 @@ export const PresupuestoFormSchema = PresupuestoSchema.pick({
 
 export const OrdenServicioFormSchema = OrdenServicioSchema.pick({
     ordenCompra: true
+});
+
+export const FacturaFormSchema = FacturaSchema.pick({
+    fecha: true,
+    emisor: true,
+    receptor: true,
+    folio: true,
+    folioFiscal: true,
+    fechaSellado: true,
+    estado: true
+});
+
+export const GestionCobroFormSchema = GestionCobrosSchema.pick({
+    id: true,
+    factura: true,
+    ie: true,
+    edicom: true,
+    pagado: true,
+    comentarios: true
 });
