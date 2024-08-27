@@ -16,7 +16,7 @@ export default function PresupuestoDetail({ presupuesto }: PresupuestoDetailProp
                 <p><span className="font-semibold">Solicito:{' '}</span>{presupuesto.solicito}</p>
             </div>
 
-            <div className="flex md:justify-end text-white text-xs md:text-sm font-semibold">
+            <div className="max-h-8	flex md:justify-end text-white text-xs md:text-sm font-semibold">
                 { presupuesto.estado === "pending" && (
                     <div className="flex items-center px-3 py-1 bg-mutedColor-foreground rounded-full">
                         <p className="px-3">{estadosPresupuesto[presupuesto.estado as EstadoPresupuesto]} {' '}</p>

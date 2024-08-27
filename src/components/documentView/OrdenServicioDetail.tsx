@@ -29,7 +29,7 @@ export default function OrdenServicioDetail({ ordenServicio }: OrdenServicioDeta
                 </div>
             </div>
 
-            <div className="flex md:justify-end text-white text-xs md:text-sm font-semibold">
+            <div className="max-h-8	flex md:justify-end text-white text-xs md:text-sm font-semibold">
                 { ordenServicio.estado === "assign" && (
                     <div className="flex items-center px-3 py-1 bg-mutedColor-foreground rounded-full">
                         <p className="px-3">{estadosOrdenServicio[ordenServicio.estado as EstadoOrdenServicio]} {' '}</p>
