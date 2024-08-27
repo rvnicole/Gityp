@@ -140,7 +140,10 @@ export default function OrdenServicioIDPage({ params }: { params: {ordenServicio
                 />
             </DocumentDetail>
             
-            <ModalEdit documentType="ordenServicio" />
+            <ModalEdit 
+                documentType="ordenServicio" 
+                defaultValues={ordenServicio}
+            />
         </>
     )
 }

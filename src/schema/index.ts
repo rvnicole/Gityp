@@ -32,8 +32,8 @@ export const PresupuestoSchema = z.object({
 
 export const OrdenServicioSchema = PresupuestoSchema.extend({
     presupuesto: PresupuestoSchema,
-    urlOrdenCompra: z.string(),
-    ordenCompra: z.string()
+    urlOrdenCompra: z.string().optional(),
+    ordenCompra: z.string().optional()
 });
 
 export const EmisorReceptorSchema = z.object({
