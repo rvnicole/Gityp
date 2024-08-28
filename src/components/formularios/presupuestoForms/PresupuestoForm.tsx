@@ -13,7 +13,13 @@ export const initialValuesService = {
     descripcion: '',
     costo: 0,
     tipoServicio: '',
-    idConductor: '',
+    idConductor: {
+        id: '',
+        nombre: '',
+        apellido: '',
+        edad: 0,
+        licencia: ''
+    },
     nota: '',
     estado: 'assign',
     controlForm: ''

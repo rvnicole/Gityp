@@ -24,7 +24,13 @@ const objEjemploPresupuesto = {
             descripcion: 'Servicio de transporte paquetería para entrega de muestras de helado',
             costo: 3500,
             tipoServicio: 'paqueteria',
-            idConductor: 'conductor',
+            idConductor: {
+                id: 'asdasdasd',
+                nombre: 'Eduardo',
+                apellido: 'Reynoso',
+                edad: 64,
+                licencia: 'Licencia'
+            },
             nota: 'El servicio requiere hielo seco',
             estado: 'assign',
             controlForm:''
@@ -36,7 +42,13 @@ const objEjemploPresupuesto = {
             descripcion: 'Servicio de transporte paquetería, entrega de refrigerador',
             costo: 2000,
             tipoServicio: 'paqueteria',
-            idConductor: 'conductor',
+            idConductor: {
+                id: 'asdasdasd',
+                nombre: 'Eduardo',
+                apellido: 'Reynoso',
+                edad: 64,
+                licencia: 'Licencia'
+            },
             nota: 'El congelador no viene emplayado',
             estado: 'assign',
             controlForm: ''

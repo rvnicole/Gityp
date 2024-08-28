@@ -28,7 +28,13 @@ export default function PresupuestoIDPage({ params }: { params: {presupuestoID: 
                 descripcion: 'Ut suscipit mollis felis, accumsan ultricies mauris sollicitudin eget.',
                 costo: 1000,
                 tipoServicio: 'paqueteria',
-                idConductor: 'conductor',
+                idConductor: {
+                    id: '01230123',
+                    nombre: 'Eduardo',
+                    apellido: 'Reynoso',
+                    edad: 64,
+                    licencia: 'RA-093'
+                },
                 nota: 'Ut vitae nulla hendrerit.',
                 estado: 'assign'
             },
@@ -44,7 +50,13 @@ export default function PresupuestoIDPage({ params }: { params: {presupuestoID: 
                 descripcion: 'Ut suscipit mollis felis, accumsan ultricies mauris sollicitudin eget.',
                 costo: 1000,
                 tipoServicio: 'paqueteria',
-                idConductor: 'conductor',
+                idConductor: {
+                    id: '01230123',
+                    nombre: 'Eduardo',
+                    apellido: 'Reynoso',
+                    edad: 64,
+                    licencia: 'RA-093'
+                },
                 nota: 'Ut vitae nulla hendrerit.',
                 estado: 'assign'
             },
@@ -60,7 +72,13 @@ export default function PresupuestoIDPage({ params }: { params: {presupuestoID: 
                 descripcion: 'Ut suscipit mollis felis, accumsan ultricies mauris sollicitudin eget.',
                 costo: 1000,
                 tipoServicio: 'paqueteria',
-                idConductor: 'conductor',
+                idConductor: {
+                    id: '01230123',
+                    nombre: 'Eduardo',
+                    apellido: 'Reynoso',
+                    edad: 64,
+                    licencia: 'RA-093'
+                },
                 nota: 'Ut vitae nulla hendrerit.',
                 estado: 'assign'
             }
