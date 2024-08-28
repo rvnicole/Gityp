@@ -2,17 +2,16 @@
 import { useSearchParams, useRouter } from 'next/navigation';
 import { Dialog, Transition } from '@headlessui/react';
 import { Fragment } from 'react';
-import { Factura, GestionCobros, OrdenServicio, Presupuesto, Servicio } from '@/src/types';
-import GestionCobroForm from '../formularios/gestionCobroForms/GestionCobroForm';
 import OrdenServicioForm from '../formularios/ordenServicioForms/OrdenServicioForm';
-import FacturaForm from '../formularios/facturaForms/FacturaForm';
 import AddPresupuesto from '../formularios/presupuestoForms/AddPresupuesto';
 import AddService from '../formularios/servicioForms/AddService';
 import AddFactura from '../formularios/facturaForms/AddFactura';
 import AddGestionCobro from '../formularios/gestionCobroForms/AddGestionCobro';
+import ConductoresForm from '../formularios/entidadesForms/ConductoresForm';
+import EmisorReceptorForm from '../formularios/entidadesForms/EmisorReceptorForm';
 
 type ModalProps = {
-  documentType: 'presupuesto' | 'factura' |  'ordenServicio' | 'gestionCobro' | 'servicio'
+  documentType: 'presupuesto' | 'factura' |  'ordenServicio' | 'gestionCobro' | 'servicio' | 'conductor' | 'emisor-receptor'
 };
 
 const formsAdd = {
@@ -35,6 +34,14 @@ const formsAdd = {
   'servicio': {
     "tsx": <AddService />, 
     "title": 'Servicio'
+  },
+  'conductor': {
+    "tsx": <ConductoresForm />, 
+    "title": 'Conductor'
+  },
+  'emisor-receptor': {
+    "tsx": <EmisorReceptorForm />, 
+    "title": 'Emisor / Receptor'
   }
 }
 

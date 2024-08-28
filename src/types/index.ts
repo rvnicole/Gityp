@@ -10,7 +10,8 @@ import {
     ServiceFormSchema,
     OrdenServicioFormSchema,
     FacturaFormSchema,
-    GestionCobroFormSchema
+    GestionCobroFormSchema,
+    ConductoresSchema
 } from "../schema";
 
 export type Servicio = z.infer<typeof ServicioSchema>;
@@ -54,4 +55,10 @@ export type TipoServicio = 'personal'|'paqueteria';
 // Types Fechas duplicadas
 export type FechasDuplicadasType = {
     [key: string]: number
-}
+};
+
+// Type conductores
+export type Conductores = z.infer<typeof ConductoresSchema>;
+
+// Type entidades
+export type EmisoresReceptores = z.infer<typeof EmisorReceptorSchema>;

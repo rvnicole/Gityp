@@ -1,5 +1,7 @@
 import { z } from "zod";
 
+
+// Esquemas documentos
 export const ServicioSchema = z.object({
     id: z.string(),
     ordenServicio: z.object({
@@ -112,4 +114,19 @@ export const GestionCobroFormSchema = GestionCobrosSchema.pick({
     edicom: true,
     pagado: true,
     comentarios: true
+});
+
+// Esquemas entidades
+export const ConductoresSchema = z.object({
+    id: z.string(),
+    nombre: z.string(),
+    apellido: z.string(),
+    edad: z.number(),
+    licencia: z.string()
+})
+
+export const EmisoresReceptores = z.object({
+    id: z.string(),
+    nombre: z.string(),
+    rfc: z.string()
 });

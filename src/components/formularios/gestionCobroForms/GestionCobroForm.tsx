@@ -16,6 +16,9 @@ export default function GestionCobroForm({ register, errors }: GestionCobroFormP
                     id="ie" 
                     type="text" 
                     className={`block p-1 border border-borderColor placeholder:text-inputColor rounded focus:outline-none focus:ring-2 focus:border-ringColor ${errors.ie && "border-2 border-destructiveColor"}`}
+                    { ...register('ie',{
+                        required: true
+                    })}
                 />                
             </div>
             <div>
@@ -23,6 +26,9 @@ export default function GestionCobroForm({ register, errors }: GestionCobroFormP
                     id="edicom" 
                     type="checkbox" 
                     className=" scale-150 ml-1"
+                    { ...register('edicom',{
+                        required: true
+                    })}
                 />
                 <label htmlFor="edicom" className="px-2"> Cargado a Edicom</label>                
             </div>

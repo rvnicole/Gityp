@@ -17,6 +17,7 @@ export default function ButtonsCobro({documentID, estadoDocument, cargadoEdicom}
     const router = useRouter();
 
     const handleClickPaid = () => {
+        router.push(`/gestion-cobros?documentID=${documentID}&modal=create`);
         setEstado(true);
     }
 
