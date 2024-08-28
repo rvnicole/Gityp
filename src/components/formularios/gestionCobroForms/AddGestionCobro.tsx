@@ -7,8 +7,8 @@ import GestionCobroForm from "./GestionCobroForm";
 export default function AddGestionCobro(){
     const { register, handleSubmit, reset, formState: { errors } } = useForm<GestionCobroFormData>();
 
-    const handleCompleteInfo = () => {
-        console.log('Agregando informacion adicional');
+    const handleCompleteInfo = (formData: GestionCobroFormData) => {
+        console.log(formData);
     };
 
     return (

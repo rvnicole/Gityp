@@ -124,9 +124,3 @@ export const ConductoresSchema = z.object({
     edad: z.number(),
     licencia: z.string()
 })
-
-export const EmisoresReceptores = z.object({
-    id: z.string(),
-    nombre: z.string(),
-    rfc: z.string()
-});

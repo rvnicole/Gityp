@@ -51,9 +51,7 @@ export default function ContentCobro({document}: ContentCobroProps) {
             <p className="font-semibold py-2 text-right text-xl">{formatCurrency(document.factura.ordenServicio.total)}</p>
         
             <ButtonsCobro
-                documentID={document.id}
-                estadoDocument={document.pagado} 
-                cargadoEdicom = {document.edicom}
+                document={document}
             />
         </div>
     )
