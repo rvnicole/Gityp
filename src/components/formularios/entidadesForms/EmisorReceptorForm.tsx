@@ -1,12 +1,12 @@
-import { Conductores, EmisoresReceptores } from "@/src/types";
+import { Conductores, EmisorReceptor } from "@/src/types";
 import { useForm } from "react-hook-form";
 import { PrimaryButton, SecondaryButton } from "../../ui/Buttons";
 import Link from "next/link";
 
 export default function EmisorReceptorForm(){
-    const { register, handleSubmit, reset, formState: { errors } } = useForm<EmisoresReceptores & { "emisor-receptor": string }>();
+    const { register, handleSubmit, reset, formState: { errors } } = useForm<EmisorReceptor & { "emisor-receptor": string }>();
 
-    const handleGuardar = (formData: EmisoresReceptores) => {
+    const handleGuardar = (formData: EmisorReceptor) => {
         console.log(formData);
     };
 

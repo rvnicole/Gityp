@@ -1,11 +1,11 @@
 "use client"
-import { EmisoresReceptores } from "@/src/types";
+import { EmisorReceptor } from "@/src/types";
 import { PrimaryButton } from "../../ui/Buttons";
 import CardEntity from "../../cards/CardEntity";
 
 type EmisoresReceptoresViewProps = {
-    emisores?: EmisoresReceptores[]
-    receptores?: EmisoresReceptores[]
+    emisores?: EmisorReceptor[]
+    receptores?: EmisorReceptor[]
 }
 
 export default function EmisoresReceptoresView({ emisores, receptores }: EmisoresReceptoresViewProps){

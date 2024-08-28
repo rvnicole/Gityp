@@ -1,5 +1,15 @@
 import { z } from "zod";
 
+// Esquemas entidades
+export const ConductoresSchema = z.object({
+    id: z.string(),
+    nombre: z.string(),
+    apellido: z.string(),
+    edad: z.number(),
+    licencia: z.string()
+});
+
+// Esquemas documentos
 export const ServicioSchema = z.object({
     id: z.string(),
     ordenServicio: z.object({
@@ -12,7 +22,7 @@ export const ServicioSchema = z.object({
     descripcion: z.string(),
     costo: z.number(),
     tipoServicio: z.string(),
-    idConductor: z.string(),
+    idConductor: ConductoresSchema,
     nota: z.string(),
     estado: z.string() 
 });
@@ -39,7 +49,8 @@ export const OrdenServicioSchema = PresupuestoSchema.extend({
 export const EmisorReceptorSchema = z.object({
     id: z.string(),
     nombre: z.string(),
-    rfc: z.string()
+    rfc: z.string(),
+    tipo: z.string()
 });
 
 export const FacturaSchema = z.object({

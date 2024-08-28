@@ -66,7 +66,7 @@ export default function OrdenServicioDetail({ ordenServicio }: OrdenServicioDeta
                 </p>
 
                 <p className="font-semibold">Presupuesto: {' '}
-                    <span className="font-normal">#{ordenServicio.presupuesto.id}</span>
+                    <span className="font-normal">#{ordenServicio.presupuesto?.id}</span>
                 </p>               
             </div>
 

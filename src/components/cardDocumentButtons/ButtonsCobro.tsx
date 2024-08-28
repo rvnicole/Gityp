@@ -7,18 +7,25 @@ import { BanknotesIcon, DocumentCheckIcon, EyeIcon} from "@heroicons/react/24/ou
 import type { CardCobro } from "@/src/types";
 
 type ButtonsCobroProps = {
-    documentID: CardCobro['id'];
-    estadoDocument: CardCobro['pagado'];
-    cargadoEdicom: CardCobro['edicom'];
+    document: CardCobro;
 }
 
-export default function ButtonsCobro({documentID, estadoDocument, cargadoEdicom}: ButtonsCobroProps) {
-    const [estado, setEstado] = useState<CardCobro['pagado']>(estadoDocument);
+export default function ButtonsCobro({document }: ButtonsCobroProps) {
+    const [estado, setEstado] = useState<{ edicom: CardCobro['edicom'], pagado: CardCobro['pagado'] }>({ edicom: document.edicom, pagado: document.pagado });
     const router = useRouter();
 
-    const handleClickPaid = () => {
-        router.push(`/gestion-cobros?documentID=${documentID}&modal=create`);
-        setEstado(true);
+    const handleClick = ( type: string ) => {
+        if( !document.edicom || !document.ie ){
+            router.push(`/gestion-cobros/?documentID=${document.id}&modal=create`);
+            return;
+        }
+
+        if( type === 'paid' ){
+            setEstado({ ...estado, pagado: true });
+        }
+        else if( type === 'chageState' ){
+            setEstado({ ...estado, edicom: true });
+        }
     }
 
     return (
@@ -28,24 +35,24 @@ export default function ButtonsCobro({documentID, estadoDocument, cargadoEdicom}
 
             <div className="flex justify-center gap-3 mt-4">
                 <OutlineButton 
-                    onClick={() => router.push(`/gestion-cobros/${documentID}`)}
+                    onClick={() => router.push(`/gestion-cobros/${document.id}`)}
                     attributes={{ title: "Ver Cobro"}}
                 >
                     <EyeIcon className="size-7"/>
                 </OutlineButton>
 
-                { cargadoEdicom == false && (
+                { document.edicom == false && (
                     <SecondaryButton
-                        onClick={handleClickPaid}
+                        onClick={() => handleClick('changeState')}
                         attributes={{ title: "Cargado a Edicom"}}
                     >
                         <DocumentCheckIcon className="size-7"/>
                     </SecondaryButton>
                 )}
 
-                { estado === false && (                    
+                { estado.pagado === false && (                    
                     <ConfirmButton
-                        onClick={handleClickPaid}
+                        onClick={() => handleClick('paid')}
                         attributes={{ title: "Pagado"}}
                     >
                         <BanknotesIcon className="size-7 text-white"  />

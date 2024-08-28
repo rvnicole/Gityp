@@ -11,8 +11,8 @@ type EditGestionCobroProps = {
 export default function EditGestionCobro({defaultValues}: EditGestionCobroProps){
     const { register, handleSubmit, reset, formState: { errors } } = useForm<GestionCobroFormData>( defaultValues && {defaultValues});
 
-    const handleEdit = () => {
-        console.log('editando');
+    const handleEdit = (formData: GestionCobroFormData) => {
+        console.log(formData);
     };
 
     return (

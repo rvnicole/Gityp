@@ -32,6 +32,14 @@ export default function GestionCobroForm({ register, errors }: GestionCobroFormP
                 />
                 <label htmlFor="edicom" className="px-2"> Cargado a Edicom</label>                
             </div>
+            <div className="space-y-5">
+                <label htmlFor="comentarios" className="">Comentarios: </label> 
+                <textarea 
+                    id="comentarios" 
+                    className={`w-full block p-1 border border-borderColor placeholder:text-inputColor rounded focus:outline-none focus:ring-2 focus:border-ringColor ${errors.comentarios && "border-2 border-destructiveColor"}`}
+                    { ...register('comentarios')}
+                />               
+            </div>
         </>
     )
 }

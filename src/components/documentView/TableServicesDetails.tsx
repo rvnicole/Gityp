@@ -23,11 +23,11 @@ export default function TableServicesDetails({ services }: TableServicesDetailsP
 
             {
                 services.map((service, indice) => (
-                    <div className={`${indice % 2 == 0 && 'bg-secondaryColor'} grid grid-cols-11 gap-1 p-1 border-b border-borderColor`}>
+                    <div key={service.id} className={`${indice % 2 == 0 && 'bg-secondaryColor'} grid grid-cols-11 gap-1 p-1 border-b border-borderColor`}>
                         <p className="my-auto break-words">{service.id}</p>
                         <p className="my-auto text-center">{service.tipoServicio}</p>
                         <p className="my-auto text-center">{formatDate(service.fechaEjecucion)}</p>
-                        <p className="my-auto text-center">{service.idConductor}</p>
+                        <p className="my-auto text-center">{service.idConductor.nombre}</p>
                         <p className="my-auto col-span-3">{service.descripcion}</p>
                         <p className="my-auto col-span-2">{service.nota}</p>
                         <p className="my-auto text-right">{formatCurrency(service.costo)}</p>
