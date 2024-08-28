@@ -1,5 +1,6 @@
 
 import DocumentDetail from "@/src/components/documentView/DocumentDetail";
+import FacturaDetail from "@/src/components/documentView/FacturaDetail";
 import OrdenServicioDetail from "@/src/components/documentView/OrdenServicioDetail";
 import ModalEdit from "@/src/components/ui/ModalEdit";
 
@@ -149,7 +150,7 @@ export default function FacturaIDPage({ params }: { params: {facturaID: string}}
         folio: '1450',
         folioFiscal: crypto.randomUUID(),
         fechaSellado: new Date(),
-        estado: 'sellado'
+        estado: 'notsealed'
     }
 
 
@@ -158,7 +159,9 @@ export default function FacturaIDPage({ params }: { params: {facturaID: string}}
             <DocumentDetail 
                 documentID={facturaID}
             >
-                Aqui va el componente de vista de factura
+                <FacturaDetail 
+                    factura={factura}
+                />
             </DocumentDetail>
             
             <ModalEdit 

@@ -1,4 +1,4 @@
-import { CalendarIcon, EyeIcon, PlayIcon, HandThumbUpIcon, NoSymbolIcon, ArchiveBoxIcon} from "@heroicons/react/24/outline";
+import { CalendarIcon, PlayIcon, HandThumbUpIcon, NoSymbolIcon, ArrowTopRightOnSquareIcon} from "@heroicons/react/24/outline";
 import { EstadoServicio, Servicio, TipoServicio} from "@/src/types";
 import { estadosServicios, tipoServicio } from "@/src/data/data";
 import { formatCurrency, formatDate } from "@/src/lib";
@@ -13,19 +13,18 @@ export default function ServicioDetail({ servicio }: ServicioDetailProps) {
             <div className="md:col-span-2 md:row-span-2">
                 <h3 className="mb-4 font-bold text-xl md:text-3xl text-foregroundColor break-words">Servicio #{servicio.id}</h3>
                 <p><span className="font-semibold">Solicito:{' '}</span>{servicio.ordenServicio.solicito}</p>
+                <p><span className="font-semibold">PO:{' '}</span>{servicio.ordenServicio.ordenCompra}</p>
 
-                <div className="flex gap-1 align-middle">
-                    <p className="font-semibold">PO:{' '}</p>
-                    <p>{servicio.ordenServicio.ordenCompra}</p>
-                    <a 
-                        className="my-auto hover:text-primaryColor"
+                { servicio.ordenServicio.urlOrdenCompra && (
+                    <a
+                        className="flex gap-1 justify-center items-center w-24 max-h-8 my-1 p-1 rounded-full text-sm text-white bg-charColor-char5 hover:bg-primaryColor"
                         href={servicio.ordenServicio.urlOrdenCompra}
                         target="_blank"
-                        title="Ver Orden de Compra"
                     >
-                        <EyeIcon className="size-5"/>
+                        Ver PO
+                        <ArrowTopRightOnSquareIcon className="size-5 inline"/>
                     </a>
-                </div>
+                )}
             </div>
 
             <div className="max-h-8	flex md:justify-end text-white text-xs md:text-sm font-semibold">
@@ -62,10 +61,10 @@ export default function ServicioDetail({ servicio }: ServicioDetailProps) {
                 <p className="font-semibold">Fecha de Ejecución: {' '}
                     <span className="font-normal">{formatDate(servicio.fechaEjecucion)}</span>
                 </p>
-                <div className="flex items-center">
-                    <p className="font-semibold">Orden de Servicio:</p>
-                    <p>#{servicio.ordenServicio.id}</p>
-                </div>                
+
+                <p className="font-semibold">Orden de Servicio: {' '}
+                    <span className="font-normal">#{servicio.ordenServicio.id}</span>
+                </p>                
             </div>
 
             <div className="md:col-span-3 grid gap-2 font-semibold">                
@@ -81,7 +80,7 @@ export default function ServicioDetail({ servicio }: ServicioDetailProps) {
 
             <div className="md:col-span-3">
                 <p className="font-semibold">Descripción del Servicio:</p>
-                <p className="text-mutedColor-foreground bg-accentColor py-2">{servicio.descripcion}</p>
+                <p className="text-mutedColor-foreground bg-accentColor py-2 px-1 rounded-lg">{servicio.descripcion}</p>
             </div>
 
             <div className="md:col-span-3">

@@ -45,7 +45,7 @@ export default function GetionCobrosPage() {
             id: '6699c12b1f9d4e7812fa7273',
             pagado: false,
             ie: '123',
-            edicom: true,
+            edicom: false,
             factura: {
                 id: '6699c12b1f9d4e7812fa7272',
                 fecha: new Date(),
@@ -64,7 +64,7 @@ export default function GetionCobrosPage() {
             id: '6699c12b1f9d4e7812fa7274',
             pagado: true,
             ie: '123',
-            edicom: true,
+            edicom: false,
             factura: {
                 id: '6699c12b1f9d4e7812fa7272',
                 fecha: new Date(),

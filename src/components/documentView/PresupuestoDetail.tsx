@@ -39,16 +39,14 @@ export default function PresupuestoDetail({ presupuesto }: PresupuestoDetailProp
                 )}
             </div>
 
-            <div className="flex md:justify-end gap-5">
-                <div className="font-semibold">
-                    <p>Fecha:</p>
-                    <p>Proveedor:</p>
-                </div>
+            <div className="flex flex-col md:justify-end">
+                <p className="font-semibold">Fecha: {' '}
+                    <span className="font-normal">{formatDate(presupuesto.fecha)}</span>
+                </p>
 
-                <div>
-                    <p>{formatDate(presupuesto.fecha)}</p>
-                    <p>{presupuesto.proveedor}</p>
-                </div>
+                <p className="font-semibold">Proveedor: {' '}
+                    <span className="font-normal">{presupuesto.proveedor}</span>
+                </p>              
             </div>
 
             <div className="md:col-span-3">
