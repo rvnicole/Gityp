@@ -11,7 +11,12 @@ import {
     OrdenServicioFormSchema,
     FacturaFormSchema,
     GestionCobroFormSchema,
-    ConductoresSchema
+    ConductoresSchema,
+    CardPresupuestoSchema,
+    CardOrdenServicioSchema,
+    CardServicioSchema,
+    CardFacturaSchema,
+    CardCobroSchema
 } from "../schema";
 
 export type Servicio = z.infer<typeof ServicioSchema>;
@@ -31,18 +36,11 @@ export type FacturaFormData = z.infer<typeof FacturaFormSchema>;
 export type GestionCobroFormData = z.infer<typeof GestionCobroFormSchema>;
 
 // Types Card Document
-export type CardPresupuesto = Pick<Presupuesto, 'id'|'fecha'|'proveedor'|'solicito'|'total'|'estado'>;
-export type CardOrdenServicio = Pick<OrdenServicio, 'id'|'fecha'|'proveedor'|'solicito'|'total'|'estado'|'ordenCompra'>;
-
-export type CardServicio = Pick<Servicio, 'id'|'fechaEjecucion'|'idConductor'|'tipoServicio'|'estado'|'costo'> & {
-    ordenServicio: Pick<OrdenServicio, 'id'|'proveedor'|'solicito'|'ordenCompra'>
-};
-
-export type CardFactura = Pick<Factura, 'id'|'fecha'|'estado'|'folio'> & {
-    ordenServicio: Pick<OrdenServicio, 'id'|'proveedor'|'solicito'|'total'|'ordenCompra'>;
-};
-
-export type CardCobro = Pick<GestionCobros, 'id'|'ie'|'edicom'|'pagado'> & {factura: CardFactura};
+export type CardPresupuesto = z.infer<typeof CardPresupuestoSchema>;
+export type CardOrdenServicio = z.infer<typeof CardOrdenServicioSchema>;
+export type CardServicio = z.infer<typeof CardServicioSchema>;
+export type CardFactura = z.infer<typeof CardFacturaSchema>;
+export type CardCobro = z.infer<typeof CardCobroSchema>;
 
 // Types Estados
 export type EstadoPresupuesto = 'pending'|'accept'|'reject';

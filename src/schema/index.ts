@@ -127,6 +127,66 @@ export const GestionCobroFormSchema = GestionCobrosSchema.pick({
     comentarios: true
 });
 
+// Informacion de Cards
+export const CardPresupuestoSchema = PresupuestoSchema.pick({
+    id: true,
+    fecha: true,
+    proveedor: true,
+    solicito: true,
+    total: true,
+    estado: true
+});
+
+export const CardOrdenServicioSchema = OrdenServicioSchema.pick({
+    id: true,
+    fecha: true,
+    proveedor: true,
+    solicito: true,
+    total: true,
+    estado: true,
+    ordenCompra: true
+});
+
+export const CardServicioSchema = ServicioSchema.pick({
+    id: true,
+    fechaEjecucion: true,
+    idConductor: true,
+    tipoServicio: true,
+    estado: true,
+    costo: true,
+}).extend({
+    ordenServicio: OrdenServicioSchema.pick({
+        id: true,
+        proveedor: true,
+        solicito: true,
+        ordenCompra: true
+    })
+});
+
+export const CardFacturaSchema = FacturaSchema.pick({
+    id: true,
+    fecha: true,
+    estado: true,
+    folio: true,
+}).extend({
+    ordenServicio: OrdenServicioSchema.pick({
+        id: true,
+        proveedor: true,
+        solicito: true,
+        total: true,
+        ordenCompra: true
+    })
+});
+
+export const CardCobroSchema = GestionCobrosSchema.pick({
+    id: true,
+    ie: true,
+    edicom: true,
+    pagado: true,
+}).extend({
+    factura: CardFacturaSchema
+});
+
 // Validaciones
 export const EmisoresReceptoresSchema = z.array( EmisorReceptorSchema );
 export const OrdenesServiciosSchema = z.array(OrdenServicioSchema);
