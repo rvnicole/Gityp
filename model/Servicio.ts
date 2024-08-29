@@ -46,9 +46,7 @@ const ServicioSchema: Schema = new Schema({
     },
     ordenServicio: {
         type: Types.ObjectId,
-        ref: 'OrdenServicio',
-        required: true
-        
+        ref: 'OrdenServicio'        
     }
 }, { timestamps: true })
 

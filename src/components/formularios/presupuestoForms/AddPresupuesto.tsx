@@ -5,14 +5,17 @@ import { PrimaryButton } from "../../ui/Buttons";
 import { formatCurrency } from "@/src/lib";
 import PresupuestoForm from "./PresupuestoForm";
 import Link from "next/link";
+import { createPresupuesto } from "@/actions/presupuesto-actions";
+import { useRouter } from "next/navigation";
 
 const montosIniciales = {
     subtotal: 0,
-    iva: 16,
+    iva: 0,
     total: 0
 }
 
 export default function AddPresupuesto(){
+    const router = useRouter();
     const [ servicios, setServicios ] = useState<ServiceFormData[]>([]);
     const [ openServiceForm, setOpenServiceForm ] = useState(true);
     const [ montos, setMontos ] = useState(montosIniciales); 
@@ -20,20 +23,38 @@ export default function AddPresupuesto(){
     const iva = watch('iva') ? watch('iva') : montos.iva;
     useMemo(()=>{ 
         const subtotal = servicios.reduce((acumulado, servicio) => acumulado + +servicio.costo, 0);
-        setMontos({...montosIniciales, subtotal, iva, total: subtotal * iva/100 + subtotal }); 
+        setMontos({...montosIniciales, subtotal, iva: subtotal * 0.16, total: subtotal * 0.16 + subtotal }); 
     } , [servicios, iva]);
 
-    const handleAdd = ( formData: PresupuestoFormData ) => {
+    const handleAdd = async ( formData: PresupuestoFormData ) => {
         if( servicios.length < 1 ){
             alert('Debe agregar al menos un servicio');
             return;
         };
         const fullFormData = {
-            formData,
-            servicios
+            formData: { ...formData, subtotal: montos.subtotal, iva: montos.iva, total: montos.total },
+            servicios: servicios.map( servicio => {
+                const { fechaEjecucion, descripcion, costo, tipoServicio, idConductor, nota, estado } = servicio;
+                return {
+                    fechaEjecucion,
+                    descripcion,
+                    costo,
+                    tipoServicio,
+                    idConductor: idConductor.id,
+                    nota,
+                    estado
+                };
+            })
         };
-        console.log(fullFormData);
         // AQUI SE LLAMA AL ACTION
+        const res = await createPresupuesto(fullFormData);
+        if( res.success ){
+            alert(res.message);
+        }
+        else{
+            alert(res.message);
+        };
+        router.push(location.pathname);
     };
 
     return (
@@ -59,6 +80,7 @@ export default function AddPresupuesto(){
             <div className="px-5">
                 <label htmlFor="subtotal">Subtotal: </label>
                 <input 
+                    id='subtotal'
                     readOnly 
                     type="text" 
                     className="p-1 placeholder:text-inputColor rounded w-24"
@@ -67,18 +89,20 @@ export default function AddPresupuesto(){
                 />
             </div>
             <div className="px-5">
-                <label htmlFor="iva">IVA: </label>
+                <label htmlFor="iva">IVA 16%: </label>
                 <input 
-                    type="number" 
-                    className={`w-16 p-1 border border-borderColor placeholder:text-inputColor rounded focus:outline-none focus:ring-2 focus:border-ringColor`}
-                    defaultValue={montos.iva}
+                    id='iva'
+                    type="text" 
+                    readOnly
+                    className="p-1 placeholder:text-inputColor rounded w-24"
+                    value={formatCurrency(montos.iva)}
                     { ...register('iva')}
                 />
-                <span>%</span>
             </div>
             <div className="px-5">
                 <label htmlFor="total">Total: </label>
                 <input 
+                    id='total'
                     readOnly 
                     type="text" 
                     className="p-1 placeholder:text-inputColor rounded w-24"

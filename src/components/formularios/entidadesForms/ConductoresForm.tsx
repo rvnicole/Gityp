@@ -2,12 +2,23 @@ import { Conductores } from "@/src/types";
 import { useForm } from "react-hook-form";
 import { PrimaryButton, SecondaryButton } from "../../ui/Buttons";
 import Link from "next/link";
+import { createConductor } from "@/actions/conductor-actions";
+import { useRouter } from "next/navigation";
 
 export default function ConductoresForm(){
     const { register, handleSubmit, reset, formState: { errors } } = useForm<Conductores>();
+    const router = useRouter();
 
-    const handleGuardar = (formData: Conductores) => {
+    const handleGuardar = async (formData: Conductores) => {
         console.log(formData);
+        const res = await createConductor(formData);
+        if( res.success ){
+            alert(res.message);
+        }
+        else{
+            alert(`Error al crear conductor: ${res.message}`);
+        }
+        router.push(location.pathname); 
     };
 
     return(

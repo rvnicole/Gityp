@@ -3,14 +3,18 @@ import { Presupuesto } from "@/model/Presupuesto";
 import CardTable from "@/src/components/cards/CardTable";
 import { PrimaryButton } from "@/src/components/ui/Buttons";
 import ModalAdd from "@/src/components/ui/ModalAdd";
+import { PresupuestosSchema } from "@/src/schema";
 import Link from "next/link";
 
 const getPresupuestos = async () => {
     try{
         await connectDB();
         const presupuestos = await Presupuesto.find();
-        console.log('Retornando');
-        return presupuestos;
+        console.log(presupuestos);
+        const { success, data } = PresupuestosSchema.safeParse(presupuestos);
+        if( success ){
+            return data;
+        };
     }
     catch(error){
         console.log(error);
@@ -20,6 +24,7 @@ const getPresupuestos = async () => {
 export default async function PresupuestoPage() {
     const presupuestos = await getPresupuestos();
     console.log('Obteniendo presupuestos...');
+    console.log(presupuestos);
     const documents = [
         {
             id: '6699c12b1f9d4e7812fa7274',

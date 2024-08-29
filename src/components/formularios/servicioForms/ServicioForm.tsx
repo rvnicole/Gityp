@@ -1,14 +1,26 @@
+import { getConductoresAction } from "@/actions/conductor-actions";
 import { estadosServicio, tiposServicio } from "@/src/data/data";
-import { ServiceFormData } from "@/src/types";
+import { ConductoresArrSchema } from "@/src/schema";
+import { Conductores, ServiceFormData } from "@/src/types";
+import { useState } from "react";
 import { FieldErrors, UseFormRegister } from "react-hook-form";
 
 type ServicioFormProps = {
     register: UseFormRegister<ServiceFormData>,
     errors: FieldErrors<ServiceFormData>,
     children: JSX.Element[]
-}
+};
 
 export default function ServicioForm({ register, errors, children  }: ServicioFormProps){
+    const [ conductores, setConductores ] = useState<Conductores[]>([]);
+
+    const handleSelectDrivers = async () => {
+        const conductores = await getConductoresAction();
+        const result = ConductoresArrSchema.safeParse(conductores);
+        if( result.success ){
+            setConductores(result.data);
+        };
+    }
 
     return (
         <fieldset className="px-5 border border-slate-200">
@@ -42,14 +54,29 @@ export default function ServicioForm({ register, errors, children  }: ServicioFo
                         <div>
                             <label htmlFor="conductor">Conductor: </label>
                             <select
-                                id="idConductor" 
+                                id="idConductor"
+                                onClick={handleSelectDrivers} 
                                 className={`p-1 border border-borderColor placeholder:text-inputColor rounded focus:outline-none focus:ring-2 focus:border-ringColor ${errors.idConductor && "border-2 border-destructiveColor"}`}
                                 { ...register('idConductor',{
                                     required: true
                                 })}
                             >
-                                <option value="">-- Seleccione ---</option>
-                                <option value="conductor">Eduardo</option>
+                                <option key={0} value=''>-- Seleccione ---</option>
+                                {
+                                    conductores.length > 0 ? 
+                                        conductores.map( conductor =>
+                                            <option 
+                                                key={conductor.id}
+                                                value={conductor.id}
+                                            >
+                                                {conductor.nombre} {' '} {conductor.apellido}
+                                            </option>
+                                        )
+                                    :
+                                    <option value="">
+                                        Cargando...
+                                    </option>
+                                }
                             </select>
                             <span className="inline text-destructiveColor p-2">*</span>
                         </div>

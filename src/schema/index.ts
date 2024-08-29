@@ -9,6 +9,8 @@ export const ConductoresSchema = z.object({
     licencia: z.string()
 });
 
+export const ConductoresArrSchema = z.array(ConductoresSchema);
+
 // Esquemas documentos
 export const ServicioSchema = z.object({
     id: z.string(),

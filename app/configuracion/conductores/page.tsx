@@ -1,28 +1,26 @@
+import { connectDB } from "@/config/db";
+import { Conductor } from "@/model/Conductor";
 import ConductoresView from "@/src/components/configView/conductores/ConductoresView";
 import { PrimaryButton } from "@/src/components/ui/Buttons";
 import ModalAdd from "@/src/components/ui/ModalAdd";
+import { ConductoresArrSchema } from "@/src/schema";
+import { Conductores } from "@/src/types";
 import Link from "next/link";
 
-const conductores = [
-    {
-        id: 'as09i909012390opasd',
-        nombre: 'Eduardo',
-        apellido: 'Reynoso',
-        edad: 64,
-        licencia: 'AT-503'
-    },
-    {
-        id: 'as09i90901239001923',
-        nombre: 'Eduardo',
-        apellido: 'Vera',
-        edad: 55,
-        licencia: 'BP-540'
-    }
-]
+export async function getConductores(){
+    await connectDB();
+    const res = await Conductor.find();
+    const { success, data } = ConductoresArrSchema.safeParse(res);
+    if( success ){
+        return data;
+    };
+};
 
-export default function ConductoresPage(){
+export default async function ConductoresPage(){
     
-    return(
+    const conductores = await getConductores();
+
+    if(conductores) return(
         <>
             <div className="flex justify-end mb-5">
                 <Link href="?modal=create">
