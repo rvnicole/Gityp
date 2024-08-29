@@ -65,7 +65,7 @@ export default async function OrdenesServiciosPage() {
     return (
         <>
             <CardTable
-                documents={documents}
+                documents={ordenesServicios}
                 documentType="ordenes-servicios"
             />
         </>

@@ -22,9 +22,9 @@ async function getPresupuestos(){
 };
 
 export default async function PresupuestoPage() {
-    const documents = await getPresupuestos();
+    const presupuestos = await getPresupuestos() || [];
 
-    if(documents) return (
+    return (
         <div className="space-y-5">
             <div className="flex justify-center md:justify-end">
                 <Link href="/presupuestos?modal=create">
@@ -33,7 +33,7 @@ export default async function PresupuestoPage() {
             </div>
 
             <CardTable
-                documents={documents}
+                documents={presupuestos}
                 documentType="presupuestos"
             />
             <ModalAdd documentType="presupuesto"/>
