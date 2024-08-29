@@ -54,6 +54,7 @@ export default function AddPresupuesto(){
         else{
             alert(res.message);
         };
+        router.refresh();
         router.push(location.pathname);
     };
 

@@ -10,7 +10,6 @@ export default function ConductoresForm(){
     const router = useRouter();
 
     const handleGuardar = async (formData: Conductores) => {
-        console.log(formData);
         const res = await createConductor(formData);
         if( res.success ){
             alert(res.message);

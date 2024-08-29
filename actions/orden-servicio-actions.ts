@@ -10,12 +10,14 @@ export async function createOrdenServicio(presupuestoID: PresupuestoType['id']) 
         await connectDB();
 
         const presupuesto = await Presupuesto.findById(presupuestoID);
+        presupuesto.estado = "accept";
 
-        const data:any = {...presupuesto, presupuesto: presupuesto.id};
+        const data:any = {...presupuesto._doc, presupuesto: presupuesto.id};
         delete data.id;
+        console.log(data);
 
         const ordenServicio = await new OrdenServicio(data);
-        await ordenServicio.save();
+        await Promise.all([ ordenServicio.save(), presupuesto.save() ]);
 
         return { success: true, message: "Orden de Servicio Creada Correctamente"}
     }

@@ -23,8 +23,10 @@ export default function DriverRow( {conductor}: DriverRowProps  ){
             alert(res.message)
         }
         setEditar(false);
-        window.location.href = location.pathname;
-        //router.replace(location.pathname);
+        //window.location.href = location.pathname;
+        
+        router.refresh();
+        router.push(location.pathname);
     };
 
     const handleDelete = async ( id: Conductores['id'] ) => {
@@ -36,8 +38,10 @@ export default function DriverRow( {conductor}: DriverRowProps  ){
             alert(res.message)
         }
         setEditar(false);
-        window.location.href = location.pathname;
-        //router.replace(location.pathname);
+        //window.location.href = location.pathname;
+        
+        router.refresh();
+        router.push(location.pathname);
     };
 
     return (

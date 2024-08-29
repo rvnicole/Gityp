@@ -139,6 +139,8 @@ export const CardPresupuestoSchema = PresupuestoSchema.pick({
     estado: true
 });
 
+export const CardsPresupuestoSchema = z.array(CardPresupuestoSchema);
+
 export const CardOrdenServicioSchema = OrdenServicioSchema.pick({
     id: true,
     fecha: true,

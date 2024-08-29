@@ -4,10 +4,9 @@ import ConductoresView from "@/src/components/configView/conductores/Conductores
 import { PrimaryButton } from "@/src/components/ui/Buttons";
 import ModalAdd from "@/src/components/ui/ModalAdd";
 import { ConductoresArrSchema } from "@/src/schema";
-import { Conductores } from "@/src/types";
 import Link from "next/link";
 
-export async function getConductores(){
+async function getConductores(){
     await connectDB();
     const res = await Conductor.find();
     const { success, data } = ConductoresArrSchema.safeParse(res);

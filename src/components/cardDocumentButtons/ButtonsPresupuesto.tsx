@@ -5,7 +5,8 @@ import { useRouter } from 'next/navigation';
 import { ConfirmButton, OutlineButton, SecondaryButton } from "../ui/Buttons";
 import { CheckCircleIcon, EyeIcon, XCircleIcon } from "@heroicons/react/24/outline";
 import { estadosPresupuesto } from "@/src/data/data";
-import type { CardPresupuesto, EstadoPresupuesto } from "@/src/types";
+import type { CardPresupuesto, EstadoPresupuesto, OrdenServicio } from "@/src/types";
+import { createOrdenServicio } from "@/actions/orden-servicio-actions";
 
 type ButtonsPresupuestosProps = {
     documentID: CardPresupuesto['id'];
@@ -16,11 +17,15 @@ export default function ButtonsPresupuestos({documentID, estadoDocument}: Button
     const [estado, setEstado] = useState<EstadoPresupuesto>(estadoDocument);
     const router = useRouter();
 
-    const handleClickAccept = () => {
-        setEstado('accept');
+    const handleClickAccept = async (id: OrdenServicio['id']) => {
+        const res = await createOrdenServicio(id);
+        alert(res.message);
+        if( res.success ){
+            setEstado('accept');
+        };        
     }
 
-    const handleClickReject = () => {
+    const handleClickReject = async () => {
         setEstado('reject');
     }
 
@@ -41,7 +46,7 @@ export default function ButtonsPresupuestos({documentID, estadoDocument}: Button
                 { estado === "pending" && (
                     <>
                         <ConfirmButton
-                            onClick={handleClickAccept}
+                            onClick={() => handleClickAccept(documentID)}
                             attributes={{ title: "Aprobado"}}
                         >
                             <CheckCircleIcon className="size-7 text-white"  />
