@@ -40,7 +40,7 @@ export default function AddPresupuesto(){
                     descripcion,
                     costo,
                     tipoServicio,
-                    idConductor: idConductor.id,
+                    idConductor: servicio.idConductor,
                     nota,
                     estado
                 };

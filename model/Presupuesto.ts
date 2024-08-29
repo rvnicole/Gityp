@@ -1,6 +1,6 @@
 import mongoose, { Document, PopulatedDoc, Schema, Types, models } from "mongoose";
-import { Presupuesto as PresupuestoType } from "@/src/types";
 import { IServicio } from "./Servicio";
+import { OrdenServicio } from "./OrdenServicio";
 
 const statusPresupuesto = {
     PENDING: 'pending',
@@ -59,5 +59,29 @@ const PresupuestoSchema: Schema = new Schema({
         default: statusPresupuesto.PENDING
     }
 }, { timestamps: true });
+
+// Middleware post cambio de estado para la creacion de la orden de servicio
+PresupuestoSchema.post('save', async (doc: IPresupuesto) => {
+    if( doc.estado === 'accept' ){
+        try{
+            const data = {
+                presupuesto: doc._id,
+                fecha: new Date(),
+                proveedor: doc.proveedor,
+                solicito: doc.solicito,
+                servicios: doc.servicios,
+                comentarios: doc.comentarios,
+                subtotal: doc.subtotal,
+                iva: doc.iva,
+                total: doc.total,
+            }
+            const ordenServicio = await new OrdenServicio(data);
+            await ordenServicio.save();
+        }
+        catch(error){
+            console.log(error);
+        }
+    };
+});
 
 export const Presupuesto = models.Presupuesto || mongoose.model<IPresupuesto>('Presupuesto', PresupuestoSchema );

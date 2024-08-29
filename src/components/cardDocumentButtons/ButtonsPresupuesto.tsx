@@ -5,8 +5,9 @@ import { useRouter } from 'next/navigation';
 import { ConfirmButton, OutlineButton, SecondaryButton } from "../ui/Buttons";
 import { CheckCircleIcon, EyeIcon, XCircleIcon } from "@heroicons/react/24/outline";
 import { estadosPresupuesto } from "@/src/data/data";
-import type { CardPresupuesto, EstadoPresupuesto, OrdenServicio } from "@/src/types";
+import type { CardPresupuesto, EstadoPresupuesto, OrdenServicio, Presupuesto } from "@/src/types";
 import { createOrdenServicio } from "@/actions/orden-servicio-actions";
+import { updateStatusPresupuesto } from "@/actions/presupuesto-actions";
 
 type ButtonsPresupuestosProps = {
     documentID: CardPresupuesto['id'];
@@ -17,16 +18,20 @@ export default function ButtonsPresupuestos({documentID, estadoDocument}: Button
     const [estado, setEstado] = useState<EstadoPresupuesto>(estadoDocument);
     const router = useRouter();
 
-    const handleClickAccept = async (id: OrdenServicio['id']) => {
-        const res = await createOrdenServicio(id);
+    const handleClickAccept = async (id: Presupuesto['id']) => {
+        const res = await updateStatusPresupuesto(id, 'accept');
         alert(res.message);
         if( res.success ){
             setEstado('accept');
         };        
     }
 
-    const handleClickReject = async () => {
-        setEstado('reject');
+    const handleClickReject = async (id: Presupuesto['id']) => {
+        const res = await updateStatusPresupuesto(id, 'reject');
+        alert(res.message);
+        if( res.success ){
+            setEstado('reject');
+        }; 
     }
 
     return (
@@ -53,7 +58,7 @@ export default function ButtonsPresupuestos({documentID, estadoDocument}: Button
                         </ConfirmButton>
                         
                         <SecondaryButton
-                            onClick={handleClickReject}
+                            onClick={() => handleClickReject(documentID)}
                             attributes={{ title: "Rechazado"}}
                         >
                             <XCircleIcon className="size-7" />
