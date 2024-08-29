@@ -1,8 +1,8 @@
 import { EmisoresReceptores } from "@/src/types";
 import { useState } from "react";
-import { OutlineButton } from "../ui/Buttons";
+import { DestructiveButton, OutlineButton } from "../ui/Buttons";
 import { useForm } from "react-hook-form";
-
+import { deleteEmisorReceptor, updateEmisorReceptor } from "@/actions/emisor-receptor-actions";
 type CardEntityProps = {
     emisor?: EmisoresReceptores,
     receptor?: EmisoresReceptores
@@ -12,9 +12,31 @@ export default function CardEntity({ emisor, receptor }: CardEntityProps){
     const [ editar, setEditar ] = useState(false);
     const { register, handleSubmit, reset, formState: { errors } } = useForm<EmisoresReceptores>({ defaultValues: emisor ? emisor : receptor });
 
-    const handleGuardar = (formData: EmisoresReceptores) => {
-        console.log(formData);
+    const handleGuardar = async (formData: EmisoresReceptores) => {
+        const respuesta = await updateEmisorReceptor(formData);
         setEditar(false);
+
+        if( respuesta.success ) {
+            alert(respuesta.message);
+        }
+        else {
+            alert(respuesta.message);
+        }
+
+       location.href = location.pathname;
+    }
+
+    const handleDelete = async (id: EmisoresReceptores['id']) => {
+        const respuesta = await deleteEmisorReceptor({ id });
+
+        if( respuesta.success ) {
+            alert(respuesta.message);
+        }
+        else {
+            alert(respuesta.message);
+        }
+
+       location.href = location.pathname;
     }
 
     if(emisor) return(
@@ -46,12 +68,19 @@ export default function CardEntity({ emisor, receptor }: CardEntityProps){
                     <OutlineButton>Guardar</OutlineButton>
                 </form>
             :
-                <div className="grid grid-cols-3 bg-accentColor p-3 rounded-lg items-center">
+                <div className="grid grid-cols-3 gap-2 bg-accentColor p-3 rounded-lg items-center">
                     <p>{`${emisor.nombre}`}</p>
                     <p>{`${emisor.rfc}`}</p>
-                    <OutlineButton onClick={() => setEditar(true)}>
-                        Editar
-                    </OutlineButton>
+
+                    <div className="flex justify-center gap-3">
+                        <OutlineButton onClick={() => setEditar(true)}>
+                            Editar
+                        </OutlineButton>
+
+                        <DestructiveButton onClick={() => handleDelete(emisor.id)}>
+                            Eliminar
+                        </DestructiveButton>
+                    </div>
                 </div>
             }
         </>
@@ -89,9 +118,16 @@ export default function CardEntity({ emisor, receptor }: CardEntityProps){
                 <div className="grid grid-cols-3 bg-accentColor p-3 rounded-lg items-center">
                     <p>{`${receptor.nombre}`}</p>
                     <p>{`${receptor.rfc}`}</p>
-                    <OutlineButton onClick={() => setEditar(true)}>
-                        Editar
-                    </OutlineButton>
+
+                    <div className="flex justify-center gap-3">
+                        <OutlineButton onClick={() => setEditar(true)}>
+                            Editar
+                        </OutlineButton>
+
+                        <DestructiveButton onClick={() => handleDelete(receptor.id)}>
+                            Eliminar
+                        </DestructiveButton>
+                    </div>
                 </div>
             }
         </>

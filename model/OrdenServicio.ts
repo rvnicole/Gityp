@@ -66,4 +66,4 @@ const OrdenServicioSchema: Schema = new Schema({
     }
 }, { timestamps: true });
 
-export const Presupuesto = models.OrdenServicio || mongoose.model<IOrdenServicio>('OrdenServicio', OrdenServicioSchema );
+export const OrdenServicio = models.OrdenServicio || mongoose.model<IOrdenServicio>('OrdenServicio', OrdenServicioSchema );

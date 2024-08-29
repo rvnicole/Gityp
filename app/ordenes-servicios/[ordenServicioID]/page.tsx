@@ -1,11 +1,36 @@
+"use server"
+
+import { connectDB } from "@/config/db";
+import { OrdenServicio } from "@/model/OrdenServicio";
 import DocumentDetail from "@/src/components/documentView/DocumentDetail";
 import OrdenServicioDetail from "@/src/components/documentView/OrdenServicioDetail";
 import ModalEdit from "@/src/components/ui/ModalEdit";
+import { OrdenServicioSchema } from "@/src/schema";
+import { OrdenServicio as OrdenServicioType } from "@/src/types";
 
-export default function OrdenServicioIDPage({ params }: { params: {ordenServicioID: string}}) {
+async function getOrdenServicio(id: OrdenServicioType['id']) {
+    try {
+        await connectDB();
+
+        const ordenesServicio = await OrdenServicio.findById(id).populate('presupuesto').populate('servicios');
+
+        const result = OrdenServicioSchema.safeParse(ordenesServicio);
+        
+        if(result) {
+            return result.data;
+        };
+    }
+    catch(error) {
+        console.log(error);
+    }
+}
+
+export default async function OrdenServicioIDPage({ params }: { params: {ordenServicioID: string}}) {
     const { ordenServicioID } = params;
 
-    const ordenServicio = {
+    const ordenServicio = await getOrdenServicio(ordenServicioID);
+
+    const document = {
         id: '6699c12b1f9d4e7812fa7274',
         fecha: new Date(),
         proveedor: 'Pruebas',
@@ -172,13 +197,13 @@ export default function OrdenServicioIDPage({ params }: { params: {ordenServicio
                 documentID={ordenServicioID}
             >
                 <OrdenServicioDetail 
-                    ordenServicio={ordenServicio}
+                    ordenServicio={document}
                 />
             </DocumentDetail>
             
             <ModalEdit 
                 documentType="ordenServicio" 
-                defaultValues={ordenServicio}
+                defaultValues={document}
             />
         </>
     )

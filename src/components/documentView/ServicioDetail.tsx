@@ -69,7 +69,7 @@ export default function ServicioDetail({ servicio }: ServicioDetailProps) {
 
             <div className="md:col-span-3 grid gap-2 font-semibold">                
                 <p>Conductor Asignado: {' '}
-                    <span className="font-normal">{servicio.idConductor}</span>
+                    <span className="font-normal">{servicio.idConductor.nombre} {servicio.idConductor.apellido}</span>
                 </p>
 
                 <p>Tipo de Servicio: {' '}

@@ -2,12 +2,25 @@ import { Conductores, EmisorReceptor } from "@/src/types";
 import { useForm } from "react-hook-form";
 import { PrimaryButton, SecondaryButton } from "../../ui/Buttons";
 import Link from "next/link";
+import { createEmisorReceptor } from "@/actions/emisor-receptor-actions";
+import { useRouter } from "next/navigation";
 
 export default function EmisorReceptorForm(){
     const { register, handleSubmit, reset, formState: { errors } } = useForm<EmisorReceptor & { "emisor-receptor": string }>();
+    const router = useRouter();
 
-    const handleGuardar = (formData: EmisorReceptor) => {
-        console.log(formData);
+    const handleGuardar = async (formData: EmisorReceptor) => {
+        const respuesta = await createEmisorReceptor(formData);
+    
+        if( respuesta.success ) {
+            alert(respuesta.message);
+        }
+        else {
+            alert(respuesta.message);
+        }
+
+        reset();
+        router.push(location.pathname);
     };
 
     return(
@@ -40,9 +53,9 @@ export default function EmisorReceptorForm(){
             <div>
                 <label className="text-foregroundColor" htmlFor="apellido">Tipo: </label>
                 <select  
-                    id="emisor-receptor"
+                    id="tipo"
                     className={`w-full sm:w-64 p-1 border border-borderColor placeholder:text-inputColor rounded focus:outline-none focus:ring-2 focus:border-ringColor ${errors['emisor-receptor'] && "border-2 border-destructiveColor"}`}
-                    { ...register('emisor-receptor', {
+                    { ...register('tipo', {
                         required: true
                     })}
                 >

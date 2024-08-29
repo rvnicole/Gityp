@@ -126,3 +126,7 @@ export const GestionCobroFormSchema = GestionCobrosSchema.pick({
     pagado: true,
     comentarios: true
 });
+
+// Validaciones
+export const EmisoresReceptoresSchema = z.array( EmisorReceptorSchema );
+export const OrdenesServiciosSchema = z.array(OrdenServicioSchema);

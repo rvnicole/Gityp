@@ -1,6 +1,27 @@
-import CardTable from "@/src/components/cards/CardTable";
+"use server"
 
-export default function OrdenesServiciosPage() {
+import { connectDB } from "@/config/db";
+import { OrdenServicio } from "@/model/OrdenServicio";
+import CardTable from "@/src/components/cards/CardTable";
+import { OrdenesServiciosSchema } from "@/src/schema";
+
+async function getOrdenesServicio() {
+    try {
+        await connectDB();
+
+        const ordenesServicio = await OrdenServicio.find();
+        const result = OrdenesServiciosSchema.safeParse(ordenesServicio);
+        
+        if(result) {
+            return result.data;
+        };
+    }
+    catch(error) {
+        console.log(error);
+    }
+}
+
+export default async function OrdenesServiciosPage() {
     const documents = [
         {
             id: '6699c12b1f9d4e7812fa7273',
@@ -39,6 +60,7 @@ export default function OrdenesServiciosPage() {
             estado: 'inProgress'
         }
     ];
+    const ordenesServicios = await getOrdenesServicio() || [];
 
     return (
         <>
