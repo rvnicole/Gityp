@@ -18,7 +18,9 @@ export default function ConductoresForm(){
         else{
             alert(`Error al crear conductor: ${res.message}`);
         }
-        router.push(location.pathname); 
+        
+        router.refresh();
+        router.push(location.pathname);
     };
 
     return(

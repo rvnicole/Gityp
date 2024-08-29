@@ -2,11 +2,14 @@
 
 import { connectDB } from "@/config/db";
 import { OrdenServicio } from "@/model/OrdenServicio";
-import { OrdenServicio as OrdenServicioType, Presupuesto } from "@/src/types";
+import { Presupuesto } from "@/model/Presupuesto";
+import { Presupuesto as PresupuestoType} from "@/src/types";
 
-export async function createOrdenServicio(presupuesto: Presupuesto) {
+export async function createOrdenServicio(presupuestoID: PresupuestoType['id']) {
     try {
         await connectDB();
+
+        const presupuesto = await Presupuesto.findById(presupuestoID);
 
         const data:any = {...presupuesto, presupuesto: presupuesto.id};
         delete data.id;

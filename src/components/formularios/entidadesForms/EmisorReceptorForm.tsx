@@ -20,6 +20,7 @@ export default function EmisorReceptorForm(){
         }
 
         reset();
+        router.refresh();
         router.push(location.pathname);
     };
 

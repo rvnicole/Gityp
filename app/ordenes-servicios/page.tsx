@@ -3,14 +3,14 @@
 import { connectDB } from "@/config/db";
 import { OrdenServicio } from "@/model/OrdenServicio";
 import CardTable from "@/src/components/cards/CardTable";
-import { OrdenesServiciosSchema } from "@/src/schema";
+import { CardsOrdenServicioSchema } from "@/src/schema";
 
 async function getOrdenesServicio() {
     try {
         await connectDB();
 
         const ordenesServicio = await OrdenServicio.find();
-        const result = OrdenesServiciosSchema.safeParse(ordenesServicio);
+        const result = CardsOrdenServicioSchema.safeParse(ordenesServicio);
         
         if(result) {
             return result.data;
