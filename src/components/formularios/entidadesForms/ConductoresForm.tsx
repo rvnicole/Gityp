@@ -10,7 +10,6 @@ export default function ConductoresForm(){
     const router = useRouter();
 
     const handleGuardar = async (formData: Conductores) => {
-        console.log(formData);
         const res = await createConductor(formData);
         if( res.success ){
             alert(res.message);
@@ -18,7 +17,9 @@ export default function ConductoresForm(){
         else{
             alert(`Error al crear conductor: ${res.message}`);
         }
-        router.push(location.pathname); 
+        
+        router.refresh();
+        router.push(location.pathname);
     };
 
     return(
