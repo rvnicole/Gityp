@@ -3,6 +3,8 @@ import { useState } from "react";
 import { DestructiveButton, OutlineButton } from "../ui/Buttons";
 import { useForm } from "react-hook-form";
 import { deleteEmisorReceptor, updateEmisorReceptor } from "@/actions/emisor-receptor-actions";
+import { useRouter } from "next/navigation";
+
 type CardEntityProps = {
     emisor?: EmisoresReceptores,
     receptor?: EmisoresReceptores
@@ -11,6 +13,7 @@ type CardEntityProps = {
 export default function CardEntity({ emisor, receptor }: CardEntityProps){
     const [ editar, setEditar ] = useState(false);
     const { register, handleSubmit, reset, formState: { errors } } = useForm<EmisoresReceptores>({ defaultValues: emisor ? emisor : receptor });
+    const router = useRouter();
 
     const handleGuardar = async (formData: EmisoresReceptores) => {
         const respuesta = await updateEmisorReceptor(formData);
@@ -23,7 +26,8 @@ export default function CardEntity({ emisor, receptor }: CardEntityProps){
             alert(respuesta.message);
         }
 
-       location.href = location.pathname;
+        router.refresh();
+        router.push(location.pathname);
     }
 
     const handleDelete = async (id: EmisoresReceptores['id']) => {
@@ -36,7 +40,8 @@ export default function CardEntity({ emisor, receptor }: CardEntityProps){
             alert(respuesta.message);
         }
 
-       location.href = location.pathname;
+        router.refresh();
+        router.push(location.pathname);
     }
 
     if(emisor) return(

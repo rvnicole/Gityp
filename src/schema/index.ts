@@ -55,6 +55,8 @@ export const EmisorReceptorSchema = z.object({
     tipo: z.string()
 });
 
+export const EmisoresReceptoresSchema = z.array( EmisorReceptorSchema );
+
 export const FacturaSchema = z.object({
     id: z.string(),
     ordenServicio: OrdenServicioSchema,
@@ -149,6 +151,8 @@ export const CardOrdenServicioSchema = OrdenServicioSchema.pick({
     ordenCompra: true
 });
 
+export const CardsOrdenServicioSchema = z.array(CardOrdenServicioSchema);
+
 export const CardServicioSchema = ServicioSchema.pick({
     id: true,
     fechaEjecucion: true,
@@ -188,7 +192,3 @@ export const CardCobroSchema = GestionCobrosSchema.pick({
 }).extend({
     factura: CardFacturaSchema
 });
-
-// Validaciones
-export const EmisoresReceptoresSchema = z.array( EmisorReceptorSchema );
-export const OrdenesServiciosSchema = z.array(OrdenServicioSchema);
