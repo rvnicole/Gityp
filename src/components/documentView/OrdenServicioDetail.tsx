@@ -72,7 +72,7 @@ export default function OrdenServicioDetail({ ordenServicio }: OrdenServicioDeta
 
             <div className="md:col-span-3">
                 <p className="font-semibold">Comentarios:</p>
-                <p className="text-mutedColor-foreground">{ordenServicio.comentarios}</p>
+                <p className="text-mutedColor-foreground bg-accentColor py-2 px-1 rounded-lg">{ordenServicio.comentarios}</p>
             </div>
 
             <div className="md:col-span-3">
@@ -85,7 +85,7 @@ export default function OrdenServicioDetail({ ordenServicio }: OrdenServicioDeta
             <div className="md:col-start-3 flex justify-end gap-5">
                 <div className="font-semibold flex flex-col justify-between">
                     <p>Subtotal:</p>
-                    <p>IVA:</p>
+                    <p>IVA (16%):</p>
                     <p>Total:</p>
                 </div>
 
