@@ -1,15 +1,15 @@
 "use server"
 import { connectDB } from "@/config/db";
-import { Presupuesto } from "@/model/Presupuesto";
 import { Servicio } from "@/model/Servicio";
+import { Presupuesto } from "@/model/Presupuesto";
 import { Presupuesto as PresupuestoType, PresupuestoFormData, ServiceFormData } from "@/src/types";
 
-type CreatePresupuestoParams = {
-    formData: PresupuestoFormData, 
-    servicios: Pick<ServiceFormData, 'costo' | 'descripcion' | 'estado' | 'fechaEjecucion' | 'nota' | 'tipoServicio'>[]
+type ActionPresupuestoParams = {
+    formData: PresupuestoFormData & { id: PresupuestoType['id'] }, 
+    servicios: Pick<ServiceFormData, 'id' | 'costo' | 'descripcion' | 'estado' | 'fechaEjecucion' | 'nota' | 'tipoServicio' | 'idConductor'>[]
 }
 
-export async function createPresupuesto(fullFormData: CreatePresupuestoParams ){
+export async function createPresupuesto(fullFormData: ActionPresupuestoParams ){
     try{
         await connectDB();
         const servicios = await Servicio.insertMany(fullFormData.servicios);
@@ -54,4 +54,4 @@ export async function updateStatusPresupuesto(id: PresupuestoType['id'], estado:
             message: typeof error === 'object' && error !== null && 'message' in error ? error.message : 'Error al crear el presupuesto'
         }
     };
-}
+};

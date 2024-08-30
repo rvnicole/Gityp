@@ -1,6 +1,6 @@
 import mongoose, { Schema, Types, Document, PopulatedDoc, models } from "mongoose";
-import { IPresupuesto } from "./Presupuesto";
-import { IConductor } from "./Conductor";
+import { IConductor, Conductor } from "./Conductor";
+import { IOrdenServicio, OrdenServicio } from "./OrdenServicio";
 
 export interface IServicio extends Document {
     fechaEjecucion: Date;
@@ -10,7 +10,7 @@ export interface IServicio extends Document {
     costo: number;
     estado: string;
     idConductor: PopulatedDoc<IConductor & Document>
-    ordenServicio: PopulatedDoc<IPresupuesto & Document>
+    ordenServicio: PopulatedDoc<IOrdenServicio & Document>
 
 }
 
@@ -42,11 +42,11 @@ const ServicioSchema: Schema = new Schema({
     },
     idConductor: {
         type: Types.ObjectId,
-        ref: 'Conductor'
+        ref: Conductor
     },
     ordenServicio: {
         type: Types.ObjectId,
-        ref: 'OrdenServicio'        
+        ref: 'OrdenServicio'       
     }
 }, { timestamps: true })
 

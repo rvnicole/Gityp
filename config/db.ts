@@ -2,8 +2,8 @@ import mongoose from "mongoose";
 import { exit } from "process";
 
 export const connectDB = async () => {
-    if(mongoose.connections[0].readyState){
-        const connection = mongoose.connections[0];
+    if(mongoose.connections[1] && mongoose.connections[1].readyState){
+        const connection = mongoose.connections[1];
         console.log(`Conexión ya establecida. Conectado a: ${connection.host} port: ${connection.port}`);
         return;
     }

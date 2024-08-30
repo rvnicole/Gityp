@@ -1,5 +1,6 @@
-import mongoose, { Document, PopulatedDoc, Schema, Types, models } from "mongoose";
-import { IServicio } from "./Servicio";
+import mongoose, { Document, PopulatedDoc, Schema, Types, models, ObjectId } from "mongoose";
+import { Presupuesto } from "./Presupuesto";
+import { IServicio, Servicio } from "./Servicio";
 
 const statusPresupuesto = {
     ASSIGN: 'assign',
@@ -65,5 +66,21 @@ const OrdenServicioSchema: Schema = new Schema({
         required: true
     }
 }, { timestamps: true });
+
+
+OrdenServicioSchema.post('save', async (doc) => {
+    if( doc.estado === 'assign' ){
+        
+        const servicios = doc.servicios as ObjectId[];
+
+        for( const servicio of servicios ){
+            console.log("ITERANDO SOBRE EL ID", servicio);
+            
+            const documentServicio = await Servicio.findById(servicio.toString());
+            documentServicio.ordenServicio = doc.id.toString();
+            await documentServicio.save();
+        };
+    };
+});
 
 export const OrdenServicio = models.OrdenServicio || mongoose.model<IOrdenServicio>('OrdenServicio', OrdenServicioSchema );
