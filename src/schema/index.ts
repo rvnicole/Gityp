@@ -171,6 +171,8 @@ export const CardServicioSchema = ServicioSchema.pick({
     })
 });
 
+export const CardsServiciosSchema = z.array(CardServicioSchema);
+
 export const CardFacturaSchema = FacturaSchema.pick({
     id: true,
     fecha: true,

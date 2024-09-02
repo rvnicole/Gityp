@@ -1,9 +1,14 @@
+"use server"
+
+import { connectDB } from "@/config/db";
 import CardTable from "@/src/components/cards/CardTable";
 import { PrimaryButton } from "@/src/components/ui/Buttons";
 import ModalAdd from "@/src/components/ui/ModalAdd";
 import Link from "next/link";
 import { formatDate } from "@/src/lib";
 import { FechasDuplicadasType } from "@/src/types";
+import { Servicio } from "@/model/Servicio";
+import { CardsServiciosSchema } from "@/src/schema";
 
 const documents = [
     {
@@ -143,9 +148,29 @@ const documents = [
     }
 ];
 
+async function getServicios() {
+    try {
+        await connectDB();
 
+        const servicios = await Servicio.find().populate('idConductor');
+        console.log("Servicios fun", servicios);
+        const {success, data, error} = CardsServiciosSchema.safeParse(servicios);
+        
+        if(success) {
+            return data;
+        }
+        else {
+            error.issues.forEach( error => console.log(error));
+        }
+    }
+    catch(error) {
+        console.log(error);
+    }
+}
 
-export default function ServiciosPage() {
+export default async function ServiciosPage() {
+    const servicios = await getServicios() || [];
+    console.log("Servicios", servicios)
     const fechasDuplicadas: FechasDuplicadasType = {};
     documents.forEach( document => fechasDuplicadas[formatDate(document.fechaEjecucion)] = fechasDuplicadas[formatDate(document.fechaEjecucion)] ? fechasDuplicadas[formatDate(document.fechaEjecucion)] + 1 : 1);
 
@@ -156,11 +181,13 @@ export default function ServiciosPage() {
                     <PrimaryButton>Crear Servicio</PrimaryButton>
                 </Link>
             </div>
+
             <CardTable
-                documents={documents}
+                documents={servicios}
                 documentType="servicios"
                 fechasDuplicadas={fechasDuplicadas}
             />
+
             <ModalAdd documentType="servicio"/>
         </div>
     )
