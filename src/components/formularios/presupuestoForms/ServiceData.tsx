@@ -14,13 +14,16 @@ type ListServicesProps = {
 
 export default function ServicesData( { servicio, setServicioEdit, servicios, setServicios }: ListServicesProps ){
     const { fechaEjecucion } = servicio;
-    let fecha = '' ;
+    let fecha = '';
     if( typeof fechaEjecucion !== 'string' ){
-        fecha  = `${fechaEjecucion.getFullYear()}-${fechaEjecucion.getMonth() + 1 < 10 ? "0"+(fechaEjecucion.getMonth()+1) : fechaEjecucion.getMonth()+1 }-${fechaEjecucion.getDate()}T00:00:00`;
+        const year = fechaEjecucion.getFullYear();
+        const mes = fechaEjecucion.getMonth() + 1 < 10 ? "0"+(fechaEjecucion.getMonth() + 1 ) : fechaEjecucion.getMonth() + 1;
+        const dia = fechaEjecucion.getDate()+ 1 < 10 ? "0"+(fechaEjecucion.getDate() + 1 ) : fechaEjecucion.getDate() + 1;
+        fecha  = `${year}-${mes}-${dia}T00:00:00`;
     }
     else{
         fecha= fechaEjecucion+'T00:00:00';
-    }
+    };
 
     const handleEditService = (servicio: ServiceFormData) => {
         setServicioEdit( {...servicio} );

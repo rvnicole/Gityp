@@ -1,5 +1,5 @@
 import mongoose, { Document, Schema, PopulatedDoc, Types, models } from "mongoose";
-import { IFactura } from "./Factura";
+import { Factura, IFactura } from "./Factura";
 
 export interface IGestionCobro {
     comentarios: string,
@@ -15,7 +15,7 @@ const GestionCobroSchema: Schema = new Schema({
     },
     factura: {
         type: Types.ObjectId,
-        ref: 'Factura',
+        ref: Factura,
         required: true
     },
     ie: {

@@ -1,5 +1,5 @@
 import mongoose, { Document, PopulatedDoc, Schema, Types, models } from "mongoose";
-import { IServicio } from "./Servicio";
+import { IServicio, Servicio } from "./Servicio";
 import { OrdenServicio } from "./OrdenServicio";
 
 const statusPresupuesto = {

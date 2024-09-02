@@ -17,8 +17,8 @@ export const ServicioSchema = z.object({
     ordenServicio: z.object({
         id: z.string(),
         solicito: z.string(),
-        urlOrdenCompra: z.string(),
-        ordenCompra: z.string()
+        urlOrdenCompra: z.string().optional(),
+        ordenCompra: z.string().optional()
     }).optional(),
     fechaEjecucion: z.date(),
     descripcion: z.string(),

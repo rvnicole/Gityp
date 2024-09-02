@@ -2,6 +2,7 @@ import { connectDB } from "@/config/db";
 import { Presupuesto } from "@/model/Presupuesto";
 import DocumentDetail from "@/src/components/documentView/DocumentDetail";
 import PresupuestoDetail from "@/src/components/documentView/PresupuestoDetail";
+import Modal from "@/src/components/ui/Modal";
 import ModalEdit from "@/src/components/ui/ModalEdit";
 import { PresupuestoSchema } from "@/src/schema";
 import { Presupuesto as PresupuestoType } from "@/src/types";
@@ -9,9 +10,13 @@ import { Presupuesto as PresupuestoType } from "@/src/types";
 async function getPresupuestoById(id: PresupuestoType['id']){
     try{
         await connectDB();
-        const presupuesto = await Presupuesto.findById(id)
-                                                    .populate('servicios')
-                                                    .populate({ path: 'servicios', populate: 'idConductor' });
+        const presupuesto = await Presupuesto.findById(id).populate('servicios').populate({
+            path: 'servicios',
+            populate: [
+                { path: 'idConductor' },
+                { path: 'ordenServicio' }
+            ]
+        });
         console.log(presupuesto);
         const { success, data, error } = PresupuestoSchema.safeParse(presupuesto);
         if( success ){
@@ -39,10 +44,15 @@ export default async function PresupuestoIDPage({ params }: { params: {presupues
                 />
             </DocumentDetail>
 
-            <ModalEdit 
-                documentType="presupuesto" 
-                defaultValues={presupuesto}
-            />
+            {
+                presupuesto.estado === 'pending' ? 
+                    <ModalEdit 
+                        documentType="presupuesto" 
+                        defaultValues={presupuesto}
+                    />
+                :
+                    <Modal>No se puede editar un presupuesto que ya ha sido aprobado</Modal>
+            }
         </>
     )
 }

@@ -1,6 +1,6 @@
 import mongoose, { Document, Schema, PopulatedDoc, Types, models } from "mongoose";
-import { IOrdenServicio } from "./OrdenServicio";
-import { IEmisorReceptor } from "./EmisorReceptor";
+import { IOrdenServicio, OrdenServicio } from "./OrdenServicio";
+import { EmisorReceptor, IEmisorReceptor } from "./EmisorReceptor";
 import { string } from "zod";
 
 const statusFactura = {
@@ -28,7 +28,7 @@ const FacturaSchema: Schema = new Schema({
     },
     ordenServicio: {
         type: Types.ObjectId,
-        ref: 'OrdenServicio',
+        ref: OrdenServicio,
         required: true
     },
     fechaSellado: {
@@ -44,11 +44,11 @@ const FacturaSchema: Schema = new Schema({
     },
     emisor: {
         type: Types.ObjectId,
-        ref: 'EmisorReceptor'
+        ref: EmisorReceptor
     },
     receptor: {
         type: Types.ObjectId,
-        ref: 'EmisorReceptor'
+        ref: EmisorReceptor
     },
     folio: {
         type: string,

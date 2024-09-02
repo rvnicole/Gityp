@@ -1,60 +1,14 @@
 import { useMemo, useState } from "react";
 import { useForm } from "react-hook-form";
 import { Presupuesto, PresupuestoFormData, ServiceFormData } from "@/src/types";
-import { PrimaryButton, SecondaryButton } from "../../ui/Buttons";
+import { PrimaryButton } from "../../ui/Buttons";
 import { formatCurrency, formatDate } from "@/src/lib";
 import PresupuestoForm from "./PresupuestoForm";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 
 
-// OBJETO DE EJEMPLO
-const objEjemploPresupuesto = {
-    id: '0904',
-    fecha: new Date(),
-    proveedor: '1230',
-    solicito: 'Fernando Rocha',
-    subtotal: 5000,
-    iva: 16,
-    total: 5800,
-    servicios: [
-        {
-            id: '0123',
-            idOrdenServicio: '',
-            fechaEjecucion: new Date(),
-            descripcion: 'Servicio de transporte paquetería para entrega de muestras de helado',
-            costo: 3500,
-            tipoServicio: 'paqueteria',
-            idConductor: {
-                id: 'asdasdasd',
-                nombre: 'Eduardo',
-                apellido: 'Reynoso',
-                edad: 64,
-                licencia: 'Licencia'
-            },
-            nota: 'El servicio requiere hielo seco',
-            estado: 'assign',
-            controlForm:''
-        },
-        {
-            id: '0124',
-            idOrdenServicio: '',
-            fechaEjecucion: new Date(),
-            descripcion: 'Servicio de transporte paquetería, entrega de refrigerador',
-            costo: 2000,
-            tipoServicio: 'paqueteria',
-            idConductor: {
-                id: 'asdasdasd',
-                nombre: 'Eduardo',
-                apellido: 'Reynoso',
-                edad: 64,
-                licencia: 'Licencia'
-            },
-            nota: 'El congelador no viene emplayado',
-            estado: 'assign',
-            controlForm: ''
-        }
-    ]
-}
+
 
 const montosIniciales = {
     subtotal: 0,
@@ -63,29 +17,35 @@ const montosIniciales = {
 }
 
 export default function EditPresupuesto({ defaultValues }: { defaultValues: Presupuesto }){
+    const router = useRouter();
     const ser = defaultValues.servicios;
     const [ servicios, setServicios ] = useState<ServiceFormData[]>(ser);
     const [ openServiceForm, setOpenServiceForm ] = useState(false);
-    const [ montos, setMontos ] = useState({ subtotal: objEjemploPresupuesto.subtotal, iva: objEjemploPresupuesto.iva, total: objEjemploPresupuesto.total }); 
+    const [ montos, setMontos ] = useState({ subtotal: defaultValues.subtotal, iva: defaultValues.iva, total: defaultValues.total }); 
     const { register, handleSubmit, reset, formState: { errors }, watch } = useForm<PresupuestoFormData>({ defaultValues });
     const iva = watch('iva') ? watch('iva') : montos.iva;
-    const fecha = formatDate(objEjemploPresupuesto.fecha);
+    const fecha = formatDate(defaultValues.fecha);
     useMemo(()=>{ 
         const subtotal = servicios.reduce((acumulado, servicio) => acumulado + +servicio.costo, 0);
         setMontos({...montosIniciales, subtotal, iva, total: subtotal * iva/100 + subtotal }); 
     } , [servicios, iva]);
 
-    const handleEdit = ( formData: PresupuestoFormData ) => {
+    const handleEdit = async ( formData: PresupuestoFormData ) => {
         if( servicios.length < 1 ){
             alert('Debe agregar al menos un servicio');
             return;
         };
         const fullFormData = {
-            formData,
+            formData: { ...formData, id: defaultValues.id },
             servicios
         };
         console.log(fullFormData);
         // AQUI SE LLAMA AL ACTION
+        return;
+        //const res = await updatePresupuesto(fullFormData);
+        //alert(res.message);
+        router.refresh();
+        router.push(location.pathname);
     };
 
     return (
