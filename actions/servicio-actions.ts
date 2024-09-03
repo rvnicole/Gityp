@@ -4,7 +4,6 @@ import { connectDB } from "@/config/db";
 import { OrdenServicio } from "@/model/OrdenServicio";
 import { Servicio } from "@/model/Servicio";
 import { ServiceFormData, Servicio as ServicioType } from "@/src/types";
-import mongoose from "mongoose";
 
 export async function createServicio(formData: Omit<ServiceFormData, 'id'> & { searchOrdenes?: string }) {
     try {
@@ -32,37 +31,6 @@ export async function createServicio(formData: Omit<ServiceFormData, 'id'> & { s
         }      
         
         return { success: false, message: 'Error al crear el Servicio'}
-    }
-}
-
-export async function deleteServicio(id: ServicioType['id']) {
-    try {
-        await connectDB();
-
-        const servicio = await Servicio.findById(id);
-
-        const ordenServicio = await OrdenServicio.findById(servicio.ordenServicio).populate('servicios');
-        ordenServicio.servicios = ordenServicio.servicios.filter(service => service.id !== servicio.id);
-
-        const subtotal = ordenServicio.servicios.reduce((suma:number, service: ServiceFormData) => servicio.id === service.id ? suma : suma + service.costo, 0);
-        const iva = subtotal * 0.16;
-        const total = subtotal + iva;
-
-        ordenServicio.subtotal = subtotal;
-        ordenServicio.iva = iva;
-        ordenServicio.total = total;
-
-        console.log(ordenServicio)
-        
-        //await servicio.deleteOne();
-    }
-    catch(error) {
-        if (typeof error === 'object' && error !== null && 'message' in error) {
-            console.log(error.message);
-            return { success: false, message: error.message}
-        }      
-        
-        return { success: false, message: 'Error al eliminar el Servicio'}
     }
 }
 
@@ -99,5 +67,36 @@ export async function updateServicio(formData: ServiceFormData) {
         }      
         
         return { success: false, message: 'Error al actualizar el Servicio'}
+    }
+}
+
+export async function deleteServicio(id: ServicioType['id']) {
+    try {
+        await connectDB();
+
+        const servicio = await Servicio.findById(id);
+
+        const ordenServicio = await OrdenServicio.findById(servicio.ordenServicio).populate('servicios');
+
+        const servicios = ordenServicio.servicios.filter((service: ServicioType) => service.id !== servicio.id);
+        const subtotal = ordenServicio.servicios.reduce((suma:number, service: ServiceFormData) => service.id === servicio.id ? suma : suma + service.costo, 0);
+        const iva = subtotal * 0.16;
+        const total = subtotal + iva;
+
+        ordenServicio.servicios = servicios;
+        ordenServicio.subtotal = subtotal;
+        ordenServicio.iva = iva;
+        ordenServicio.total = total;
+        
+        await Promise.all([servicio.deleteOne(), ordenServicio.save()]);
+        return { success: true, message: "Servicio Eliminado Correctamente"}
+    }
+    catch(error) {
+        if (typeof error === 'object' && error !== null && 'message' in error) {
+            console.log(error.message);
+            return { success: false, message: error.message}
+        }      
+        
+        return { success: false, message: 'Error al eliminar el Servicio'}
     }
 }
