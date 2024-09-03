@@ -46,9 +46,7 @@ export const PresupuestoSchema = z.object({
 });
 
 export const OrdenServicioSchema = PresupuestoSchema.extend({
-    presupuesto: PresupuestoSchema.pick({
-        id: true
-    }),
+    presupuesto: PresupuestoSchema.pick({ id: true }),
     urlOrdenCompra: z.string().optional(),
     ordenCompra: z.string().optional()
 });
@@ -112,7 +110,9 @@ export const PresupuestoFormSchema = PresupuestoSchema.pick({
 });
 
 export const OrdenServicioFormSchema = OrdenServicioSchema.pick({
-    ordenCompra: true
+    id: true,
+    ordenCompra: true,
+    comentarios: true
 });
 
 export const FacturaFormSchema = FacturaSchema.pick({
@@ -173,6 +173,8 @@ export const CardServicioSchema = ServicioSchema.pick({
         ordenCompra: true
     })
 });
+
+export const CardsServiciosSchema = z.array(CardServicioSchema);
 
 export const CardFacturaSchema = FacturaSchema.pick({
     id: true,

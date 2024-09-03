@@ -2,13 +2,38 @@ import Link from "next/link";
 import { useForm } from "react-hook-form"
 import { PrimaryButton } from "../../ui/Buttons";
 import ErrorMessage from "../../Error";
-import { OrdenServicioFormData } from "@/src/types";
+import { OrdenServicio, OrdenServicioFormData } from "@/src/types";
+import { updateOrdenServicio } from "@/actions/orden-servicio-actions";
+import { useRouter } from "next/navigation";
 
-export default function OrdenServicioForm(){
-    const { register, handleSubmit, reset, formState: { errors } } = useForm<OrdenServicioFormData>();
+type OrdenServicioFormProps = {
+    defaultValues: OrdenServicio
+}
 
-    const handleEdit = ( formData: OrdenServicioFormData  ) => {
-        console.log('tansa', formData);
+export default function OrdenServicioForm({ defaultValues }: OrdenServicioFormProps){
+    const { register, handleSubmit, reset, formState: { errors } } = useForm<OrdenServicioFormData>({
+        defaultValues: {
+            id: defaultValues.id,
+            ordenCompra: defaultValues.ordenCompra,
+            comentarios: defaultValues.comentarios
+        }
+    });
+
+    const router = useRouter();
+
+    const handleEdit = async ( formData: OrdenServicioFormData  ) => {
+        const respuesta = await updateOrdenServicio(formData);
+
+        if( respuesta.success ) {
+            alert(respuesta.message);
+        }
+        else {
+            alert(respuesta.message);
+        }
+
+        reset();
+        router.push(location.pathname);
+        router.refresh();
     };
 
     return (
@@ -29,9 +54,19 @@ export default function OrdenServicioForm(){
                 />
                 <span className="p-1 text-destructiveColor">*</span>
             </div>
+
+            <div className="px-5">
+                <label htmlFor="comentarios">Comentarios:</label>
+                <textarea
+                    className="p-1 border border-borderColor placeholder:text-inputColor rounded w-full focus:outline-none focus:ring-2 focus:border-ringColor"
+                    { ...register('comentarios')}
+                />
+            </div>
+
             <div className="px-5 flex justify-center sm:justify-start">
                 { errors.ordenCompra && <ErrorMessage>{errors.ordenCompra.message?.toString()}</ErrorMessage> }
             </div>
+
             <div className="flex justify-center flex-col sm:justify-end sm:flex-row gap-5 p-5">
                 <Link 
                     href={`${location.pathname}`}

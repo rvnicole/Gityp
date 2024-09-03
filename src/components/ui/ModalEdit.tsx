@@ -26,7 +26,7 @@ const selectForm = ( {documentType, defaultValues}: ModalProps ) => {
       "title": 'Factura' 
     },
     'ordenServicio': { 
-      "tsx": <OrdenServicioForm /*defaultValues={defaultValues as OrdenServicio}*//>, 
+      "tsx": <OrdenServicioForm defaultValues={defaultValues as OrdenServicio}/>, 
       "title": 'Orden de servicio' 
     },
     'gestionCobro': { 
