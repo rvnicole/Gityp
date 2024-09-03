@@ -84,14 +84,16 @@ async function searchServicios( tipoBusqueda: string, q: string ){
         break;
         case 'regex': {
             const regex = new RegExp(q, 'i');
+            const ordenesServicio = await OrdenServicio.find({ solicito: { $regex: regex } });
             servicios = await Servicio.find({
                 $or: [
                     { descripcion: { $regex: regex } },
                     { nota: { $regex: regex } },
                     { tipoServicio: { $regex: regex } },
-                    { estado: { $regex: regex } }
+                    { estado: { $regex: regex } },
+                    { ordenServicio: { $in: ordenesServicio } }
                 ]
-            }).populate('idConductor').populate('ordenServicio');;
+            }).populate('idConductor').populate('ordenServicio');
         }
         break;
         case 'monto': {
@@ -215,11 +217,12 @@ export default async function SearchPage( params: SearchPageProps ){
 
     if( query && query.documents.length > 0 )  return (
         <div className="space-y-5">
-                <CardTable
-                    documents={query.documents}
-                    documentType={params.searchParams.document}
-                    fechasDuplicadas={query.fechasDuplicadas}
-                />
+            <h1 className="p-3 text-foregroundColor font-semibold">{query.documents.length} Resultados: </h1>
+            <CardTable
+                documents={query.documents}
+                documentType={params.searchParams.document}
+                fechasDuplicadas={query.fechasDuplicadas}
+            />
         </div>
     )
     else return (
