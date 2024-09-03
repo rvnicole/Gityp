@@ -74,21 +74,8 @@ export async function deleteServicio(id: ServicioType['id']) {
     try {
         await connectDB();
 
-        const servicio = await Servicio.findById(id);
-
-        const ordenServicio = await OrdenServicio.findById(servicio.ordenServicio).populate('servicios');
-
-        const servicios = ordenServicio.servicios.filter((service: ServicioType) => service.id !== servicio.id);
-        const subtotal = ordenServicio.servicios.reduce((suma:number, service: ServiceFormData) => service.id === servicio.id ? suma : suma + service.costo, 0);
-        const iva = subtotal * 0.16;
-        const total = subtotal + iva;
-
-        ordenServicio.servicios = servicios;
-        ordenServicio.subtotal = subtotal;
-        ordenServicio.iva = iva;
-        ordenServicio.total = total;
-        
-        await Promise.all([servicio.deleteOne(), ordenServicio.save()]);
+        const servicio = await Servicio.findById(id);        
+        await servicio.deleteOne();
         return { success: true, message: "Servicio Eliminado Correctamente"}
     }
     catch(error) {
