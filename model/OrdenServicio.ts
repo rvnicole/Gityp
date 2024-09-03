@@ -14,7 +14,7 @@ export interface IOrdenServicio extends Document {
     fecha: Date,
     proveedor: string,
     solicito: string,
-    servicios: PopulatedDoc<IServicio & Document>
+    servicios: PopulatedDoc<IServicio & Document>[]
 };
 
 const OrdenServicioSchema: Schema = new Schema({
@@ -72,14 +72,15 @@ const OrdenServicioSchema: Schema = new Schema({
 OrdenServicioSchema.post('save', async (doc) => {
     if( doc.estado === 'assign' ){
         
-        const servicios = doc.servicios as ObjectId[];
-
+        const servicios = doc.servicios as ObjectId[];        
+        
         for( const servicio of servicios ){
             
-            const documentServicio = await Servicio.findById(servicio.toString());
-            documentServicio.ordenServicio = doc.id.toString();
+            const documentServicio = await Servicio.findById(servicio);            
+            documentServicio.ordenServicio = doc._id;
             await documentServicio.save();
         };
+        
     }
 });
 
