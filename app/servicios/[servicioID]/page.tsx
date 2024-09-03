@@ -1,58 +1,51 @@
+"use server"
+
+import { connectDB } from "@/config/db";
+import { Servicio } from "@/model/Servicio";
 import DocumentDetail from "@/src/components/documentView/DocumentDetail";
 import ServicioDetail from "@/src/components/documentView/ServicioDetail";
 import ModalEdit from "@/src/components/ui/ModalEdit";
-import { ServiceFormData } from "@/src/types";
+import { ServicioSchema } from "@/src/schema";
+import { ServiceFormData, Servicio as ServicioType} from "@/src/types";
 
-// DATOS DE PRUEBA
-const defaultValues: ServiceFormData = {
-    id: 'string',
-    costo: 400,
-    descripcion: "Esta es una descripcion mocito emosa",
-    estado: "assign",
-    fechaEjecucion: new Date("2024-08-24"),
-    idConductor: "conductor",
-    nota: "Traslado",
-    ordenServicio: 
-        {
-            id: 'n',
-            solicito: '',
-            urlOrdenCompra: 'string',
-            ordenCompra: 'string'
+async function getServicio(id: ServicioType['id']) {
+    try {
+        await connectDB();
+
+        const servicio = await Servicio.findById(id).populate([
+            { path: 'idConductor' },
+            { path: 'ordenServicio'}
+        ]);
+
+        const {success, data, error} = ServicioSchema.safeParse(servicio);
+        
+        if(success) {
+            return data;
         }
-    ,
-    tipoServicio: "personal"
+
+        error.issues.forEach( error => console.log(error));
+    }
+    catch(error) {
+        console.log(error);
+    }
 }
 
-export default function ServicioIDPage({ params }: { params: {servicioID: string}}) {
+export default async function ServicioIDPage({ params }: { params: {servicioID: string}}) {
     const { servicioID } = params;
 
-    const servicio = {
-        id: '6699c12b1f9d4e7812fa7272',
-        ordenServicio: {
-            id: '6699c12b1f9d4e7812fa7271',
-            solicito: 'Fulanita',
-            urlOrdenCompra: 'https://heroicons.com/outline',
-            ordenCompra: '67890'
-        },
-        fechaEjecucion: new Date('2024/02/08'),
-        descripcion: 'Ut suscipit mollis felis, accumsan ultricies mauris sollicitudin eget.',
-        costo: 1000,
-        tipoServicio: 'paqueteria',
-        idConductor: 'Persona Conductora',
-        nota: 'Ut vitae nulla hendrerit.',
-        estado: 'assign'
-    };
+    const servicio = await getServicio(servicioID);
 
-    return (
+    if(servicio) return (
         <>
             <DocumentDetail 
                 documentID={servicioID}
             >
                 <ServicioDetail servicio={servicio} />
             </DocumentDetail>
+            
             <ModalEdit 
                 documentType="servicio" 
-                defaultValues={defaultValues}
+                defaultValues={servicio}
             />
         </>
     )

@@ -5,7 +5,6 @@ import { OrdenServicio } from "@/model/OrdenServicio";
 import { Presupuesto } from "@/model/Presupuesto";
 import { 
     OrdenServicioFormData,
-    OrdenServicio as OrdenServicioType, 
     Presupuesto as PresupuestoType
 } from "@/src/types";
 
@@ -31,6 +30,23 @@ export async function createOrdenServicio(presupuestoID: PresupuestoType['id']) 
         }      
         
         return { success: false, message: 'Error al crear la Orden de Servicio'}
+    }
+}
+
+export async function getOrdenesServicioIDs() {
+    try {
+        await connectDB();
+
+        const ordenesServicios = await OrdenServicio.find(
+            { estado: { $in: ['assign', 'inProgress'] } },
+            { _id: 1 }
+        );
+
+        const ordenesServicioIDs = ordenesServicios.map( ordenServicio => ordenServicio.id.toString());
+        return ordenesServicioIDs;
+    }
+    catch(error) {
+        console.log(error);
     }
 }
 

@@ -113,7 +113,7 @@ export default function FacturaDetail({ factura }: FacturaDetailProps) {
 
             <div className="md:col-span-3">
                 <p className="font-semibold">Comentarios de la Orden de Servicio:</p>
-                <p className="text-mutedColor-foreground">{factura.ordenServicio.comentarios}</p>
+                <p className="text-mutedColor-foreground bg-accentColor py-2 px-1 rounded-lg">{factura.ordenServicio.comentarios}</p>
             </div>
 
             <div className="md:col-span-3">

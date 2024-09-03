@@ -1,16 +1,49 @@
-import { useMemo } from "react";
+import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import ServicioForm from "./ServicioForm";
-import { ServiceFormData } from "@/src/types";
+import { OptionOrdenesServiciosIDs, ServiceFormData } from "@/src/types";
 import { PrimaryButton } from "../../ui/Buttons";
 import Link from "next/link";
+import { getOrdenesServicioIDs } from "@/actions/orden-servicio-actions";
+import { OptionOrdenesServicios } from "@/src/schema";
+import { createServicio } from "@/actions/servicio-actions";
+import { useRouter } from "next/navigation";
 
 export default function AddService(){
-    const dataListOrdenes = useMemo(()=>{},[]); // Este datalistordenes se llena con la misma informacion de ordenes que traen los servicios para solo hacer una llamada a la bd
     const  { register, handleSubmit, reset, formState: { errors } } = useForm<ServiceFormData & { searchOrdenes?: string }>();
+    const [dataListOrdenes, setDataListOrdenes] = useState<OptionOrdenesServiciosIDs>([]); 
+    const router = useRouter();
+    
+    useEffect(() => {
+        const fetchOrdenesServicioIDs = async () => {
+            try {
+                const ordenesServicioIDs = await getOrdenesServicioIDs();
+                const {success, data, error} = OptionOrdenesServicios.safeParse(ordenesServicioIDs);
 
-    const handleServiceFormData = ( formData: ServiceFormData & { searchOrdenes?: string } ) => {
-        console.log(formData);
+                if( success ) {
+                    setDataListOrdenes(data);
+                }
+
+            } catch (error) {
+                console.error("Error", error);
+            }
+        };
+        
+        fetchOrdenesServicioIDs();
+    }, []);
+
+    const handleServiceFormData = async ( formData: ServiceFormData & { searchOrdenes?: string }) => {
+        const respuesta = await createServicio(formData);
+        
+        if( respuesta.success ) {
+            alert(respuesta.message);
+        }
+        else {
+            alert(respuesta.message);
+        }
+
+        reset();
+        router.push(location.pathname);
     };
 
     return(
@@ -32,9 +65,13 @@ export default function AddService(){
                 />
                 <datalist id="ordenesServicio">
                     <option value="valores"></option>
+                    { dataListOrdenes.map( ordenServicioID => (
+                        <option key={ordenServicioID} value={ordenServicioID}></option>
+                    ))}
                 </datalist>
                 <span className="p-1 text-destructiveColor">*</span>
             </div>
+            
             <ServicioForm 
                 register={register}
                 errors={errors}

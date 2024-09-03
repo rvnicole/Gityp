@@ -51,7 +51,7 @@ export default function PresupuestoDetail({ presupuesto }: PresupuestoDetailProp
 
             <div className="md:col-span-3">
                 <p className="font-semibold">Comentarios:</p>
-                <p className="text-mutedColor-foreground">{presupuesto.comentarios}</p>
+                <p className="text-mutedColor-foreground bg-accentColor py-2 px-1 rounded-lg">{presupuesto.comentarios}</p>
             </div>
 
             <div className="md:col-span-3">
