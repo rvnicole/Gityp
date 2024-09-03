@@ -24,7 +24,10 @@ export const ServicioSchema = z.object({
     descripcion: z.string(),
     costo: z.number(),
     tipoServicio: z.string(),
-    idConductor: ConductoresSchema,
+    idConductor: ConductoresSchema.pick({
+        nombre: true,
+        apellido: true
+    }),
     nota: z.string(),
     estado: z.string() 
 });
@@ -43,7 +46,9 @@ export const PresupuestoSchema = z.object({
 });
 
 export const OrdenServicioSchema = PresupuestoSchema.extend({
-    presupuesto: PresupuestoSchema,
+    presupuesto: PresupuestoSchema.pick({
+        id: true
+    }),
     urlOrdenCompra: z.string().optional(),
     ordenCompra: z.string().optional()
 });
@@ -183,6 +188,7 @@ export const CardFacturaSchema = FacturaSchema.pick({
         ordenCompra: true
     })
 });
+export const CardFacturasSchema = z.array(CardFacturaSchema);
 
 export const CardCobroSchema = GestionCobrosSchema.pick({
     id: true,

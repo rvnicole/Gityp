@@ -28,34 +28,34 @@ const FacturaSchema: Schema = new Schema({
     },
     ordenServicio: {
         type: Types.ObjectId,
-        ref: OrdenServicio,
+        ref: 'OrdenServicio',
         required: true
     },
     fechaSellado: {
         type: Date
     },
     estado: {
-        type: string,
+        type: String,
         required: true,
         default: statusFactura.NOTSEALED
     },
     urlFactura: {
-        type: string
+        type: String
     },
     emisor: {
         type: Types.ObjectId,
-        ref: EmisorReceptor
+        ref: 'EmisorReceptor'
     },
     receptor: {
         type: Types.ObjectId,
-        ref: EmisorReceptor
+        ref: 'EmisorReceptor'
     },
     folio: {
-        type: string,
+        type: String,
         required: true
     },
     folioFiscal: {
-        type: string
+        type: String
     }
 }, { timestamps: true });
 

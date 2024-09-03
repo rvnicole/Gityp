@@ -1,6 +1,7 @@
 import mongoose, { Document, PopulatedDoc, Schema, Types, models, ObjectId } from "mongoose";
-import { Presupuesto } from "./Presupuesto";
+import { IPresupuesto, Presupuesto } from "./Presupuesto";
 import { IServicio, Servicio } from "./Servicio";
+import { Factura } from "./Factura";
 
 const statusPresupuesto = {
     ASSIGN: 'assign',
@@ -31,7 +32,7 @@ const OrdenServicioSchema: Schema = new Schema({
     servicios: [
         {
             type: Types.ObjectId,
-            ref: 'Servicio'
+            ref: Servicio
         }
     ],
     comentarios: {
@@ -74,13 +75,21 @@ OrdenServicioSchema.post('save', async (doc) => {
         const servicios = doc.servicios as ObjectId[];
 
         for( const servicio of servicios ){
-            console.log("ITERANDO SOBRE EL ID", servicio);
             
             const documentServicio = await Servicio.findById(servicio.toString());
             documentServicio.ordenServicio = doc.id.toString();
             await documentServicio.save();
         };
-    };
+    }
+});
+
+OrdenServicioSchema.post('updateOne', async (doc) => {
+    if( doc.estado === 'complete' ){
+        const factura = await new Factura();
+        factura.fecha = new Date();
+        factura.folio = '2000';
+        await factura();
+    }
 });
 
 export const OrdenServicio = models.OrdenServicio || mongoose.model<IOrdenServicio>('OrdenServicio', OrdenServicioSchema );

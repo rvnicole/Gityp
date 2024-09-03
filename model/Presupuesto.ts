@@ -35,7 +35,7 @@ const PresupuestoSchema: Schema = new Schema({
     servicios: [
         {
             type: Types.ObjectId,
-            ref: 'Servicio'
+            ref: Servicio
         }
     ],
     comentarios: {

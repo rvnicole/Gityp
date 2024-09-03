@@ -51,7 +51,7 @@ export default async function PresupuestoIDPage({ params }: { params: {presupues
                         defaultValues={presupuesto}
                     />
                 :
-                    <Modal>No se puede editar un presupuesto que ya ha sido aprobado</Modal>
+                    <Modal>No se puede editar un presupuesto que ya ha sido aprobado o rechazado</Modal>
             }
         </>
     )

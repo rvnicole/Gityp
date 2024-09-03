@@ -26,7 +26,7 @@ const GestionCobroSchema: Schema = new Schema({
         default: false
     },
     pagado: {
-        types: Boolean,
+        type: Boolean,
         default: false
     }
 }, { timestamps: true });

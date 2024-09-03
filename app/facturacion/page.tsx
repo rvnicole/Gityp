@@ -1,7 +1,24 @@
+import { connectDB } from "@/config/db";
+import { Factura } from "@/model/Factura";
 import CardTable from "@/src/components/cards/CardTable";
 import ModalAdd from "@/src/components/ui/ModalAdd";
+import { CardFacturaSchema } from "@/src/schema";
 
-export default function FacturacionPage() {
+async function getFacturas(){
+    await connectDB();
+    const facturas = await Factura.find();
+    const { success, data, error } = CardFacturaSchema.safeParse(facturas);
+    if( success ){
+        return data;
+    }
+    error.issues.forEach( issue => console.log(issue));
+}
+
+export default async function FacturacionPage() {
+
+    const facturas = await getFacturas() || [];
+    console.log('FACTURAS', facturas);
+
     const documents = [
         {
             id: '6699c12b1f9d4e7812fa7271',
