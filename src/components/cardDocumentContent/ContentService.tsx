@@ -35,7 +35,7 @@ export default function ContentService({document, fechasDuplicadas}: ContentServ
             <div className="w-full p-1 bg-charColor-char4 rounded-lg my-2"></div>
 
             <p className="font-semibold">Conductor: {' '}
-                <span className="font-normal">{document.idConductor}</span>
+                <span className="font-normal">{document.idConductor.nombre} {document.idConductor.apellido}</span>
             </p>
 
             <p className="font-semibold">Tipo: {' '}
@@ -43,21 +43,21 @@ export default function ContentService({document, fechasDuplicadas}: ContentServ
             </p>
 
             <p className="font-semibold">Solicito: {' '}
-                <span className="font-normal">{document.ordenServicio.solicito}</span>
+                <span className="font-normal">{document.ordenServicio?.solicito}</span>
             </p>
 
-            { document.ordenServicio.proveedor && (
+            { document.ordenServicio?.proveedor && (
                 <p className="font-semibold">Proveedor: {' '}
                     <span className="font-normal">{document.ordenServicio.proveedor}</span>
                 </p>
             )}
 
             <p className="font-semibold">OS:{' '}
-                <span className="font-normal">{document.ordenServicio.id}</span>
+                <span className="font-normal">{document.ordenServicio?.id}</span>
             </p>   
                      
             <p className="inline-block font-semibold py-1 px-3 my-1 bg-mutedColor-foreground text-white rounded-full">PO{' '}
-                <span className="font-normal">{document.ordenServicio.ordenCompra}</span>
+                <span className="font-normal">{document.ordenServicio?.ordenCompra}</span>
             </p>   
             
             <p className="font-semibold py-2 text-right text-xl">{formatCurrency(document.costo)}</p>

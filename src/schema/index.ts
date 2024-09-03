@@ -171,7 +171,7 @@ export const CardServicioSchema = ServicioSchema.pick({
         proveedor: true,
         solicito: true,
         ordenCompra: true
-    })
+    }).optional()
 });
 
 export const CardsServiciosSchema = z.array(CardServicioSchema);
@@ -200,3 +200,6 @@ export const CardCobroSchema = GestionCobrosSchema.pick({
 }).extend({
     factura: CardFacturaSchema
 });
+
+
+export const OptionOrdenesServicios = z.array( z.string() );

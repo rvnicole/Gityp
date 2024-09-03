@@ -12,13 +12,14 @@ async function getOrdenServicio(id: OrdenServicioType['id']) {
     try {
         await connectDB();
 
-        const ordenesServicio = await OrdenServicio.findById(id).populate([
+        const ordenServicio = await OrdenServicio.findById(id).populate([
             { path: 'presupuesto', select: '_id' },
             { path: 'presupuesto' },
-            { path: 'servicios', populate: { path: 'idConductor' } }
+            { path: 'servicios', populate: { path: 'idConductor' } },
+            { path: 'servicios', populate: { path: 'ordenServicio'} }
         ]);
 
-        const {success, data, error} = OrdenServicioSchema.safeParse(ordenesServicio);
+        const {success, data, error} = OrdenServicioSchema.safeParse(ordenServicio);
         
         if(success) {
             return data;
@@ -35,6 +36,7 @@ export default async function OrdenServicioIDPage({ params }: { params: {ordenSe
     const { ordenServicioID } = params;
 
     const ordenServicio = await getOrdenServicio(ordenServicioID);
+    //console.log('Orden Servicio', ordenServicio);
 
     if(ordenServicio) return (
         <>
