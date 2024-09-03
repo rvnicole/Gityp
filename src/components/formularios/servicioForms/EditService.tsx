@@ -1,4 +1,3 @@
-import { useMemo } from "react";
 import { useForm } from "react-hook-form";
 import ServicioForm from "./ServicioForm";
 import { ServiceFormData, Servicio } from "@/src/types";
@@ -12,7 +11,6 @@ type EditServiceProps = {
 }
 
 export default function EditService({defaultValues}: EditServiceProps){
-    const dataListOrdenes = useMemo(()=>{},[]);
     const  { register, handleSubmit, reset, formState: { errors } } = useForm<ServiceFormData & { searchOrdenes?: string }>({
         defaultValues
     });

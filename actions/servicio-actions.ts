@@ -4,7 +4,6 @@ import { connectDB } from "@/config/db";
 import { OrdenServicio } from "@/model/OrdenServicio";
 import { Servicio } from "@/model/Servicio";
 import { ServiceFormData, Servicio as ServicioType } from "@/src/types";
-import mongoose from "mongoose";
 
 export async function createServicio(formData: Omit<ServiceFormData, 'id'> & { searchOrdenes?: string }) {
     try {
@@ -35,23 +34,6 @@ export async function createServicio(formData: Omit<ServiceFormData, 'id'> & { s
     }
 }
 
-export async function deleteServicio(id: ServicioType['id']) {
-    try {
-        await connectDB();
-
-        const servicio = await Servicio.findById(id);
-        await servicio.deleteOne();
-    }
-    catch(error) {
-        if (typeof error === 'object' && error !== null && 'message' in error) {
-            console.log(error.message);
-            return { success: false, message: error.message}
-        }      
-        
-        return { success: false, message: 'Error al eliminar el Servicio'}
-    }
-}
-
 export async function updateServicio(formData: ServiceFormData) {
     try {
         console.log(formData)
@@ -67,8 +49,7 @@ export async function updateServicio(formData: ServiceFormData) {
         servicio.nota = formData.nota;
 
         const ordenServicio = await OrdenServicio.findById(formData.ordenServicio?.id).populate('servicios');
-        
-        const subtotal = ordenServicio.servicios.reduce((suma:number, servicio: ServiceFormData) => servicio.id.toString() === formData.id ? suma + servicio.costo : suma + Number(formData.costo), 0);
+        const subtotal = ordenServicio.servicios.reduce((suma:number, servicio: ServiceFormData) => servicio.id === formData.id ? suma + Number(formData.costo) : suma + servicio.costo, 0);
         const iva = subtotal * 0.16;
         const total = subtotal + iva;
 
@@ -86,5 +67,23 @@ export async function updateServicio(formData: ServiceFormData) {
         }      
         
         return { success: false, message: 'Error al actualizar el Servicio'}
+    }
+}
+
+export async function deleteServicio(id: ServicioType['id']) {
+    try {
+        await connectDB();
+
+        const servicio = await Servicio.findById(id);        
+        await servicio.deleteOne();
+        return { success: true, message: "Servicio Eliminado Correctamente"}
+    }
+    catch(error) {
+        if (typeof error === 'object' && error !== null && 'message' in error) {
+            console.log(error.message);
+            return { success: false, message: error.message}
+        }      
+        
+        return { success: false, message: 'Error al eliminar el Servicio'}
     }
 }
