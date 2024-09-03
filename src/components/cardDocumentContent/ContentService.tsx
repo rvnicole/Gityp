@@ -19,7 +19,8 @@ const coloresDuplicados: ColoresDuplicados= {
 
 export default function ContentService({document, fechasDuplicadas}: ContentServiceProps) {
     const numFechasDuplicados = Number(fechasDuplicadas[formatDate(document.fechaEjecucion)]);
-
+    //const numFechasDuplicados = 2;
+    console.log('AQUI DEBE ESTAR EL DOCUMENTO',document);
     return (
         <div>
             {

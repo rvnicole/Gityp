@@ -15,7 +15,7 @@ const GestionCobroSchema: Schema = new Schema({
     },
     factura: {
         type: Types.ObjectId,
-        ref: Factura,
+        ref: 'Factura' || Factura,
         required: true
     },
     ie: {
