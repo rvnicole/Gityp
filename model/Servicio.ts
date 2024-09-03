@@ -46,8 +46,10 @@ const ServicioSchema: Schema = new Schema({
     },
     ordenServicio: {
         type: Types.ObjectId,
-        ref: 'OrdenServicio'       
+        ref: 'OrdenServicio' || OrdenServicio       
     }
 }, { timestamps: true })
+
+ServicioSchema.path('ordenServicio').options.ref = () => require('./OrdenServicio').OrdenServicio;
 
 export const Servicio = models.Servicio || mongoose.model<IServicio>('Servicio', ServicioSchema);

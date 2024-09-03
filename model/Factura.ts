@@ -28,7 +28,7 @@ const FacturaSchema: Schema = new Schema({
     },
     ordenServicio: {
         type: Types.ObjectId,
-        ref: 'OrdenServicio',
+        ref: 'OrdenServicio' || OrdenServicio,
         required: true
     },
     fechaSellado: {
@@ -44,11 +44,11 @@ const FacturaSchema: Schema = new Schema({
     },
     emisor: {
         type: Types.ObjectId,
-        ref: 'EmisorReceptor'
+        ref: EmisorReceptor
     },
     receptor: {
         type: Types.ObjectId,
-        ref: 'EmisorReceptor'
+        ref: 'EmisorReceptor' 
     },
     folio: {
         type: String,
