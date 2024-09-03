@@ -8,16 +8,18 @@ import CardTable from "@/src/components/cards/CardTable";
 import { Presupuesto as PresupuestoType, } from "@/src/types";
 
 async function searchPresupuestos( tipoBusqueda: string, q: string ){
+    console.log({tipoBusqueda, q});
     switch( tipoBusqueda ){ 
         case 'mongoId': {
             return await Presupuesto.find({ _id: q });
         }
         case 'regex': {
+            const regex = new RegExp(q, 'i');
             return await Presupuesto.find({
                 $or: [
-                    { solicito: { $regex: q } },
-                    { comentarios: { $regex: q } },
-                    { estado: { $regex: q } }
+                    { solicito: { $regex: regex } },
+                    { comentarios: { $regex: regex } },
+                    { estado: { $regex: regex } }
                 ]
             });
         }
@@ -38,12 +40,13 @@ async function searchOrdenes( tipoBusqueda: string, q: string ){
             });
         }
         case 'regex': {
+            const regex = new RegExp(q, 'i');
             return await OrdenServicio.find({
                 $or: [
-                    { solicito: { $regex: q } },
-                    { comentarios: { $regex: q } },
-                    { estado: { $regex: q } },
-                    { ordenCompra: { $regex: q } }
+                    { solicito: { $regex: regex } },
+                    { comentarios: { $regex: regex } },
+                    { estado: { $regex: regex } },
+                    { ordenCompra: { $regex: regex } }
                 ]
             });
         }
@@ -64,12 +67,13 @@ async function searchServicios( tipoBusqueda: string, q: string ){
             });
         }
         case 'regex': {
+            const regex = new RegExp(q, 'i');
             return await Servicio.find({
                 $or: [
-                    { descripcion: { $regex: q } },
-                    { nota: { $regex: q } },
-                    { tipoServicio: { $regex: q } },
-                    { estado: { $regex: q } }
+                    { descripcion: { $regex: regex } },
+                    { nota: { $regex: regex } },
+                    { tipoServicio: { $regex: regex } },
+                    { estado: { $regex: regex } }
                 ]
             });
         }
@@ -90,11 +94,12 @@ async function searchFacturas( tipoBusqueda: string, q: string ){
             });
         }
         case 'regex': {
+            const regex = new RegExp(q, 'i');
             return await Factura.find({
                 $or: [
-                    { estado: { $regex: q } },
-                    { folio: { $regex: q } },
-                    { folioFiscal: { $regex: q } }
+                    { estado: { $regex: regex } },
+                    { folio: { $regex: regex } },
+                    { folioFiscal: { $regex: regex } }
                 ]
             });
         }
@@ -112,10 +117,11 @@ async function searchCobros( tipoBusqueda: string, q: string ){
             });
         }
         case 'regex': {
+            const regex = new RegExp(q, 'i');
             return await GestionCobro.find({
                 $or: [
-                    { comentarios: { $regex: q } },
-                    { ie: { $regex: q } }
+                    { comentarios: { $regex: regex } },
+                    { ie: { $regex: regex } }
                 ]
             });
         }
@@ -133,7 +139,7 @@ async function searchDocuments( searchParams: { document: string, q: string }){
     else if( !isNaN(+searchParams.q) ){
         console.log('ES UN NUMERO');
         tipoBusqueda = 'monto'
-    };
+    }
 
     switch(searchParams.document){
         case 'presupuestos': {
