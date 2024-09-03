@@ -4,7 +4,7 @@ import ServicioForm from "./ServicioForm";
 import { ServiceFormData, Servicio } from "@/src/types";
 import Link from "next/link";
 import { PrimaryButton } from "../../ui/Buttons";
-import { updateServicio } from "@/actions/servicio-actions";
+import { deleteServicio, updateServicio } from "@/actions/servicio-actions";
 import { useRouter } from "next/navigation";
 
 type EditServiceProps = {
@@ -19,7 +19,7 @@ export default function EditService({defaultValues}: EditServiceProps){
     const router = useRouter();
 
     const handleServiceFormData = async (formData: ServiceFormData & { searchOrdenes?: string }) => {
-        const respuesta = await updateServicio(formData);
+        /*const respuesta = await updateServicio(formData);
         
         if( respuesta.success ) {
             alert(respuesta.message);
@@ -29,7 +29,9 @@ export default function EditService({defaultValues}: EditServiceProps){
         }
 
         reset();
-        router.push(location.pathname);
+        router.push(location.pathname);*/
+
+        await deleteServicio(formData.id);
     };
 
     return(

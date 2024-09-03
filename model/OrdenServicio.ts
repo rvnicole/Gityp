@@ -63,7 +63,7 @@ const OrdenServicioSchema: Schema = new Schema({
     },
     presupuesto: {
         type: Types.ObjectId,
-        ref: 'Presupuesto',
+        ref: Presupuesto,
         required: true
     }
 }, { timestamps: true });

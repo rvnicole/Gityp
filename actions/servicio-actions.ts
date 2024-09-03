@@ -40,7 +40,21 @@ export async function deleteServicio(id: ServicioType['id']) {
         await connectDB();
 
         const servicio = await Servicio.findById(id);
-        await servicio.deleteOne();
+
+        const ordenServicio = await OrdenServicio.findById(servicio.ordenServicio).populate('servicios');
+        ordenServicio.servicios = ordenServicio.servicios.filter(service => service.id !== servicio.id);
+
+        const subtotal = ordenServicio.servicios.reduce((suma:number, service: ServiceFormData) => servicio.id === service.id ? suma : suma + service.costo, 0);
+        const iva = subtotal * 0.16;
+        const total = subtotal + iva;
+
+        ordenServicio.subtotal = subtotal;
+        ordenServicio.iva = iva;
+        ordenServicio.total = total;
+
+        console.log(ordenServicio)
+        
+        //await servicio.deleteOne();
     }
     catch(error) {
         if (typeof error === 'object' && error !== null && 'message' in error) {
@@ -67,8 +81,7 @@ export async function updateServicio(formData: ServiceFormData) {
         servicio.nota = formData.nota;
 
         const ordenServicio = await OrdenServicio.findById(formData.ordenServicio?.id).populate('servicios');
-        
-        const subtotal = ordenServicio.servicios.reduce((suma:number, servicio: ServiceFormData) => servicio.id.toString() === formData.id ? suma + servicio.costo : suma + Number(formData.costo), 0);
+        const subtotal = ordenServicio.servicios.reduce((suma:number, servicio: ServiceFormData) => servicio.id === formData.id ? suma + Number(formData.costo) : suma + servicio.costo, 0);
         const iva = subtotal * 0.16;
         const total = subtotal + iva;
 

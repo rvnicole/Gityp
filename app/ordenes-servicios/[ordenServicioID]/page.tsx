@@ -1,5 +1,3 @@
-"use server"
-
 import { connectDB } from "@/config/db";
 import { OrdenServicio } from "@/model/OrdenServicio";
 import DocumentDetail from "@/src/components/documentView/DocumentDetail";
@@ -18,6 +16,7 @@ async function getOrdenServicio(id: OrdenServicioType['id']) {
             { path: 'servicios', populate: { path: 'idConductor' } },
             { path: 'servicios', populate: { path: 'ordenServicio'} }
         ]);
+        console.log('Orden Servicio 1', ordenServicio);
 
         const {success, data, error} = OrdenServicioSchema.safeParse(ordenServicio);
         
@@ -36,7 +35,7 @@ export default async function OrdenServicioIDPage({ params }: { params: {ordenSe
     const { ordenServicioID } = params;
 
     const ordenServicio = await getOrdenServicio(ordenServicioID);
-    //console.log('Orden Servicio', ordenServicio);
+    console.log('Orden Servicio', ordenServicio);
 
     if(ordenServicio) return (
         <>

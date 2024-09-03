@@ -85,7 +85,7 @@ export default function ServicioDetail({ servicio }: ServicioDetailProps) {
 
             <div className="md:col-span-3">
                 <p className="font-semibold">Nota:</p>
-                <p className="text-mutedColor-foreground">{servicio.descripcion}</p>
+                <p className="text-mutedColor-foreground">{servicio.nota}</p>
             </div>
 
             <div className="md:col-start-3 flex justify-end gap-5">
