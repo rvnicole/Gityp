@@ -41,7 +41,6 @@ export default function AddService(){
         else {
             alert(respuesta.message);
         }
-
         reset();
         router.push(location.pathname);
     };
@@ -64,7 +63,6 @@ export default function AddService(){
                     })}
                 />
                 <datalist id="ordenesServicio">
-                    <option value="valores"></option>
                     { dataListOrdenes.map( ordenServicioID => (
                         <option key={ordenServicioID} value={ordenServicioID}></option>
                     ))}

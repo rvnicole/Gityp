@@ -4,12 +4,13 @@ import { connectDB } from "@/config/db";
 import { OrdenServicio } from "@/model/OrdenServicio";
 import { Servicio } from "@/model/Servicio";
 import { ServiceFormData, Servicio as ServicioType } from "@/src/types";
+import mongoose from "mongoose";
 
 export async function createServicio(formData: Omit<ServiceFormData, 'id'> & { searchOrdenes?: string }) {
     try {
-        await connectDB();
+        await connectDB();        
 
-        const servicio = await new Servicio(formData);
+        const servicio = await new Servicio(formData);        
         const ordenServicio = await OrdenServicio.findById(formData.searchOrdenes).populate('servicios');
 
         const subtotal = ordenServicio.servicios.reduce((suma:number, servicio: ServiceFormData) => suma + servicio.costo, 0) + Number(formData.costo);
@@ -19,9 +20,7 @@ export async function createServicio(formData: Omit<ServiceFormData, 'id'> & { s
         ordenServicio.subtotal = subtotal;
         ordenServicio.iva = iva;
         ordenServicio.total = total;
-        ordenServicio.servicios.push(servicio.id.toString());
-
-        servicio.ordenServicio = ordenServicio.id.toString();
+        ordenServicio.servicios.push( servicio.id);
 
         await Promise.all([servicio.save(), ordenServicio.save()]);
         return { success: true, message: "Servicio Creado Correctamente"}
