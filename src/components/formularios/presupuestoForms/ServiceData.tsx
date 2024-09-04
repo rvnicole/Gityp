@@ -1,6 +1,6 @@
 import { useSearchParams } from "next/navigation";
 import { PencilSquareIcon, XCircleIcon } from "@heroicons/react/24/solid";
-import { formatDate } from "@/src/lib";
+import { evalDate, formatDate } from "@/src/lib";
 import { ServiceFormData } from "@/src/types";
 import { tiposServicio } from "@/src/data/data";
 import { Dispatch, SetStateAction } from "react";
@@ -14,18 +14,10 @@ type ListServicesProps = {
 
 export default function ServicesData( { servicio, setServicioEdit, servicios, setServicios }: ListServicesProps ){
     const { fechaEjecucion } = servicio;
-    let fecha = '';
-    if( typeof fechaEjecucion !== 'string' ){
-        const year = fechaEjecucion.getFullYear();
-        const mes = fechaEjecucion.getMonth() + 1 < 10 ? "0"+(fechaEjecucion.getMonth() + 1 ) : fechaEjecucion.getMonth() + 1;
-        const dia = fechaEjecucion.getDate()+ 1 < 10 ? "0"+(fechaEjecucion.getDate() + 1 ) : fechaEjecucion.getDate() + 1;
-        fecha  = `${year}-${mes}-${dia}T00:00:00`;
-    }
-    else{
-        fecha= fechaEjecucion+'T00:00:00';
-    };
+    const fecha = evalDate(fechaEjecucion);    
 
     const handleEditService = (servicio: ServiceFormData) => {
+        console.log(servicio, 'Serivico para editar');
         setServicioEdit( {...servicio} );
     };
 

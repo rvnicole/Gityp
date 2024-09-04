@@ -4,6 +4,7 @@ import { connectDB } from "@/config/db";
 import { Servicio } from "@/model/Servicio";
 import DocumentDetail from "@/src/components/documentView/DocumentDetail";
 import ServicioDetail from "@/src/components/documentView/ServicioDetail";
+import Modal from "@/src/components/ui/Modal";
 import ModalEdit from "@/src/components/ui/ModalEdit";
 import { ServicioSchema } from "@/src/schema";
 import { ServiceFormData, Servicio as ServicioType} from "@/src/types";
@@ -43,10 +44,16 @@ export default async function ServicioIDPage({ params }: { params: {servicioID: 
                 <ServicioDetail servicio={servicio} />
             </DocumentDetail>
             
-            <ModalEdit 
-                documentType="servicio" 
-                defaultValues={servicio}
-            />
+            
+            {
+                    servicio.estado === 'assign' ? 
+                    <ModalEdit 
+                        documentType="servicio" 
+                        defaultValues={servicio}
+                    />
+                :
+                    <Modal>No se puede editar un servicio que ya ha sido realizado o se encuentra en curso</Modal>
+            }
         </>
     )
 }

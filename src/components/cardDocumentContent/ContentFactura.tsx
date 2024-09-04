@@ -1,4 +1,4 @@
-import { formatCurrency, formatDate } from "@/src/lib";
+import { evalDate, formatCurrency, formatDate } from "@/src/lib";
 import type { CardFactura, EstadoFactura } from "@/src/types";
 import ButtonsFactura from "../cardDocumentButtons/ButtonsFactura";
 
@@ -9,7 +9,7 @@ type ContentFacturaProps = {
 export default function ContentFactura({document}: ContentFacturaProps) {
     return (
         <div>
-            <p className="text-right">{formatDate(document.fecha)}</p>
+            <p className="text-right">{formatDate(new Date(evalDate(document.fecha)))}</p>
                                      
             <p className="font-bold text-lg pt-3">Factura {' '}
                 <span className="text-2xl break-words">#{document.id}</span>

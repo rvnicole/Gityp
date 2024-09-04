@@ -1,4 +1,4 @@
-import { formatCurrency, formatDate } from "@/src/lib";
+import { evalDate, formatCurrency, formatDate } from "@/src/lib";
 import { EstadoServicio, FechasDuplicadasType, CardServicio } from "@/src/types";
 import ButtonsServicio from "../cardDocumentButtons/ButtonsServicio";
 
@@ -27,7 +27,7 @@ export default function ContentService({document, fechasDuplicadas}: ContentServ
                 numFechasDuplicados > 1 ? 
                     <p className="text-right"><span className={`${coloresDuplicados[numFechasDuplicados]} bg- text-white font-semibold px-2 py-1 rounded-2xl`}>{formatDate(document.fechaEjecucion)}</span></p>
                 :
-                    <p className="text-right">{formatDate(document.fechaEjecucion)}</p>
+                    <p className="text-right">{formatDate(new Date(evalDate(document.fechaEjecucion)))}</p>
             }                                     
             <p className="font-bold text-lg pt-3">Servicio{' '}
                 <span className="text-2xl break-words">#{document.id}</span>

@@ -40,6 +40,7 @@ export default async function OrdenServicioIDPage({ params }: { params: {ordenSe
         <>
             <DocumentDetail 
                 documentID={ordenServicioID}
+                documentType="ordenServicio"
             >
                 <OrdenServicioDetail 
                     ordenServicio={ordenServicio}

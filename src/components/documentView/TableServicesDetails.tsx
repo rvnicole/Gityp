@@ -1,4 +1,4 @@
-import { formatCurrency, formatDate } from "@/src/lib";
+import { evalDate, formatCurrency, formatDate } from "@/src/lib";
 import { estadosServicios, tipoServicio } from "@/src/data/data";
 import { EstadoServicio, Servicio, TipoServicio } from "@/src/types";
 
@@ -26,7 +26,7 @@ export default function TableServicesDetails({ services }: TableServicesDetailsP
                     <div key={service.id} className={`${indice % 2 == 0 && 'bg-secondaryColor'} grid grid-cols-11 gap-1 p-1 border-b border-borderColor`}>
                         <p className="my-auto break-words">{service.id}</p>
                         <p className="my-auto text-center">{tipoServicio[service.tipoServicio as TipoServicio]}</p>
-                        <p className="my-auto text-center">{formatDate(service.fechaEjecucion)}</p>
+                        <p className="my-auto text-center">{formatDate(new Date(evalDate(service.fechaEjecucion)))}</p>
                         <p className="my-auto text-center">{service.idConductor.nombre}</p>
                         <p className="my-auto col-span-3">{service.descripcion}</p>
                         <p className="my-auto col-span-2">{service.nota}</p>

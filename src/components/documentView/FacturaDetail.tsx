@@ -1,5 +1,5 @@
 import { estadosFactura } from "@/src/data/data";
-import { formatCurrency, formatDate } from "@/src/lib";
+import { evalDate, formatCurrency, formatDate } from "@/src/lib";
 import { EstadoFactura, Factura } from "@/src/types";
 import { ArrowTopRightOnSquareIcon, CheckBadgeIcon, XMarkIcon } from "@heroicons/react/24/outline";
 import TableServicesDetails from "./TableServicesDetails";
@@ -44,7 +44,7 @@ export default function FacturaDetail({ factura }: FacturaDetailProps) {
 
             <div className="flex flex-col md:justify-end gap-1">
                 <p className="font-semibold">Fecha: {' '}
-                    <span className="font-normal">{formatDate(factura.fecha)}</span>
+                    <span className="font-normal">{formatDate(new Date(evalDate(factura.fecha)))}</span>
                 </p>
 
                 <p className="font-semibold">Proveedor: {' '}
@@ -98,7 +98,7 @@ export default function FacturaDetail({ factura }: FacturaDetailProps) {
                 </p>
 
                 <p className="font-semibold">Fecha de Sellado: {' '}
-                    <span className="font-normal">{formatDate(factura.fechaSellado)}</span>
+                    <span className="font-normal">{formatDate(new Date(evalDate(factura.fechaSellado)))}</span>
                 </p>
 
                 <a

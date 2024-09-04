@@ -2,7 +2,7 @@ import { CheckCircleIcon, ClockIcon, XCircleIcon } from "@heroicons/react/24/out
 import TableServicesDetails from "./TableServicesDetails";
 import { EstadoPresupuesto, Presupuesto } from "@/src/types";
 import { estadosPresupuesto } from "@/src/data/data";
-import { formatCurrency, formatDate } from "@/src/lib";
+import { evalDate, formatCurrency, formatDate } from "@/src/lib";
 
 type PresupuestoDetailProps = {
     presupuesto: Presupuesto;
@@ -41,7 +41,7 @@ export default function PresupuestoDetail({ presupuesto }: PresupuestoDetailProp
 
             <div className="flex flex-col md:justify-end">
                 <p className="font-semibold">Fecha: {' '}
-                    <span className="font-normal">{formatDate(presupuesto.fecha)}</span>
+                    <span className="font-normal">{formatDate(new Date(evalDate(presupuesto.fecha)))}</span>
                 </p>
 
                 <p className="font-semibold">Proveedor: {' '}

@@ -9,7 +9,7 @@ async function getOrdenesServicio() {
     try {
         await connectDB();
 
-        const ordenesServicio = await OrdenServicio.find();
+        const ordenesServicio = await OrdenServicio.find().sort({ fecha: -1 });
         const {success, data} = CardsOrdenServicioSchema.safeParse(ordenesServicio);
         
         if(success) {

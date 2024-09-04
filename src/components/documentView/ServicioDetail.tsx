@@ -1,7 +1,7 @@
 import { CalendarIcon, PlayIcon, HandThumbUpIcon, NoSymbolIcon, ArrowTopRightOnSquareIcon} from "@heroicons/react/24/outline";
 import { EstadoServicio, Servicio, TipoServicio} from "@/src/types";
 import { estadosServicios, tipoServicio } from "@/src/data/data";
-import { formatCurrency, formatDate } from "@/src/lib";
+import { evalDate, formatCurrency, formatDate } from "@/src/lib";
 
 type ServicioDetailProps = {
     servicio: Servicio;
@@ -59,7 +59,7 @@ export default function ServicioDetail({ servicio }: ServicioDetailProps) {
 
             <div className="flex flex-col md:justify-end">
                 <p className="font-semibold">Fecha de Ejecución: {' '}
-                    <span className="font-normal">{formatDate(servicio.fechaEjecucion)}</span>
+                    <span className="font-normal">{formatDate(new Date(evalDate(servicio.fechaEjecucion)))}</span>
                 </p>
 
                 <p className="font-semibold">Orden de Servicio: {' '}

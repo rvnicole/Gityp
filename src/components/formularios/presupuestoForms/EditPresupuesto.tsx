@@ -6,6 +6,7 @@ import { formatCurrency, formatDate } from "@/src/lib";
 import PresupuestoForm from "./PresupuestoForm";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
+import { updatePresupuesto } from "@/actions/presupuesto-actions";
 
 
 
@@ -27,7 +28,7 @@ export default function EditPresupuesto({ defaultValues }: { defaultValues: Pres
     const fecha = formatDate(defaultValues.fecha);
     useMemo(()=>{ 
         const subtotal = servicios.reduce((acumulado, servicio) => acumulado + +servicio.costo, 0);
-        setMontos({...montosIniciales, subtotal, iva, total: subtotal * iva/100 + subtotal }); 
+        setMontos({...montosIniciales, subtotal, iva: subtotal * 0.16, total: subtotal * 0.16 + subtotal }); 
     } , [servicios, iva]);
 
     const handleEdit = async ( formData: PresupuestoFormData ) => {
@@ -36,14 +37,25 @@ export default function EditPresupuesto({ defaultValues }: { defaultValues: Pres
             return;
         };
         const fullFormData = {
-            formData: { ...formData, id: defaultValues.id },
-            servicios
+            formData: { ...formData, subtotal: montos.subtotal, iva: montos.iva, total: montos.total },
+            servicios: servicios.map( servicio => {
+                const { fechaEjecucion, descripcion, costo, tipoServicio, idConductor, nota, estado, id } = servicio;
+                return {
+                    id,
+                    fechaEjecucion,
+                    descripcion,
+                    costo,
+                    tipoServicio,
+                    idConductor: servicio.idConductor,
+                    nota,
+                    estado
+                };
+            })
         };
         console.log(fullFormData);
         // AQUI SE LLAMA AL ACTION
-        return;
-        //const res = await updatePresupuesto(fullFormData);
-        //alert(res.message);
+        const res = await updatePresupuesto(fullFormData);
+        alert(res.message);
         router.refresh();
         router.push(location.pathname);
     };

@@ -1,4 +1,4 @@
-import { formatCurrency, formatDate } from "@/src/lib";
+import { evalDate, formatCurrency, formatDate } from "@/src/lib";
 import type { CardPresupuesto, EstadoPresupuesto } from "@/src/types";
 import ButtonsPresupuestos from "../cardDocumentButtons/ButtonsPresupuesto";
 
@@ -9,7 +9,7 @@ type ContentPresupuestoProps = {
 export default function ContentPresupuesto({document}: ContentPresupuestoProps) {
     return (
         <div>
-            <p className="text-right">{formatDate(document.fecha)}</p>
+            <p className="text-right">{formatDate(new Date(evalDate(document.fecha)))}</p>
                                      
             <p className="font-bold text-lg pt-3">Presupuesto{' '}
                 <span className="text-2xl break-words">#{document.id}</span>

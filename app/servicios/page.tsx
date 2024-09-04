@@ -20,7 +20,7 @@ async function getServicios() {
           .populate([
             { path: 'idConductor' },
             { path: 'ordenServicio'}
-        ]);
+        ]).sort({ fechaEjecucion: -1 });
         console.log("Servicios",servicios)
 
         const {success, data, error} = CardsServiciosSchema.safeParse(servicios);

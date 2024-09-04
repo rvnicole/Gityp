@@ -27,7 +27,7 @@ export const ServicioSchema = z.object({
     idConductor: ConductoresSchema.pick({
         nombre: true,
         apellido: true
-    }),
+    }).extend({ id: z.string().optional() }),
     nota: z.string(),
     estado: z.string() 
 });

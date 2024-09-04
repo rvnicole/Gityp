@@ -1,4 +1,4 @@
-import { formatCurrency, formatDate } from "@/src/lib";
+import { evalDate, formatCurrency, formatDate } from "@/src/lib";
 import { GestionCobros } from "@/src/types";
 import { ArrowTopRightOnSquareIcon, BanknotesIcon, ClockIcon, DocumentCheckIcon, DocumentCurrencyDollarIcon } from "@heroicons/react/24/outline";
 import TableServicesDetails from "./TableServicesDetails";
@@ -118,7 +118,7 @@ export default function CobroDetail({ cobro }: CobroDetailProps) {
                 </p>
 
                 <p className="font-semibold">Fecha de Sellado: {' '}
-                    <span className="font-normal">{formatDate(cobro.factura.fechaSellado)}</span>
+                    <span className="font-normal">{formatDate(new Date(evalDate(cobro.factura.fechaSellado)))}</span>
                 </p>
 
                 <a

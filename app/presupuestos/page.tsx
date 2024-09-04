@@ -9,7 +9,7 @@ import Link from "next/link";
 async function getPresupuestos(){
     try{
         await connectDB();
-        const presupuestos = await Presupuesto.find();
+        const presupuestos = await Presupuesto.find().sort({ fecha: -1 });
         const { success, data, error } = CardsPresupuestoSchema.safeParse(presupuestos);
         if( success ){
             return data;

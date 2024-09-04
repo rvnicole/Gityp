@@ -35,6 +35,7 @@ export default function ServicioFormDetails({ servicios, setServicios, setOpenSe
     };
 
     const editService = ( formData: ServiceFormData ) => {
+        console.log(formData, 'Servicios');
         if( setOpenServiceForm && servicioEdit && setServicios && servicios  ){            
             const updateServices = servicios.map( servicio =>{
                 if( servicio.id === servicioEdit.id ){

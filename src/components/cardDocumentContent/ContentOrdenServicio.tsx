@@ -1,4 +1,4 @@
-import { formatCurrency, formatDate } from "@/src/lib";
+import { evalDate, formatCurrency, formatDate } from "@/src/lib";
 import type { CardOrdenServicio, EstadoOrdenServicio } from "@/src/types";
 import ButtonsOrdenServicio from "../cardDocumentButtons/ButtonsOrdenServicio";
 
@@ -9,7 +9,7 @@ type ContentOrdenServicioProps = {
 export default function ContentOrdenServicio({document}: ContentOrdenServicioProps) {
     return (
         <div>
-            <p className="text-right">{formatDate(document.fecha)}</p>
+            <p className="text-right">{formatDate(new Date(evalDate(document.fecha)))}</p>
                                      
             <p className="font-bold text-lg pt-3">Orden de Servicio {' '}
                 <span className="text-2xl break-words">#{document.id}</span>

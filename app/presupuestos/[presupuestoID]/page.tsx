@@ -17,7 +17,7 @@ async function getPresupuestoById(id: PresupuestoType['id']){
                 { path: 'ordenServicio' }
             ]
         });
-        console.log(presupuesto);
+        console.log(presupuesto.servicios);
         const { success, data, error } = PresupuestoSchema.safeParse(presupuesto);
         if( success ){
             return data;
@@ -38,6 +38,7 @@ export default async function PresupuestoIDPage({ params }: { params: {presupues
         <>
             <DocumentDetail 
                 documentID={presupuestoID}
+                documentType="presupuesto"
             >
                 <PresupuestoDetail 
                     presupuesto={presupuesto}

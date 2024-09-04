@@ -36,6 +36,7 @@ export default function AddPresupuesto(){
             servicios: servicios.map( servicio => {
                 const { fechaEjecucion, descripcion, costo, tipoServicio, idConductor, nota, estado } = servicio;
                 return {
+                    id: '',
                     fechaEjecucion,
                     descripcion,
                     costo,
