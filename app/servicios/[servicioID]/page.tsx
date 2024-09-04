@@ -41,9 +41,12 @@ export default async function ServicioIDPage({ params }: { params: {servicioID: 
             >
                 <ServicioDetail servicio={servicio} />
             </DocumentDetail>
+            <ModalEdit 
+                documentType="servicio" 
+                defaultValues={servicio}
+            />
             
-            
-            {
+            { /*
                     servicio.estado === 'assign' ? 
                     <ModalEdit 
                         documentType="servicio" 
@@ -51,6 +54,7 @@ export default async function ServicioIDPage({ params }: { params: {servicioID: 
                     />
                 :
                     <Modal>No se puede editar un servicio que ya ha sido realizado o se encuentra en curso</Modal>
+                */
             }
         </>
     )
