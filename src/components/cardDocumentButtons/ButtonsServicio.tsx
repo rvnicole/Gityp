@@ -27,7 +27,7 @@ export default function ButtonsServicio({documentID, estadoDocument}: ButtonsSer
         else {
             alert(respuesta.message);
         }
-
+        
         router.push(location.pathname);
     }
 
