@@ -84,6 +84,16 @@ export const GestionCobrosSchema = z.object({
     comentarios: z.string()
 });
 
+export const ConfiguracionSchema = z.object({
+    folioInicial: z.string(),
+    plantillas: z.array(
+        z.object({
+            nombre: z.string(),
+            tipo: z.string()
+        })
+    )
+});
+
 // Schema Forms
 export const ServiceFormSchema = ServicioSchema.pick({
     id: true,

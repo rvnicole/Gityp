@@ -13,13 +13,13 @@ async function getServicios() {
         await connectDB();
 
         const servicios = await Servicio.find({
-            ordenServicio: { $ne: null }
-          })
-          .populate([
-            { path: 'idConductor' },
-            { path: 'ordenServicio'}
-        ]).sort({ fechaEjecucion: -1 });
-        console.log("Servicios",servicios)
+                ordenServicio: { $ne: null }
+            })
+            .populate([
+                { path: 'idConductor' },
+                { path: 'ordenServicio'}
+            ])
+            .sort({ fechaEjecucion: -1 });
 
         const {success, data, error} = CardsServiciosSchema.safeParse(servicios);
         
