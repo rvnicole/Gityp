@@ -1,5 +1,3 @@
-"use server"
-
 import { connectDB } from "@/config/db";
 import CardTable from "@/src/components/cards/CardTable";
 import { PrimaryButton } from "@/src/components/ui/Buttons";

@@ -1,5 +1,3 @@
-"use server"
-
 import { connectDB } from "@/config/db";
 import { Servicio } from "@/model/Servicio";
 import DocumentDetail from "@/src/components/documentView/DocumentDetail";

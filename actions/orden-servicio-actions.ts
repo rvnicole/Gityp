@@ -5,7 +5,8 @@ import { OrdenServicio } from "@/model/OrdenServicio";
 import { Presupuesto } from "@/model/Presupuesto";
 import { 
     OrdenServicioFormData,
-    Presupuesto as PresupuestoType
+    Presupuesto as PresupuestoType,
+    OrdenServicio as OrdenServicioType
 } from "@/src/types";
 
 export async function createOrdenServicio(presupuestoID: PresupuestoType['id']) {
@@ -68,5 +69,22 @@ export async function updateOrdenServicio(formData: OrdenServicioFormData) {
         }      
         
         return { success: false, message: 'Error al crear la Orden de Servicio'}
+    }
+}
+
+export async function deleteOrdenServicio(id: OrdenServicioType['id']) {
+    try {
+        await connectDB();
+
+        const ordenServicio = await OrdenServicio.findById(id);        
+        await ordenServicio.deleteOne();
+        return { success: true, message: "Orden de Servicio Eliminada Correctamente"}
+    }
+    catch(error) {
+        if (typeof error === 'object' && error !== null && 'message' in error) {
+            return { success: false, message: error.message}
+        }    
+
+        return { success: false, message: 'Error al eliminar la Orden de Servicio'}
     }
 }

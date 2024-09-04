@@ -6,6 +6,7 @@ import { ConfirmButton, OutlineButton, PrimaryButton, SecondaryButton } from "..
 import { EyeIcon, PlayIcon, HandThumbUpIcon, NoSymbolIcon } from "@heroicons/react/24/outline";
 import { estadosServicios } from "@/src/data/data";
 import type { CardServicio, EstadoServicio } from "@/src/types";
+import { updateEstadoServicio } from "@/actions/servicio-actions";
 
 type ButtonsServicioProps = {
     documentID: CardServicio['id'];
@@ -16,16 +17,18 @@ export default function ButtonsServicio({documentID, estadoDocument}: ButtonsSer
     const [estado, setEstado] = useState<EstadoServicio>(estadoDocument);
     const router = useRouter();
 
-    const handleClickInProgress = () => {
-        setEstado('inProgress');
-    }
+    const handleClick = async (data: {id: CardServicio['id'], estado: EstadoServicio}) => {
+        const respuesta = await updateEstadoServicio(data);
 
-    const handleClickComplete = () => {
-        setEstado('complete');
-    }
-
-    const handleClickNoShow = () => {
-        setEstado('noShow');
+        if( respuesta.success ) {
+            setEstado(data.estado);
+            alert(respuesta.message);
+        }
+        else {
+            alert(respuesta.message);
+        }
+        
+        router.push(location.pathname);
     }
 
     return (
@@ -46,7 +49,7 @@ export default function ButtonsServicio({documentID, estadoDocument}: ButtonsSer
                     <>
                         { estado !== "inProgress" && (
                             <PrimaryButton
-                                onClick={handleClickInProgress}
+                                onClick={() => handleClick({id: documentID, estado: "inProgress"})}
                                 attributes={{ title: "En progreso"}}
                             >
                                 <PlayIcon className="size-7 text-white" />
@@ -54,14 +57,14 @@ export default function ButtonsServicio({documentID, estadoDocument}: ButtonsSer
                         )}
 
                         <ConfirmButton
-                            onClick={handleClickComplete}
+                            onClick={() => handleClick({id: documentID, estado: "complete"})}
                             attributes={{ title: "Completado"}}
                         >
                             <HandThumbUpIcon className="size-7 text-white"  />
                         </ConfirmButton>
 
                         <SecondaryButton
-                            onClick={handleClickNoShow}
+                            onClick={() => handleClick({id: documentID, estado: "noShow"})}
                             attributes={{ title: "No realizado"}}
                         >
                             <NoSymbolIcon className="size-7 text-secondaryColor-foreground" />
