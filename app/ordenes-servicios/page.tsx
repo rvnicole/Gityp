@@ -1,5 +1,3 @@
-"use server"
-
 import { connectDB } from "@/config/db";
 import { OrdenServicio } from "@/model/OrdenServicio";
 import CardTable from "@/src/components/cards/CardTable";

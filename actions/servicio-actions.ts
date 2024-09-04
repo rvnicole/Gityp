@@ -4,29 +4,29 @@ import { connectDB } from "@/config/db";
 import { OrdenServicio } from "@/model/OrdenServicio";
 import { Servicio } from "@/model/Servicio";
 import { ServiceFormData, Servicio as ServicioType } from "@/src/types";
+import { determinaEstadoOS, calculaMontos } from "@/src/lib/servicios";
 
 export async function createServicio(formData: Omit<ServiceFormData, 'id'> & { searchOrdenes?: string }) {
     try {
         await connectDB();        
 
         const servicio = await new Servicio(formData);        
+
         const ordenServicio = await OrdenServicio.findById(formData.searchOrdenes).populate('servicios');
-
-        const subtotal = ordenServicio.servicios.reduce((suma:number, servicio: ServiceFormData) => suma + servicio.costo, 0) + Number(formData.costo);
-        const iva = subtotal * 0.16;
-        const total = subtotal + iva;
-
-        ordenServicio.subtotal = subtotal;
-        ordenServicio.iva = iva;
-        ordenServicio.total = total;
+        ordenServicio.estado = determinaEstadoOS(ordenServicio, servicio.id, servicio.estado);
+        const montos = calculaMontos(ordenServicio, servicio.id, servicio.costo);
+        ordenServicio.subtotal = montos.subtotal;
+        ordenServicio.iva = montos.iva;
+        ordenServicio.total = montos.total;
         ordenServicio.servicios.push( servicio.id);
+
+        servicio.ordenServicio = ordenServicio.id;
 
         await Promise.all([servicio.save(), ordenServicio.save()]);
         return { success: true, message: "Servicio Creado Correctamente"}
     }
     catch(error) {
         if (typeof error === 'object' && error !== null && 'message' in error) {
-            console.log(error.message);
             return { success: false, message: error.message}
         }      
         
@@ -36,7 +36,6 @@ export async function createServicio(formData: Omit<ServiceFormData, 'id'> & { s
 
 export async function updateServicio(formData: ServiceFormData) {
     try {
-        console.log(formData)
         await connectDB();
 
         const servicio = await Servicio.findById(formData.id);
@@ -49,24 +48,48 @@ export async function updateServicio(formData: ServiceFormData) {
         servicio.nota = formData.nota;
 
         const ordenServicio = await OrdenServicio.findById(formData.ordenServicio?.id).populate('servicios');
-        const subtotal = ordenServicio.servicios.reduce((suma:number, servicio: ServiceFormData) => servicio.id === formData.id ? suma + Number(formData.costo) : suma + servicio.costo, 0);
-        const iva = subtotal * 0.16;
-        const total = subtotal + iva;
-
-        ordenServicio.subtotal = subtotal;
-        ordenServicio.iva = iva;
-        ordenServicio.total = total;
+        ordenServicio.estado = determinaEstadoOS(ordenServicio, servicio.id, servicio.estado);
+        const montos = calculaMontos(ordenServicio, servicio.id, servicio.costo);
+        ordenServicio.subtotal = montos.subtotal;
+        ordenServicio.iva = montos.iva;
+        ordenServicio.total = montos.total;
 
         await Promise.all([servicio.save(), ordenServicio.save()]);
         return { success: true, message: "Servicio Actualizado Correctamente"}
     }
     catch(error) {
         if (typeof error === 'object' && error !== null && 'message' in error) {
-            console.log(error.message);
             return { success: false, message: error.message}
         }      
         
         return { success: false, message: 'Error al actualizar el Servicio'}
+    }
+}
+
+export async function updateEstadoServicio({id, estado}: Pick<ServicioType, 'id'|'estado'>) {
+    try {
+        await connectDB();
+
+        const servicio = await Servicio.findById(id);
+        servicio.costo = estado === "noShow" ? 0 : servicio.costo;
+        servicio.estado = estado;
+
+        const ordenServicio = await OrdenServicio.findById(servicio.ordenServicio).populate('servicios');
+        ordenServicio.estado = determinaEstadoOS(ordenServicio, servicio.id, estado);
+        const montos = calculaMontos(ordenServicio, servicio.id, servicio.costo);
+        ordenServicio.subtotal = montos.subtotal;
+        ordenServicio.iva = montos.iva;
+        ordenServicio.total = montos.total;
+
+        await Promise.all([servicio.save(), ordenServicio.save()]);
+        return { success: true, message: "Estado Actualizado Correctamente"}
+    }
+    catch(error) {
+        if (typeof error === 'object' && error !== null && 'message' in error) {
+            return { success: false, message: error.message}
+        }      
+        
+        return { success: false, message: 'Error al Actualizar el Estado'}
     }
 }
 
@@ -80,10 +103,9 @@ export async function deleteServicio(id: ServicioType['id']) {
     }
     catch(error) {
         if (typeof error === 'object' && error !== null && 'message' in error) {
-            console.log(error.message);
             return { success: false, message: error.message}
-        }      
-        
+        }    
+
         return { success: false, message: 'Error al eliminar el Servicio'}
     }
 }
