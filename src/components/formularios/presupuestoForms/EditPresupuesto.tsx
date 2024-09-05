@@ -92,14 +92,15 @@ export default function EditPresupuesto({ defaultValues }: { defaultValues: Pres
                 />
             </div>
             <div className="px-5">
-                <label htmlFor="iva">IVA: </label>
+            <label htmlFor="iva">IVA 16%: </label>
                 <input 
-                    type="number" 
-                    className={`w-16 p-1 border border-borderColor placeholder:text-inputColor rounded focus:outline-none focus:ring-2 focus:border-ringColor`}
-                    defaultValue={montos.iva}
+                    id='iva'
+                    type="text" 
+                    readOnly
+                    className="p-1 placeholder:text-inputColor rounded w-24"
+                    value={formatCurrency(montos.iva)}
                     { ...register('iva')}
                 />
-                <span>%</span>
             </div>
             <div className="px-5">
                 <label htmlFor="total">Total: </label>
