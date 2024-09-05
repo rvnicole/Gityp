@@ -43,7 +43,7 @@ export default function DeleteDocument( { documentType, documentID }: DeleteDocu
             }
 
             router.refresh();
-            router.push('/presupuestos');
+            router.push('/ordenes-servicios');
         };
 
         return (
