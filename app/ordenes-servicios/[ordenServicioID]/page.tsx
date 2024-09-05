@@ -11,10 +11,8 @@ async function getOrdenServicio(id: OrdenServicioType['id']) {
         await connectDB();
 
         const ordenServicio = await OrdenServicio.findById(id).populate([
-            { path: 'presupuesto', select: '_id' },
             { path: 'presupuesto' },
-            { path: 'servicios', populate: { path: 'idConductor' } },
-            { path: 'servicios', populate: { path: 'ordenServicio'} }
+            { path: 'servicios', populate: [{ path: 'idConductor' }, { path: 'ordenServicio'}] }
         ]);
 
         const {success, data, error} = OrdenServicioSchema.safeParse(ordenServicio);

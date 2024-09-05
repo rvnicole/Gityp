@@ -1,180 +1,60 @@
-
+import { connectDB } from "@/config/db";
+import { GestionCobro } from "@/model/GestionCobro";
 import CobroDetail from "@/src/components/documentView/CobroDetail";
 import DocumentDetail from "@/src/components/documentView/DocumentDetail";
 import ModalEdit from "@/src/components/ui/ModalEdit";
+import { GestionCobrosSchema } from "@/src/schema";
+import { GestionCobros } from "@/src/types";
 
-export default function GestionCobroIDPage({ params }: { params: {gestionCobroID: string}}) {
+async function getCobro(id: GestionCobros['id']) {
+    try {
+        await connectDB();
+
+        const cobro = await GestionCobro.findById(id).populate([
+            { path: 'factura', populate: [
+                { path: 'emisor'},
+                { path: 'receptor'},
+                { path: 'ordenServicio', populate: [
+                    { path: 'presupuesto', select: 'id' },
+                    { path: 'servicios', populate: [
+                        { path: 'idConductor'}, 
+                        { path: 'ordenServicio', select: 'id solicito urlOrdenCompra ordenCompra'}
+                    ]},
+                ]}
+            ]}
+        ]);
+        console.log("Cobro", cobro);
+        const {success, data, error} = GestionCobrosSchema.safeParse(cobro);
+        
+        if(success) {
+            return data;
+        }
+
+        error.issues.forEach( error => console.log(error));
+    }
+    catch(error) {
+        console.log(error);
+    }
+}
+
+export default async function GestionCobroIDPage({ params }: { params: {gestionCobroID: string}}) {
     const { gestionCobroID } = params;
 
-    const ordenServicio = {
-        id: '6699c12b1f9d4e7812fa7274',
-        fecha: new Date(),
-        proveedor: 'Pruebas',
-        solicito: 'Fulanita',
-        subtotal: 900,
-        iva: 100,
-        total: 1000,
-        estado: 'assign',
-        comentarios: 'Ut suscipit mollis felis, accumsan ultricies mauris sollicitudin eget. Ut suscipit mollis felis, accumsan ultricies mauris sollicitudin eget.', 
-        ordenCompra: '123456',
-        urlOrdenCompra: 'https://heroicons.com/outline',
-        presupuesto: {
-            id: '6699c12b1f9d4e7812fa7274',
-            fecha: new Date(),
-            proveedor: 'Pruebas',
-            solicito: 'Fulanita',
-            subtotal: 900,
-            iva: 100,
-            total: 1000,
-            estado: 'pending',
-            comentarios: 'Ut suscipit mollis felis, accumsan ultricies mauris sollicitudin eget. Ut suscipit mollis felis, accumsan ultricies mauris sollicitudin eget.',
-            servicios: [
-                {
-                    id: '6699c12b1f9d4e7812fa7272',
-                    ordenServicio: {
-                        id: '6699c12b1f9d4e7812fa7271',
-                        solicito: 'Fulanita',
-                        urlOrdenCompra: '/ejemplo',
-                        ordenCompra: '67890'
-                    },
-                    fechaEjecucion: new Date(),
-                    descripcion: 'Ut suscipit mollis felis, accumsan ultricies mauris sollicitudin eget.',
-                    costo: 1000,
-                    tipoServicio: 'paqueteria',
-                    idConductor: 'Persona Conductora',
-                    nota: 'Ut vitae nulla hendrerit.',
-                    estado: 'assign'
-                },
-                {
-                    id: '6699c12b1f9d4e7812fa7272',
-                    ordenServicio: {
-                        id: '6699c12b1f9d4e7812fa7271',
-                        solicito: 'Fulanita',
-                        urlOrdenCompra: '/ejemplo',
-                        ordenCompra: '67890'
-                    },
-                    fechaEjecucion: new Date(),
-                    descripcion: 'Ut suscipit mollis felis, accumsan ultricies mauris sollicitudin eget.',
-                    costo: 1000,
-                    tipoServicio: 'paqueteria',
-                    idConductor: 'Persona Conductora',
-                    nota: 'Ut vitae nulla hendrerit.',
-                    estado: 'assign'
-                },
-                {
-                    id: '6699c12b1f9d4e7812fa7272',
-                    ordenServicio: {
-                        id: '6699c12b1f9d4e7812fa7271',
-                        solicito: 'Fulanita',
-                        urlOrdenCompra: '/ejemplo',
-                        ordenCompra: '67890'
-                    },
-                    fechaEjecucion: new Date(),
-                    descripcion: 'Ut suscipit mollis felis, accumsan ultricies mauris sollicitudin eget.',
-                    costo: 1000,
-                    tipoServicio: 'paqueteria',
-                    idConductor: 'Persona Conductora',
-                    nota: 'Ut vitae nulla hendrerit.',
-                    estado: 'assign'
-                }
-            ]
-        },
-        servicios: [
-            {
-                id: '6699c12b1f9d4e7812fa7272',
-                ordenServicio: {
-                    id: '6699c12b1f9d4e7812fa7271',
-                    solicito: 'Fulanita',
-                    urlOrdenCompra: '/ejemplo',
-                    ordenCompra: '67890'
-                },
-                fechaEjecucion: new Date(),
-                descripcion: 'Ut suscipit mollis felis, accumsan ultricies mauris sollicitudin eget.',
-                costo: 1000,
-                tipoServicio: 'paqueteria',
-                idConductor: 'Persona Conductora',
-                nota: 'Ut vitae nulla hendrerit.',
-                estado: 'assign'
-            },
-            {
-                id: '6699c12b1f9d4e7812fa7272',
-                ordenServicio: {
-                    id: '6699c12b1f9d4e7812fa7271',
-                    solicito: 'Fulanita',
-                    urlOrdenCompra: '/ejemplo',
-                    ordenCompra: '67890'
-                },
-                fechaEjecucion: new Date(),
-                descripcion: 'Ut suscipit mollis felis, accumsan ultricies mauris sollicitudin eget.',
-                costo: 1000,
-                tipoServicio: 'paqueteria',
-                idConductor: 'Persona Conductora',
-                nota: 'Ut vitae nulla hendrerit.',
-                estado: 'assign'
-            },
-            {
-                id: '6699c12b1f9d4e7812fa7272',
-                ordenServicio: {
-                    id: '6699c12b1f9d4e7812fa7271',
-                    solicito: 'Fulanita',
-                    urlOrdenCompra: '/ejemplo',
-                    ordenCompra: '67890'
-                },
-                fechaEjecucion: new Date(),
-                descripcion: 'Ut suscipit mollis felis, accumsan ultricies mauris sollicitudin eget.',
-                costo: 1000,
-                tipoServicio: 'paqueteria',
-                idConductor: 'Persona Conductora',
-                nota: 'Ut vitae nulla hendrerit.',
-                estado: 'assign'
-            }
-        ]
-    }
+    const cobro = await getCobro( gestionCobroID );
 
-    const factura = {
-        id: '6699c12b1f9d4e7812fa984',
-        ordenServicio: ordenServicio,
-        fecha: new Date(),
-        urlFactura: 'url',
-        emisor: {
-            id:'1',
-            nombre: 'Eduardo Reynoso Gonzalez',
-            rfc: 'REGE6003152Q7'
-        },
-        receptor: {
-            id: '2',
-            nombre: 'Unilever de México',
-            rfc: 'UME123045RF09'
-        },
-        folio: '1450',
-        folioFiscal: crypto.randomUUID(),
-        fechaSellado: new Date(),
-        estado: 'sellado'
-    }
-
-    const gestionCobro = {
-        id: '6699c12b1f9d4e7812fa102',
-        factura: factura,
-        ie: '1203940959',
-        edicom: true,
-        pagado: false,
-        comentarios: 'Este es un comentario'
-    };
-
-
-    return (
+    if(cobro) return (
         <>
             <DocumentDetail 
                 documentID={gestionCobroID}
             >
                 <CobroDetail 
-                    cobro={gestionCobro}
+                    cobro={cobro}
                 />
             </DocumentDetail>
             
             <ModalEdit 
                 documentType="gestionCobro" 
-                defaultValues={gestionCobro}
+                defaultValues={cobro}
             />
         </>
     )

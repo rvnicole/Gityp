@@ -77,7 +77,7 @@ export const GestionCobrosSchema = z.object({
     id: z.string(),
     factura: FacturaSchema,
     //ordenCompra: z.string(),
-    ie: z.string(),
+    ie: z.string().optional(),
     //total: z.number(),
     edicom: z.boolean(),
     pagado: z.boolean(),
@@ -210,6 +210,7 @@ export const CardCobroSchema = GestionCobrosSchema.pick({
 }).extend({
     factura: CardFacturaSchema
 });
+export const CardCobrosSchema = z.array( CardCobroSchema );
 
 
 export const OptionOrdenesServicios = z.array( z.string() );
