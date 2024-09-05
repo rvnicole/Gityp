@@ -12,12 +12,16 @@ type DeleteDocumentProps ={
 
 export default function DeleteDocument( { documentType, documentID }: DeleteDocumentProps ){
     const router = useRouter();
+    
     if( documentType === 'presupuesto' ){
         const handleClick = async ( id: Presupuesto['id'] ) => {
+            if( !confirm('¿Esta seguro que desea eliminar el documento?') ){
+                return;
+            };
             const res = await deletePresupuesto(id);
             alert(res.message);
             router.refresh();
-            router.push(`/presupuestos/${documentID}`);
+            router.push(`/presupuestos`);
         };
 
         return (
@@ -26,6 +30,9 @@ export default function DeleteDocument( { documentType, documentID }: DeleteDocu
     }
     else if( documentType === 'ordenServicio' ){
         const handleClick = async ( id: OrdenServicio['id'] ) => {
+            if( !confirm('¿Esta seguro que desea eliminar el documento?') ){
+                return;
+            };
             const respuesta = await deleteOrdenServicio(id);
            
             if( respuesta.success ) {
