@@ -20,7 +20,7 @@ async function getFacturaById(id: FacturaType['id']){
                                                 { path: 'presupuesto', select: 'id' },
                                                 { path: 'servicios' },
                                                 { path: 'servicios', populate: [
-                                                    { path: 'ordenServicio', select: 'id solicito urlCompra ordenCompra' },
+                                                    { path: 'ordenServicio', select: 'id solicito urlOrdenCompra ordenCompra' },
                                                     { path: 'idConductor', select: 'nombre apellido'}
                                                 ]}
                                             ]}
