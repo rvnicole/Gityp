@@ -5,14 +5,24 @@ import { OrdenServicio } from "@/model/OrdenServicio";
 import { Servicio } from "@/model/Servicio";
 import { ServiceFormData, Servicio as ServicioType } from "@/src/types";
 import { determinaEstadoOS, calculaMontos } from "@/src/lib/servicios";
+import mongoose from "mongoose";
 
 export async function createServicio(formData: Omit<ServiceFormData, 'id'> & { searchOrdenes?: string }) {
     try {
         await connectDB();        
 
-        const servicio = await new Servicio(formData);        
+        if( formData.searchOrdenes && !mongoose.Types.ObjectId.isValid(formData.searchOrdenes) ) {
+            return { success: false, message: "Orden de Servicio Inválida"}
+        }
 
-        const ordenServicio = await OrdenServicio.findById(formData.searchOrdenes).populate('servicios');
+        const ordenServicio = await OrdenServicio.findById(formData.searchOrdenes).populate('servicios'); 
+        if( !ordenServicio ) {
+            return { success: false, message: "Orden de Servicio No Encontrada"}
+        }       
+
+        const servicio = await new Servicio(formData);
+        servicio.ordenServicio = ordenServicio.id; 
+
         ordenServicio.estado = determinaEstadoOS(ordenServicio, servicio.id, servicio.estado);
         const montos = calculaMontos(ordenServicio, servicio.id, servicio.costo);
         ordenServicio.subtotal = montos.subtotal;
@@ -20,10 +30,9 @@ export async function createServicio(formData: Omit<ServiceFormData, 'id'> & { s
         ordenServicio.total = montos.total;
         ordenServicio.servicios.push( servicio.id);
 
-        servicio.ordenServicio = ordenServicio.id;
-
         await Promise.all([servicio.save(), ordenServicio.save()]);
         return { success: true, message: "Servicio Creado Correctamente"}
+        
     }
     catch(error) {
         if (typeof error === 'object' && error !== null && 'message' in error) {
