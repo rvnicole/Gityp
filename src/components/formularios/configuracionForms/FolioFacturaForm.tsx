@@ -1,15 +1,29 @@
 "use client"
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { OutlineButton } from "../../ui/Buttons";
+import { getConfig, setFolioInicial } from "@/actions/configuracion-actions";
 
 export default function FolioFacturaForm(){
+    const [ folio, setFolio ] = useState('');
     const [ editar, setEditar ] = useState(false);
     const { register, handleSubmit, reset, formState: { errors } } = useForm<{ folio: string }>();
+    useEffect(()=>{
+        const fetchFolio = async () => {
+            const config = await getConfig();
+            setFolio(config.folioInicial);
+        }
+        fetchFolio();
+    },[]);
 
-    const handleGuardar = (formData: { folio: string }) => {
+    const handleGuardar = async (formData: { folio: string }) => {
         console.log(formData);
-        setEditar(false);
+        const res = await setFolioInicial(formData);
+        if( res.success ){
+            setFolio( formData.folio );
+            setEditar(false);
+        }
+        alert(res.message);       
     };
 
     return (
@@ -32,7 +46,7 @@ export default function FolioFacturaForm(){
                 </form>
             :
                 <div className="flex items-center">
-                    <p className="text-foregroundColor mr-3">Folio: 1000</p>
+                    <p className="text-foregroundColor mr-3">Folio: {folio}</p>
                     <OutlineButton onClick={() => setEditar(true)}>Editar</OutlineButton>
                 </div>
         }

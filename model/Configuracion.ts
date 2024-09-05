@@ -1,6 +1,6 @@
 import mongoose, { Schema, models } from "mongoose";
 
-interface IConfiguracion {
+export interface IConfiguracion {
     folioInicial: string,
     plantillas: {
         nombre: string,

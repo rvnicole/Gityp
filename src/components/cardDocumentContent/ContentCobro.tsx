@@ -1,4 +1,4 @@
-import { evalDate, formatCurrency, formatDate } from "@/src/lib";
+import { formatCurrency, formatDate } from "@/src/lib";
 import type { CardCobro } from "@/src/types";
 import ButtonsCobro from "../cardDocumentButtons/ButtonsCobro";
 

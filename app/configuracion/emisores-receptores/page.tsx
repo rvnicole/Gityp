@@ -1,5 +1,3 @@
-"use server"
-
 import { connectDB } from "@/config/db";
 import { EmisorReceptor } from "@/model/EmisorReceptor";
 import EmisoresReceptoresView from "@/src/components/configView/emisoresReceptores/EmisoresReceptoresView";
