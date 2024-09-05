@@ -7,6 +7,8 @@ import ModalEdit from "@/src/components/ui/ModalEdit";
 import { PresupuestoSchema } from "@/src/schema";
 import { Presupuesto as PresupuestoType } from "@/src/types";
 
+export const revalidate = 0;
+
 async function getPresupuestoById(id: PresupuestoType['id']){
     try{
         await connectDB();

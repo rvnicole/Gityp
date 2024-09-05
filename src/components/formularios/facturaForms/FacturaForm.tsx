@@ -1,4 +1,7 @@
-import { FacturaFormData } from "@/src/types"
+import { getConductoresAction } from "@/actions/conductor-actions"
+import { getEmisorReceptor } from "@/actions/emisor-receptor-actions"
+import { Conductores, EmisoresReceptores, EmisorReceptor, FacturaFormData } from "@/src/types"
+import { ChangeEvent, useEffect, useState } from "react"
 import { FieldErrors, UseFormRegister } from "react-hook-form"
 
 type FacturaFormProps = {
@@ -7,6 +10,45 @@ type FacturaFormProps = {
 }
 
 export default function FacturaForm({register, errors}: FacturaFormProps){
+    const [ emisores, setEmisores ] = useState<EmisorReceptor[]>([]);
+    const [ receptores, setReceptores ] = useState<EmisorReceptor[]>([]);
+    const [ rfcs, setRfcs ] = useState({ rfcEmisor: '', rfcReceptor: '' });
+
+    useEffect(()=>{
+        const fetchEntidades = async () => {
+            const emisoresReceptores = await getEmisorReceptor() || [];
+            if( "success" in emisoresReceptores ){
+                return;
+            }
+            console.log(emisoresReceptores);
+            let em: EmisorReceptor[] = [];
+            let rec: EmisorReceptor[] = [];
+            emisoresReceptores.forEach( entidad => entidad.tipo === 'emisor' ? em.push(entidad) : rec.push(entidad));
+            
+            setEmisores(em);
+            setReceptores(rec);
+        };        
+        fetchEntidades();
+    },[]);
+
+
+    const handleChangeEmisor = (e: ChangeEvent<HTMLSelectElement>) => {
+        const emisorRfc = emisores.find( em => em.id === e.target.value );
+        if( emisorRfc ){
+            setRfcs({ ...rfcs, rfcEmisor: emisorRfc.rfc });
+            return;
+        };
+        setRfcs({ ...rfcs, rfcEmisor: '' })
+    } 
+
+    const handleChangeReceptor = (e: ChangeEvent<HTMLSelectElement>) => {
+        const receptorRfc = receptores.find( rec => rec.id === e.target.value );
+        if( receptorRfc ){
+            setRfcs({ ...rfcs, rfcReceptor: receptorRfc.rfc });
+            return;
+        };
+        setRfcs({ ...rfcs, rfcReceptor: '' })
+    } 
     
 
     return (
@@ -43,8 +85,14 @@ export default function FacturaForm({register, errors}: FacturaFormProps){
                         { ...register('emisor.id', {
                             required: true
                         })}
+                        onChange={(e) => handleChangeEmisor(e)}
                     >
-                        <option value="1" className="text-foregroundColor">Eduardo Reynoso Gonzalez</option>
+                        <option value="">--- Seleccione ---</option>
+                        {
+                            emisores.map( emisor => 
+                                <option key={emisor.id} value={emisor.id} className="text-foregroundColor">{emisor.nombre}</option>
+                            )
+                        }
                     </select>
                     <div>
                         <label htmlFor="rfcEmisor">RFC: </label>
@@ -53,7 +101,7 @@ export default function FacturaForm({register, errors}: FacturaFormProps){
                             type="text" 
                             readOnly 
                             disabled={true}
-                            value={'REGE6003152Q7'} 
+                            value={rfcs.rfcEmisor} 
                             className="text-foregroundColor font-bold"
                         />
                     </div>
@@ -68,8 +116,14 @@ export default function FacturaForm({register, errors}: FacturaFormProps){
                         { ...register('receptor.id', {
                             required: true
                         })}
+                        onChange={(e) => handleChangeReceptor(e)}
                     >
-                        <option value="2">Unilever de México</option>
+                        <option value="">--- Seleccione ---</option>
+                        {
+                            receptores.map( receptor => 
+                                <option key={receptor.id} value={receptor.id}>{receptor.nombre}</option>
+                            )
+                        }
                     </select>
                     <div>
                         <label htmlFor="rfcReceptor">RFC: </label>
@@ -78,7 +132,7 @@ export default function FacturaForm({register, errors}: FacturaFormProps){
                             type="text" 
                             readOnly 
                             disabled={true}
-                            value={'UMEE6003152Q7'}
+                            value={rfcs.rfcReceptor}
                             className="text-foregroundColor font-bold"
                         />
                     </div>

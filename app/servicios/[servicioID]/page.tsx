@@ -7,6 +7,8 @@ import ModalEdit from "@/src/components/ui/ModalEdit";
 import { ServicioSchema } from "@/src/schema";
 import { ServiceFormData, Servicio as ServicioType} from "@/src/types";
 
+export const revalidate = 0;
+
 async function getServicio(id: ServicioType['id']) {
     try {
         await connectDB();

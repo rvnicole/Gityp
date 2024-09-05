@@ -7,6 +7,8 @@ import ModalEdit from "@/src/components/ui/ModalEdit";
 import { FacturaSchema } from "@/src/schema";
 import { Factura as FacturaType } from "@/src/types";
 
+export const revalidate = 0;
+
 async function getFacturaById(id: FacturaType['id']){
     await connectDB();
     const factura = await Factura.findById(id)

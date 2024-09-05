@@ -44,7 +44,7 @@ export default function FacturaDetail({ factura }: FacturaDetailProps) {
 
             <div className="flex flex-col md:justify-end gap-1">
                 <p className="font-semibold">Fecha: {' '}
-                    <span className="font-normal">{formatDate(new Date(evalDate(factura.fecha)))}</span>
+                    <span className="font-normal">{formatDate(factura.fecha)}</span>
                 </p>
 
                 <p className="font-semibold">Proveedor: {' '}

@@ -3,12 +3,21 @@ import Link from "next/link";
 import { useForm } from "react-hook-form"
 import { PrimaryButton } from "../../ui/Buttons";
 import FacturaForm from "./FacturaForm";
+import { updateFactura } from "@/actions/factura-actions";
+import { useRouter, useSearchParams } from "next/navigation";
 
 export default function AddFactura(){
+    const router = useRouter();
     const { register, handleSubmit, reset, formState: { errors } } = useForm<FacturaFormData>();
+    const searchParams = useSearchParams();
+    const facturaID = searchParams.get('documentID')!;
 
-    const handleCompleteInfo = () => {
-        console.log('Agregando informacion adicional');
+    const handleCompleteInfo = async (formData: FacturaFormData) => {
+        console.log(formData);
+        const res = await updateFactura( formData, facturaID );
+        alert(res.message);
+        router.refresh();
+        router.push(location.pathname);
     };
 
     return (

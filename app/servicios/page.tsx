@@ -8,6 +8,8 @@ import { FechasDuplicadasType } from "@/src/types";
 import { Servicio } from "@/model/Servicio";
 import { CardsServiciosSchema } from "@/src/schema";
 
+export const revalidate = 0;
+
 async function getServicios() {
     try {
         await connectDB();

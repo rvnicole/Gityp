@@ -3,6 +3,8 @@ import { OrdenServicio } from "@/model/OrdenServicio";
 import CardTable from "@/src/components/cards/CardTable";
 import { CardsOrdenServicioSchema } from "@/src/schema";
 
+export const revalidate = 0;
+
 async function getOrdenesServicio() {
     try {
         await connectDB();

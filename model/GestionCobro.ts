@@ -10,6 +10,11 @@ export interface IGestionCobro {
 };
 
 const GestionCobroSchema: Schema = new Schema({
+    fecha: {
+        type: Date,
+        required: true,
+        default: new Date()
+    },
     comentarios: {
         type: String
     },

@@ -4,6 +4,8 @@ import CardTable from "@/src/components/cards/CardTable";
 import ModalAdd from "@/src/components/ui/ModalAdd";
 import { CardFacturasSchema } from "@/src/schema";
 
+export const revalidate = 0;
+
 async function getFacturas(){
     await connectDB();
     const facturas = await Factura.find()

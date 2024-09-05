@@ -118,7 +118,7 @@ export default function CobroDetail({ cobro }: CobroDetailProps) {
                 </p>
 
                 <p className="font-semibold">Fecha de Sellado: {' '}
-                    <span className="font-normal">{formatDate(new Date(evalDate(cobro.factura.fechaSellado)))}</span>
+                    <span className="font-normal">{formatDate(cobro.factura.fechaSellado)}</span>
                 </p>
 
                 <a
