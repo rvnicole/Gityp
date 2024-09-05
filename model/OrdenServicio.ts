@@ -2,6 +2,7 @@ import mongoose, { Document, PopulatedDoc, Schema, Types, models, ObjectId } fro
 import { IPresupuesto, Presupuesto } from "./Presupuesto";
 import { IServicio, Servicio } from "./Servicio";
 import { Factura } from "./Factura";
+import { Configuracion } from "./Configuracion";
 
 const statusPresupuesto = {
     ASSIGN: 'assign',
@@ -82,14 +83,26 @@ OrdenServicioSchema.post('save', async (doc) => {
         };
         
     }
-});
+    else if( doc.estado === 'complete' ){
+        const configuracionDocs = await Configuracion.find();
+        let folio = '1';
 
-OrdenServicioSchema.post('updateOne', async (doc) => {
-    if( doc.estado === 'complete' ){
+        if( configuracionDocs.length > 0 ) {
+            const configuracion = configuracionDocs[0];
+            folio = (parseInt(configuracion.folioInicial) + 1).toString();
+            configuracion.folioInicial = folio;
+            await configuracion.save()
+        }
+        else {
+            const configuracion = new Configuracion({folioInicial: folio});
+            await configuracion.save();
+        }
+
         const factura = await new Factura();
         factura.fecha = new Date();
-        factura.folio = '2000';
-        await factura();
+        factura.folio = folio;
+        factura.ordenServicio = doc.id;
+        await factura.save();
     }
 });
 
