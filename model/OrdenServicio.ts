@@ -1,8 +1,9 @@
 import mongoose, { Document, PopulatedDoc, Schema, Types, models, ObjectId } from "mongoose";
-import { IPresupuesto, Presupuesto } from "./Presupuesto";
+import { Presupuesto } from "./Presupuesto";
 import { IServicio, Servicio } from "./Servicio";
 import { Factura } from "./Factura";
 import { Configuracion } from "./Configuracion";
+import { GestionCobro } from "./GestionCobro";
 
 const statusPresupuesto = {
     ASSIGN: 'assign',
@@ -98,12 +99,36 @@ OrdenServicioSchema.post('save', async (doc) => {
             await configuracion.save();
         }
 
-        const factura = await new Factura();
+        const factura = new Factura();
         factura.fecha = new Date();
         factura.folio = folio;
         factura.ordenServicio = doc.id;
         await factura.save();
     }
+});
+
+OrdenServicioSchema.pre('deleteOne', { document: true }, async function () {
+    const mensaje = `*ATENCIÓN: El presupuesto ha cambiado a estado rechazado porque 
+    la Orden de Servicio #${this._id} (${this.ordenCompra ? this.ordenCompra : 'sin PO'}) generada a 
+    partir de este fue eliminada, asi como cada uno de los servicios, facturas y cobros que la conformaban. 
+    Ya no se considera un presupuesto aprobado.*`;
+
+    const presupuesto = await Presupuesto.findById(this.presupuesto);
+    presupuesto.estado = 'reject';
+    presupuesto.comentarios = `${presupuesto.comentarios} ${mensaje}`;
+
+    const facturas = await Factura.find({ordenServicio: this._id});
+    for(const factura of facturas) {
+        await GestionCobro.deleteMany({factura: factura._id });
+    }
+    
+    const eliminacion = await Promise.all([
+        presupuesto.save(),
+        Servicio.deleteMany({ ordenServicio: this._id }),
+        Factura.deleteMany({ordenServicio: this._id})
+    ]);
+
+    console.log("OS - Eliminacion", eliminacion);
 });
 
 export const OrdenServicio = models.OrdenServicio || mongoose.model<IOrdenServicio>('OrdenServicio', OrdenServicioSchema );

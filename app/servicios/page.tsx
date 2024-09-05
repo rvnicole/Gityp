@@ -22,7 +22,7 @@ async function getServicios() {
                 { path: 'ordenServicio'}
             ])
             .sort({ fechaEjecucion: -1 });
-
+        
         const {success, data, error} = CardsServiciosSchema.safeParse(servicios);
         
         if(success) {
