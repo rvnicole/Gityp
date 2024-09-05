@@ -40,6 +40,10 @@ export default function CobroDetail({ cobro }: CobroDetailProps) {
             </div>
 
             <div className="flex flex-col md:justify-end gap-1">
+                <p className="font-semibold">Fecha: {' '}
+                    <span className="font-normal">{formatDate(cobro.fecha)}</span>
+                </p>
+
                 <p className="font-semibold">Proveedor: {' '}
                     <span className="font-normal">{cobro.factura.ordenServicio.proveedor}</span>
                 </p>
@@ -85,11 +89,11 @@ export default function CobroDetail({ cobro }: CobroDetailProps) {
                     <p className="font-bold text-secondaryColor-foreground">Emisor</p>
 
                     <p className="font-semibold">Nombre: {' '}
-                        <span className="font-normal">{cobro.factura.emisor.nombre}</span>
+                        <span className="font-normal">{cobro.factura.emisor?.nombre}</span>
                     </p>
 
                     <p className="font-semibold">RFC: {' '}
-                        <span className="font-normal">{cobro.factura.emisor.rfc}</span>
+                        <span className="font-normal">{cobro.factura.emisor?.rfc}</span>
                     </p>
                 </div>
 
@@ -99,11 +103,11 @@ export default function CobroDetail({ cobro }: CobroDetailProps) {
                     <p className="font-bold text-secondaryColor-foreground">Receptor</p>
 
                     <p className="font-semibold">Nombre: {' '}
-                        <span className="font-normal">{cobro.factura.receptor.nombre}</span>
+                        <span className="font-normal">{cobro.factura.receptor?.nombre}</span>
                     </p>
 
                     <p className="font-semibold">RFC: {' '}
-                        <span className="font-normal">{cobro.factura.receptor.rfc}</span>
+                        <span className="font-normal">{cobro.factura.receptor?.rfc}</span>
                     </p>
                 </div>
             </div>
@@ -118,7 +122,7 @@ export default function CobroDetail({ cobro }: CobroDetailProps) {
                 </p>
 
                 <p className="font-semibold">Fecha de Sellado: {' '}
-                    <span className="font-normal">{formatDate(cobro.factura.fechaSellado)}</span>
+                    <span className="font-normal">{cobro.factura.fechaSellado && formatDate(cobro.factura.fechaSellado)}</span>
                 </p>
 
                 <a

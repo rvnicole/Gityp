@@ -3,12 +3,23 @@
 import { connectDB } from "@/config/db";
 import { GestionCobro } from "@/model/GestionCobro";
 import { GestionCobroFormData, GestionCobros } from "@/src/types";
+import mongoose from "mongoose";
 
-export async function updateCobro(formData: GestionCobroFormData) {
+export async function updateCobro(formData: Omit<GestionCobroFormData, 'factura'>) {
     try {
         await connectDB();
 
+        console.log("COBRO - FORMDATA", formData);
+
+        if( !mongoose.Types.ObjectId.isValid(formData.id) ) {
+            return { success: false, message: "Cobro Inválido"}
+        }
+
         const cobro = await GestionCobro.findById(formData.id);
+        if( !cobro ) {
+            return { success: false, message: "Cobro No Encontrado"}
+        }  
+
         cobro.ie = formData.ie;
         cobro.edicom = formData.edicom;
         cobro.pagado = formData.pagado;

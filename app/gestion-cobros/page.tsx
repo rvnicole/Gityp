@@ -12,6 +12,8 @@ async function getCobros() {
             .populate([ { path: 'factura', populate: { path: 'ordenServicio' } }])
             .sort({ fecha: -1 });
 
+        console.log("Cobros", cobros);
+
         const {success, data, error} = CardCobrosSchema.safeParse(cobros);
         
         if(success) {
