@@ -3,12 +3,29 @@ import Link from "next/link";
 import { useForm } from "react-hook-form"
 import { PrimaryButton } from "../../ui/Buttons";
 import GestionCobroForm from "./GestionCobroForm";
+import { useSearchParams, useRouter } from "next/navigation";
+import { updateCobro } from "@/actions/gestion-cobros-actions";
 
 export default function AddGestionCobro(){
     const { register, handleSubmit, reset, formState: { errors } } = useForm<GestionCobroFormData>();
+    const router = useRouter();
 
-    const handleCompleteInfo = (formData: GestionCobroFormData) => {
-        console.log(formData);
+    const params = useSearchParams();
+    const cobroID = params.get('documentID')!;
+    const pagado = params.get('pagado') === "true" ? true : false;
+    
+    const handleCompleteInfo = async (formData: GestionCobroFormData) => {
+        const respuesta = await updateCobro({...formData, id: cobroID, pagado});
+        
+        if( respuesta.success ){
+            alert(respuesta.message);
+        }
+        else {
+            alert(respuesta.message);
+        }
+
+        reset();
+        router.push(location.pathname);
     };
 
     return (
