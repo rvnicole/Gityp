@@ -2,7 +2,7 @@ import { useMemo, useState } from "react";
 import { useForm } from "react-hook-form";
 import { Presupuesto, PresupuestoFormData, ServiceFormData } from "@/src/types";
 import { PrimaryButton } from "../../ui/Buttons";
-import { formatCurrency, formatDate } from "@/src/lib";
+import { evalDate, formatCurrency, formatDate } from "@/src/lib";
 import PresupuestoForm from "./PresupuestoForm";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
@@ -25,7 +25,7 @@ export default function EditPresupuesto({ defaultValues }: { defaultValues: Pres
     const [ montos, setMontos ] = useState({ subtotal: defaultValues.subtotal, iva: defaultValues.iva, total: defaultValues.total }); 
     const { register, handleSubmit, reset, formState: { errors }, watch } = useForm<PresupuestoFormData>({ defaultValues });
     const iva = watch('iva') ? watch('iva') : montos.iva;
-    const fecha = formatDate(defaultValues.fecha);
+    const fecha = formatDate(new Date(evalDate(defaultValues.fecha)));
     useMemo(()=>{ 
         const subtotal = servicios.reduce((acumulado, servicio) => acumulado + +servicio.costo, 0);
         setMontos({...montosIniciales, subtotal, iva: subtotal * 0.16, total: subtotal * 0.16 + subtotal }); 
