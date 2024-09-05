@@ -18,7 +18,7 @@ export default function FacturaDetail({ factura }: FacturaDetailProps) {
 
                 <a
                     className="inline-flex gap-1 justify-center items-center w-24 max-h-8 my-1 p-1 rounded-full text-sm text-white bg-charColor-char5 hover:bg-primaryColor"
-                    href={factura.ordenServicio.urlOrdenCompra}
+                    href={factura.ordenServicio.urlOrdenCompra ? factura.ordenServicio.urlOrdenCompra: ''}
                     target="_blank"
                 >
                     Ver PO
@@ -48,7 +48,7 @@ export default function FacturaDetail({ factura }: FacturaDetailProps) {
                 </p>
 
                 <p className="font-semibold">Proveedor: {' '}
-                    <span className="font-normal">{factura.ordenServicio.proveedor}</span>
+                    <span className="font-normal">{ factura.ordenServicio.proveedor ? factura.ordenServicio.proveedor : ''}</span>
                 </p>
 
                 <p className="font-semibold">Presupuesto: {' '}
@@ -65,11 +65,11 @@ export default function FacturaDetail({ factura }: FacturaDetailProps) {
                     <p className="font-bold text-secondaryColor-foreground">Emisor</p>
 
                     <p className="font-semibold">Nombre: {' '}
-                        <span className="font-normal">{factura.emisor.nombre}</span>
+                        <span className="font-normal">{factura.emisor ? factura.emisor.nombre : ''}</span>
                     </p>
 
                     <p className="font-semibold">RFC: {' '}
-                        <span className="font-normal">{factura.emisor.rfc}</span>
+                        <span className="font-normal">{factura.emisor ? factura.emisor.rfc : ''}</span>
                     </p>
                 </div>
 
@@ -79,11 +79,11 @@ export default function FacturaDetail({ factura }: FacturaDetailProps) {
                     <p className="font-bold text-secondaryColor-foreground">Receptor</p>
 
                     <p className="font-semibold">Nombre: {' '}
-                        <span className="font-normal">{factura.receptor.nombre}</span>
+                        <span className="font-normal">{factura.receptor ? factura.receptor.nombre : ''}</span>
                     </p>
 
                     <p className="font-semibold">RFC: {' '}
-                        <span className="font-normal">{factura.receptor.rfc}</span>
+                        <span className="font-normal">{factura.receptor ? factura.receptor.rfc : ''}</span>
                     </p>
                 </div>
             </div>
@@ -94,11 +94,11 @@ export default function FacturaDetail({ factura }: FacturaDetailProps) {
                 </p>
 
                 <p className="font-semibold">Folio Fiscal: {' '}
-                    <span className="font-normal">{factura.folioFiscal}</span>
+                    <span className="font-normal">{factura.folioFiscal ? factura.folioFiscal : ''}</span>
                 </p>
 
                 <p className="font-semibold">Fecha de Sellado: {' '}
-                    <span className="font-normal">{formatDate(new Date(evalDate(factura.fechaSellado)))}</span>
+                    <span className="font-normal">{factura.fechaSellado ? formatDate(new Date(evalDate(factura.fechaSellado))) : ''}</span>
                 </p>
 
                 <a

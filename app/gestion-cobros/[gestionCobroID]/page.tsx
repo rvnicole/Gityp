@@ -41,7 +41,11 @@ export default function GestionCobroIDPage({ params }: { params: {gestionCobroID
                     descripcion: 'Ut suscipit mollis felis, accumsan ultricies mauris sollicitudin eget.',
                     costo: 1000,
                     tipoServicio: 'paqueteria',
-                    idConductor: 'Persona Conductora',
+                    idConductor: {
+                        id: 'as',
+                        nombre: 'Nombre',
+                        apellido: 'Apellido'
+                    },
                     nota: 'Ut vitae nulla hendrerit.',
                     estado: 'assign'
                 },
@@ -57,7 +61,11 @@ export default function GestionCobroIDPage({ params }: { params: {gestionCobroID
                     descripcion: 'Ut suscipit mollis felis, accumsan ultricies mauris sollicitudin eget.',
                     costo: 1000,
                     tipoServicio: 'paqueteria',
-                    idConductor: 'Persona Conductora',
+                    idConductor: {
+                        id: 'as',
+                        nombre: 'Nombre',
+                        apellido: 'Apellido'
+                    },
                     nota: 'Ut vitae nulla hendrerit.',
                     estado: 'assign'
                 },
@@ -73,7 +81,11 @@ export default function GestionCobroIDPage({ params }: { params: {gestionCobroID
                     descripcion: 'Ut suscipit mollis felis, accumsan ultricies mauris sollicitudin eget.',
                     costo: 1000,
                     tipoServicio: 'paqueteria',
-                    idConductor: 'Persona Conductora',
+                    idConductor: {
+                        id: 'as',
+                        nombre: 'Nombre',
+                        apellido: 'Apellido'
+                    },
                     nota: 'Ut vitae nulla hendrerit.',
                     estado: 'assign'
                 }
@@ -92,7 +104,11 @@ export default function GestionCobroIDPage({ params }: { params: {gestionCobroID
                 descripcion: 'Ut suscipit mollis felis, accumsan ultricies mauris sollicitudin eget.',
                 costo: 1000,
                 tipoServicio: 'paqueteria',
-                idConductor: 'Persona Conductora',
+                idConductor: {
+                    id: 'as',
+                    nombre: 'Nombre',
+                    apellido: 'Apellido'
+                },
                 nota: 'Ut vitae nulla hendrerit.',
                 estado: 'assign'
             },
@@ -108,7 +124,11 @@ export default function GestionCobroIDPage({ params }: { params: {gestionCobroID
                 descripcion: 'Ut suscipit mollis felis, accumsan ultricies mauris sollicitudin eget.',
                 costo: 1000,
                 tipoServicio: 'paqueteria',
-                idConductor: 'Persona Conductora',
+                idConductor: {
+                    id: 'as',
+                    nombre: 'Nombre',
+                    apellido: 'Apellido'
+                },
                 nota: 'Ut vitae nulla hendrerit.',
                 estado: 'assign'
             },
@@ -124,7 +144,11 @@ export default function GestionCobroIDPage({ params }: { params: {gestionCobroID
                 descripcion: 'Ut suscipit mollis felis, accumsan ultricies mauris sollicitudin eget.',
                 costo: 1000,
                 tipoServicio: 'paqueteria',
-                idConductor: 'Persona Conductora',
+                idConductor: {
+                    id: 'as',
+                    nombre: 'Nombre',
+                    apellido: 'Apellido'
+                },
                 nota: 'Ut vitae nulla hendrerit.',
                 estado: 'assign'
             }

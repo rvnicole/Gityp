@@ -9,7 +9,7 @@ type ContentCobroProps = {
 export default function ContentCobro({document}: ContentCobroProps) {
     return (
         <div>
-            <p className="text-right">{formatDate(new Date(evalDate(document.factura.fecha)))}</p>
+            <p className="text-right">{formatDate(document.factura.fecha)}</p>
                                      
             <p className="font-bold text-lg pt-3">Cobro {' '}
                 <span className="text-2xl break-words">#{document.id}</span>

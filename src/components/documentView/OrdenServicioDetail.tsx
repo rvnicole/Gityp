@@ -58,7 +58,7 @@ export default function OrdenServicioDetail({ ordenServicio }: OrdenServicioDeta
 
             <div className="flex flex-col md:justify-end gap-1">
                 <p className="font-semibold">Fecha: {' '}
-                    <span className="font-normal">{formatDate(new Date(evalDate(ordenServicio.fecha)))}</span>
+                    <span className="font-normal">{formatDate(ordenServicio.fecha)}</span>
                 </p>
 
                 <p className="font-semibold">Proveedor: {' '}

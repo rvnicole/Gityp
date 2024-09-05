@@ -1,6 +1,30 @@
+import { Configuracion } from "@/model/Configuracion";
 import CardIconConfig from "@/src/components/cards/CardIconConfig";
 
-export default function ConfigurationPage() {
+async function initConfiguracion(){
+    try{
+        const config = await Configuracion.find();
+        if( config.length === 0 ){
+            const configParams = {
+                folioInicial: 0,
+                plantillas: {
+                    nombre: 'default',
+                    tipo: 'impresion'
+                }
+            }
+            const configuracion = new Configuracion(configParams);
+            await configuracion.save();
+            console.log('configuracion inicial creada');
+        }
+    }
+    catch(error){
+        console.log(error);
+    }
+}
+
+export default async function ConfigurationPage() {
+    await initConfiguracion();
+
     return (
         <div className="flex items-center h-[85%] px-2 py-4">
             <div className="grid gap-5 m-auto md:grid-cols-2 sm:grid-cols-1 lg:w-2/3 md:w-full">
