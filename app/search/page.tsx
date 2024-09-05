@@ -245,6 +245,7 @@ export default async function SearchPage( params: SearchPageProps ){
     
     const query = await searchDocuments(params.searchParams) as { documents: PresupuestoType[], fechasDuplicadas: FechasDuplicadasType };
     console.log(query.documents.length);
+
     if( query && query.documents.length > 0 )  return (
         <div className="space-y-5">
             <h1 className="p-3 text-foregroundColor font-semibold">{query.documents.length} Resultados: </h1>
@@ -252,6 +253,7 @@ export default async function SearchPage( params: SearchPageProps ){
                 documents={query.documents}
                 documentType={params.searchParams.document}
                 fechasDuplicadas={query.fechasDuplicadas}
+                search={params.searchParams.document === "gestion-cobros"}
             />
         </div>
     )

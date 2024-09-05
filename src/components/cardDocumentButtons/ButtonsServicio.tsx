@@ -28,7 +28,7 @@ export default function ButtonsServicio({documentID, estadoDocument}: ButtonsSer
             alert(respuesta.message);
         }
         
-        router.push(location.pathname);
+        router.push(location.href);
     }
 
     return (

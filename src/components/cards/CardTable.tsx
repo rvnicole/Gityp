@@ -18,15 +18,17 @@ type CardTableProps = {
     documents: CardPresupuesto[] | CardOrdenServicio[] | CardServicio[] | CardFactura[] | CardCobro[];
     documentType: DocumentTypeURL;
     fechasDuplicadas?: FechasDuplicadasType;
+    search?: Boolean;
 }
 
 type FunctionProps = {
     document: CardPresupuesto | CardOrdenServicio | CardServicio | CardFactura | CardCobro;
     documentType: DocumentTypeURL;
     fechasDuplicadas?: FechasDuplicadasType;
+    search?: Boolean;
 }
 
-function contentCard({documentType, document, fechasDuplicadas}: FunctionProps) {
+function contentCard({documentType, document, fechasDuplicadas, search}: FunctionProps) {
     switch(documentType) {
         case "presupuestos":
             return <ContentPresupuesto document={document as CardPresupuesto}/>
@@ -37,17 +39,17 @@ function contentCard({documentType, document, fechasDuplicadas}: FunctionProps) 
         case "facturacion":
             return <ContentFactura document={document as CardFactura}/>
         case "gestion-cobros":
-            return <ContentCobro document={document as CardCobro}/>
+            return <ContentCobro document={document as CardCobro} search={search}/>
     }
 }
 
-export default function CardTable({documentType, documents, fechasDuplicadas}: CardTableProps) {
+export default function CardTable({documentType, documents, fechasDuplicadas, search}: CardTableProps) {
     return (
         <div className="py-3 w-full grid gap-5 xl:grid-cols-3 lg:grid-cols-3 md:grid-cols-2 xs: grid-cols-1">
             {
                 documents.map( document => (
                     <CardDocument key={document.id}> 
-                        {contentCard({documentType, document, fechasDuplicadas})}
+                        {contentCard({documentType, document, fechasDuplicadas, search})}
                     </CardDocument>
                 ))
             }

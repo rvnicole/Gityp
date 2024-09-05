@@ -3,6 +3,8 @@ import Link from "next/link";
 import { useForm } from "react-hook-form"
 import { PrimaryButton } from "../../ui/Buttons";
 import GestionCobroForm from "./GestionCobroForm";
+import { updateCobro } from "@/actions/gestion-cobros-actions";
+import { useRouter } from "next/navigation";
 
 type EditGestionCobroProps = {
     defaultValues: GestionCobroFormData
@@ -10,9 +12,19 @@ type EditGestionCobroProps = {
 
 export default function EditGestionCobro({defaultValues}: EditGestionCobroProps){
     const { register, handleSubmit, reset, formState: { errors } } = useForm<GestionCobroFormData>( defaultValues && {defaultValues});
+    const router = useRouter();
 
-    const handleEdit = (formData: GestionCobroFormData) => {
-        console.log(formData);
+    const handleEdit = async (formData: GestionCobroFormData) => {
+        const respuesta = await updateCobro(formData);
+        
+        if( respuesta.success ) {
+            alert(respuesta.message);
+        }
+        else {
+            alert(respuesta.message);
+        }
+        
+        router.push(location.pathname);
     };
 
     return (

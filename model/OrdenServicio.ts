@@ -85,6 +85,10 @@ OrdenServicioSchema.post('save', async (doc) => {
         
     }
     else if( doc.estado === 'complete' ){
+        const facturas = await Factura.find({ordenServicio: doc._id});
+
+        if( facturas.length > 0 ) return; 
+        
         const configuracionDocs = await Configuracion.find();
         let folio = '1';
 
