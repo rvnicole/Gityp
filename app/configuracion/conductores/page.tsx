@@ -6,6 +6,8 @@ import ModalAdd from "@/src/components/ui/ModalAdd";
 import { ConductoresArrSchema } from "@/src/schema";
 import Link from "next/link";
 
+export const revalidate = 0;
+
 async function getConductores(){
     await connectDB();
     const res = await Conductor.find();

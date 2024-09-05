@@ -64,12 +64,12 @@ export const FacturaSchema = z.object({
     id: z.string(),
     ordenServicio: OrdenServicioSchema,
     fecha: z.date(),
-    urlFactura: z.string(),
-    emisor: EmisorReceptorSchema,
-    receptor: EmisorReceptorSchema,
+    urlFactura: z.string().optional(),
+    emisor: EmisorReceptorSchema.optional(),
+    receptor: EmisorReceptorSchema.optional(),
     folio: z.string(),
-    folioFiscal: z.string(),
-    fechaSellado: z.date(),
+    folioFiscal: z.string().optional(),
+    fechaSellado: z.date().optional(),
     estado: z.string()
 });
 

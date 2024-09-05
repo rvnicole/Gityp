@@ -17,7 +17,7 @@ export default function DeleteDocument( { documentType, documentID }: DeleteDocu
             const res = await deletePresupuesto(id);
             alert(res.message);
             router.refresh();
-            router.push('/presupuestos');
+            router.push(`/presupuestos/${documentID}`);
         };
 
         return (

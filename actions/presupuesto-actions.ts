@@ -1,4 +1,5 @@
 "use server"
+import mongoose, { Document } from "mongoose";
 import { connectDB } from "@/config/db";
 import { Servicio } from "@/model/Servicio";
 import { Presupuesto } from "@/model/Presupuesto";
@@ -77,8 +78,6 @@ export async function updatePresupuesto( fullFormData: ActionPresupuestoParams  
         presupuesto.iva = formData.iva;
         presupuesto.total = formData.total;
         presupuesto.comentarios = formData.comentarios;
-        presupuesto.servicios = fullFormData.servicios.map( s => s.id );
-        console.log(fullFormData.servicios.map( s => s.id ));
         
         // Formatea todos los servicios para que solo tengan un string en el id del conductor
         const serviciosF = fullFormData.servicios.map( servicioF => {
@@ -90,40 +89,18 @@ export async function updatePresupuesto( fullFormData: ActionPresupuestoParams  
                 idConductor: servicioF.idConductor.id
             }
         });
-
-        // Actualizar o eliminar
-        fullFormData.formData.servicios!.forEach( async servicioAnterior => {
-            const servicio = serviciosF.find( s => s.id.toString() === servicioAnterior.id.toString() );
-            console.log('SE encontro el servicio para actualizar', servicio);
-            if( servicio ){
-                const ser = await Servicio.findById(servicio.id);
-                console.log(ser, 'Servicio que se va actualizar');
-                if( ser ){
-                    ser.costo = servicio.costo;
-                    ser.descripcion = servicio.descripcion;
-                    ser.estado = servicio.estado;
-                    ser.nota = servicio.nota;
-                    ser.tipoServicio = servicio.tipoServicio;
-                    ser.fechaEjecucion = servicio.fechaEjecucion;
-                    ser.idConductor = servicio.idConductor
-                    await ser.save();
-                }                
-            }
-            else{
-                await Servicio.findByIdAndDelete(servicioAnterior.id);
-            };
-        });
-
-        // Agregar nuevo servicio
-        serviciosF.forEach( async s => {
-            const servicioAnterior = formData.servicios!.find( ser => ser.id.toString() === s.id.toString() );
-            if( !servicioAnterior ){
-                const servicioNuevo = new Servicio(s);
-                await servicioNuevo.save();
-            }
-        });       
         
+        // Elimina los anteriores
+        formData.servicios!.forEach( async servicio => await Servicio.findById(servicio.id).deleteOne() );
+
+        // Crea los servicios nuevos
+        const serviciosNuevos = await Servicio.insertMany(serviciosF);
+
+        // Agrega los servicios nuevos al presupuesto
+        presupuesto.servicios = serviciosNuevos;
+
         await presupuesto.save();
+        
         return {
             success: true,
             message: 'Presupuesto actualizado'

@@ -6,6 +6,8 @@ import ModalEdit from "@/src/components/ui/ModalEdit";
 import { OrdenServicioSchema } from "@/src/schema";
 import { OrdenServicio as OrdenServicioType } from "@/src/types";
 
+export const revalidate = 0;
+
 async function getOrdenServicio(id: OrdenServicioType['id']) {
     try {
         await connectDB();

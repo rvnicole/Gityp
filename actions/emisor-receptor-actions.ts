@@ -2,6 +2,7 @@
 
 import { connectDB } from "@/config/db";
 import { EmisorReceptor } from "@/model/EmisorReceptor";
+import { EmisoresReceptoresSchema } from "@/src/schema";
 import { EmisorReceptor as EmisorReceptorType } from "@/src/types";
 
 export async function createEmisorReceptor(formData: Pick<EmisorReceptorType, 'nombre'|'rfc'|'tipo'>) {
@@ -61,5 +62,19 @@ export async function deleteEmisorReceptor({ id }: Pick<EmisorReceptorType, 'id'
         }      
         
         return { success: false, message: 'Error al eliminar el Emisor/Receptor'}
+    }
+}
+
+export async function getEmisorReceptor(){
+    try {
+        await connectDB();
+        const emisorReceptor = await EmisorReceptor.find();
+        const { data, success, error } = EmisoresReceptoresSchema.safeParse(emisorReceptor);
+        if( success ){
+            return data;
+        };
+    }
+    catch(error) {           
+        return { success: false, message: 'Error al obtener los Emisores y Receptores'}
     }
 }
