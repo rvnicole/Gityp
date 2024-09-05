@@ -23,7 +23,7 @@ async function getCobro(id: GestionCobros['id']) {
                 ]}
             ]}
         ]);
-        console.log("Cobro", cobro);
+        
         const {success, data, error} = GestionCobrosSchema.safeParse(cobro);
         
         if(success) {
@@ -41,6 +41,7 @@ export default async function GestionCobroIDPage({ params }: { params: {gestionC
     const { gestionCobroID } = params;
 
     const cobro = await getCobro( gestionCobroID );
+    //console.log("Cobro", cobro);
 
     if(cobro) return (
         <>

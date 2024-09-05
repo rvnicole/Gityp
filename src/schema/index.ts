@@ -75,6 +75,7 @@ export const FacturaSchema = z.object({
 
 export const GestionCobrosSchema = z.object({
     id: z.string(),
+    fecha: z.date(),
     factura: FacturaSchema,
     ie: z.string().optional(),
     edicom: z.boolean(),
@@ -202,6 +203,7 @@ export const CardFacturasSchema = z.array(CardFacturaSchema);
 
 export const CardCobroSchema = GestionCobrosSchema.pick({
     id: true,
+    fecha: true,
     ie: true,
     edicom: true,
     pagado: true,
