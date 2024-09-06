@@ -20,8 +20,10 @@ export default function DeleteDocument( { documentType, documentID }: DeleteDocu
             };
             const res = await deletePresupuesto(id);
             alert(res.message);
-            router.refresh();
-            router.push(`/presupuestos`);
+            if( res.success ){
+                router.refresh();
+                router.push(`/presupuestos`);
+            };
         };
 
         return (

@@ -10,13 +10,16 @@ type PresupuestoDetailProps = {
 
 export default function PresupuestoDetail({ presupuesto }: PresupuestoDetailProps) {
     return (
-        <div className="grid grid-cols-1 gap-5 md:grid-cols-3 text-secondaryColor-foreground">
+        <div id='imp-presupuesto-detalles' className="grid grid-cols-1 gap-5 md:grid-cols-3 text-secondaryColor-foreground">
             <div className="md:col-span-2 md:row-span-2">
                 <h3 className="mb-4 font-bold text-xl md:text-3xl text-foregroundColor break-words">Presupuesto #{presupuesto.id}</h3>
                 <p><span className="font-semibold">Solicito:{' '}</span>{presupuesto.solicito}</p>
             </div>
 
-            <div className="max-h-8	flex md:justify-end text-white text-xs md:text-sm font-semibold">
+            <div 
+                id='imp-estado'
+                className="max-h-8	flex md:justify-end text-white text-xs md:text-sm font-semibold"
+            >
                 { presupuesto.estado === "pending" && (
                     <div className="flex items-center px-3 py-1 bg-mutedColor-foreground rounded-full">
                         <p className="px-3">{estadosPresupuesto[presupuesto.estado as EstadoPresupuesto]} {' '}</p>
@@ -39,7 +42,10 @@ export default function PresupuestoDetail({ presupuesto }: PresupuestoDetailProp
                 )}
             </div>
 
-            <div className="flex flex-col md:justify-end">
+            <div 
+                id='imp-data-proveedor'
+                className="flex flex-col md:justify-end"
+            >
                 <p className="font-semibold">Fecha: {' '}
                     <span className="font-normal">{formatDate(new Date(evalDate(presupuesto.fecha)))}</span>
                 </p>
@@ -61,7 +67,7 @@ export default function PresupuestoDetail({ presupuesto }: PresupuestoDetailProp
                 />
             </div>
 
-            <div className="md:col-start-3 flex justify-end gap-5">
+            <div id='imp-monto-letra' className="md:col-start-3 flex justify-end gap-5">
                 <div className="font-semibold flex flex-col justify-between">
                     <p>Subtotal:</p>
                     <p>IVA:</p>
@@ -71,7 +77,7 @@ export default function PresupuestoDetail({ presupuesto }: PresupuestoDetailProp
                 <div className="text-right">
                     <p>{formatCurrency(presupuesto.subtotal)}</p>
                     <p>{formatCurrency(presupuesto.iva)}</p>
-                    <p className="font-bold text-2xl">{formatCurrency(presupuesto.total)}</p>
+                    <p className="font-bold text-2xl imp-data-total" data-set={presupuesto.total}>{formatCurrency(presupuesto.total)}</p>
                 </div>
             </div>
         </div>

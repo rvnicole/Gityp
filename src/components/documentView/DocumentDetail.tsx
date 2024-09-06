@@ -3,6 +3,7 @@ import { BackButton, DestructiveRoundButton, OutlineRoundButton } from "../ui/Bu
 import { ReactNode } from "react";
 import Link from "next/link";
 import DeleteDocument from "../ui/DeleteDocument";
+import SendDocument from "../ui/SendDocument";
 
 type DocumentDetailProps = {
     documentID: string;
@@ -21,12 +22,15 @@ export default function DocumentDetail({documentID, children, documentType}: Doc
                 </div>
 
                 <div className="flex justify-end gap-3">
+                    <SendDocument 
+                        documentType={documentType}
+                        documentID={documentID}
+                    />
                     <Link
                         href={`${documentID}?modal=edit`}
                     >
                         <OutlineRoundButton>Editar</OutlineRoundButton>
                     </Link>
-
                     <DeleteDocument 
                         documentType={documentType}
                         documentID={documentID}

@@ -3,15 +3,15 @@ import { Dialog, Transition } from "@headlessui/react";
 import { useSearchParams } from "next/navigation";
 import { useRouter } from "next/navigation";
 import { Fragment, ReactNode } from "react";
-import { SecondaryButton } from "./Buttons";
+import EmailForm from "../formularios/emailForm/EmailForm";
 
-export default function Modal({children}: {children: ReactNode}) {
+export default function ModalSend({children}: {children: ReactNode}) {
     const router = useRouter();
     const searchParams = useSearchParams();
     const modo = searchParams.get('modal');
     const isOpen = !!modo;
   
-    if(modo === 'edit') return (
+    if(modo === 'send') return (
       <>
         <Transition appear show={isOpen} as={Fragment}>
           <Dialog as="div" className="relative z-10" onClose={() => router.replace(`${location.pathname}`)}>
@@ -40,8 +40,8 @@ export default function Modal({children}: {children: ReactNode}) {
                 >
                   <Dialog.Panel className="w-full max-w-xl transform overflow-hidden rounded-2xl bg-white p-6 text-left align-middle shadow-xl transition-all">
                       <div className="flex flex-col">
-                        <p className="text-xl font-semibold text-foregroundColor text-center p-3">{ children }</p>
-                        <SecondaryButton  onClick={() => router.replace(`${location.pathname}`)}>Aceptar</SecondaryButton>
+                        <p className="text-xl font-semibold text-foregroundColor text-center p-3">Enviar Presupuesto</p>
+                        <EmailForm />
                       </div>
                   </Dialog.Panel>
                 </Transition.Child>

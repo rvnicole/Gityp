@@ -4,6 +4,7 @@ import DocumentDetail from "@/src/components/documentView/DocumentDetail";
 import PresupuestoDetail from "@/src/components/documentView/PresupuestoDetail";
 import Modal from "@/src/components/ui/Modal";
 import ModalEdit from "@/src/components/ui/ModalEdit";
+import ModalSend from "@/src/components/ui/ModalSend";
 import { PresupuestoSchema } from "@/src/schema";
 import { Presupuesto as PresupuestoType } from "@/src/types";
 
@@ -56,6 +57,7 @@ export default async function PresupuestoIDPage({ params }: { params: {presupues
                 :
                     <Modal>No se puede editar un presupuesto que ya ha sido aprobado o rechazado</Modal>
             }
+            <ModalSend>Estes es para enviar</ModalSend>
         </>
     )
 }

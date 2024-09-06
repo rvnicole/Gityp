@@ -50,7 +50,7 @@ export default function ModalEdit({documentType, defaultValues}: ModalProps) {
   const formulario = selectForm({documentType, defaultValues});
 
 
-  return (
+  if( modo === 'edit' ) return (
     <>
       <Transition appear show={isOpen} as={Fragment}>
         <Dialog as="div" className="relative z-10" onClose={() => router.replace(`${location.pathname}`)}>

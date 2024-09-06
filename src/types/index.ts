@@ -17,7 +17,8 @@ import {
     CardServicioSchema,
     CardFacturaSchema,
     CardCobroSchema,
-    OptionOrdenesServicios
+    OptionOrdenesServicios,
+    EmailSchema
 } from "../schema";
 
 export type Servicio = z.infer<typeof ServicioSchema>;
@@ -64,3 +65,6 @@ export type EmisoresReceptores = z.infer<typeof EmisorReceptorSchema>;
 
 // Types Options
 export type OptionOrdenesServiciosIDs = z.infer<typeof OptionOrdenesServicios>;
+
+// Type Email
+export type Email = z.infer<typeof EmailSchema>;

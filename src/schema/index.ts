@@ -214,3 +214,12 @@ export const CardCobrosSchema = z.array( CardCobroSchema );
 
 
 export const OptionOrdenesServicios = z.array( z.string() );
+
+// Esquema email
+export const EmailSchema = z.object({
+    para: z.string(),
+    cc: z.string().optional(),
+    cco: z.string().optional(),
+    asunto: z.string(),
+    mensaje: z.string()
+});

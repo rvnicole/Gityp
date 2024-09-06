@@ -244,7 +244,7 @@ type SearchPageProps = {
 export default async function SearchPage( params: SearchPageProps ){
     
     const query = await searchDocuments(params.searchParams) as { documents: PresupuestoType[], fechasDuplicadas: FechasDuplicadasType };
-    console.log(query.documents.length);
+    //console.log(query.documents.length);
 
     if( query && query.documents.length > 0 )  return (
         <div className="space-y-5">
