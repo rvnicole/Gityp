@@ -2,6 +2,7 @@ import { connectDB } from "@/config/db";
 import { Factura } from "@/model/Factura";
 import CardTable from "@/src/components/cards/CardTable";
 import ModalAdd from "@/src/components/ui/ModalAdd";
+import Spinner from "@/src/components/ui/Spinner";
 import { CardFacturasSchema } from "@/src/schema";
 
 export const revalidate = 0;
@@ -36,6 +37,7 @@ export default async function FacturacionPage() {
                 documentType="facturacion"
             />
             <ModalAdd documentType="factura"/>
+            <Spinner />
         </>
     )
 }

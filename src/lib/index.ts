@@ -8,7 +8,13 @@ export const formatCurrency = ( amount: number ) => {
 };
 
 export const formatDate = (date: Date) => {
-    return Intl.DateTimeFormat('es-MX').format(date)
+    return Intl.DateTimeFormat('es-MX').format(date);
+};
+
+export const formatLongDate = (date: Date) => {
+    return Intl.DateTimeFormat('es-MX', {
+        dateStyle:"full"
+    }).format(date);
 };
 
 export const evalDate = ( fecha: Date | string ) => {

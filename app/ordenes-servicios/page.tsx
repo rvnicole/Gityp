@@ -1,6 +1,7 @@
 import { connectDB } from "@/config/db";
 import { OrdenServicio } from "@/model/OrdenServicio";
 import CardTable from "@/src/components/cards/CardTable";
+import Spinner from "@/src/components/ui/Spinner";
 import { CardsOrdenServicioSchema } from "@/src/schema";
 
 export const revalidate = 0;
@@ -30,6 +31,7 @@ export default async function OrdenesServiciosPage() {
                 documents={ordenesServicios}
                 documentType="ordenes-servicios"
             />
+            <Spinner />
         </>
     )
 }

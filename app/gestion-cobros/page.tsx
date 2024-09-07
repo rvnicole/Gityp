@@ -2,6 +2,7 @@ import { connectDB } from "@/config/db";
 import { GestionCobro } from "@/model/GestionCobro";
 import CardTable from "@/src/components/cards/CardTable";
 import ModalAdd from "@/src/components/ui/ModalAdd";
+import Spinner from "@/src/components/ui/Spinner";
 import { CardCobrosSchema } from "@/src/schema";
 
 async function getCobros() {
@@ -38,6 +39,7 @@ export default async function GetionCobrosPage() {
             />
 
             <ModalAdd documentType="gestionCobro" />
+            <Spinner />
         </>
     )
 }

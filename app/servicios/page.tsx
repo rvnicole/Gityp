@@ -7,6 +7,7 @@ import { formatDate } from "@/src/lib";
 import { FechasDuplicadasType } from "@/src/types";
 import { Servicio } from "@/model/Servicio";
 import { CardsServiciosSchema } from "@/src/schema";
+import Spinner from "@/src/components/ui/Spinner";
 
 export const revalidate = 0;
 
@@ -61,6 +62,7 @@ export default async function ServiciosPage() {
             <ModalAdd 
                 documentType="servicio"
             />
+            <Spinner />
         </div>
     )
 }

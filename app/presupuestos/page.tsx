@@ -3,6 +3,7 @@ import { Presupuesto } from "@/model/Presupuesto";
 import CardTable from "@/src/components/cards/CardTable";
 import { PrimaryButton } from "@/src/components/ui/Buttons";
 import ModalAdd from "@/src/components/ui/ModalAdd";
+import Spinner from "@/src/components/ui/Spinner";
 import { CardsPresupuestoSchema } from "@/src/schema";
 import Link from "next/link";
 
@@ -39,6 +40,7 @@ export default async function PresupuestoPage() {
                 documentType="presupuestos"
             />
             <ModalAdd documentType="presupuesto"/>
+            <Spinner />
         </div>
     )
 }

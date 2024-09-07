@@ -206,27 +206,27 @@ async function searchDocuments( searchParams: { document: string, q: string }){
 
     switch(searchParams.document){
         case 'presupuestos': {
-            const presupuestos = await searchPresupuestos(tipoBusqueda, searchParams.q);
+            const presupuestos = await searchPresupuestos(tipoBusqueda, searchParams.q.trim());
             return presupuestos;
         };
         break;
         case 'ordenes-servicios': {
-            const ordenes = await searchOrdenes(tipoBusqueda, searchParams.q);
+            const ordenes = await searchOrdenes(tipoBusqueda, searchParams.q.trim());
             return ordenes;
         }
         break;
         case 'servicios': {
-            const serviciosYFechas = await searchServicios(tipoBusqueda, searchParams.q);
+            const serviciosYFechas = await searchServicios(tipoBusqueda, searchParams.q.trim());
             return serviciosYFechas
         }
         break;
         case 'facturacion': {
-            const facturas = await searchFacturas(tipoBusqueda, searchParams.q);
+            const facturas = await searchFacturas(tipoBusqueda, searchParams.q.trim());
             return facturas;
         }
         break;
         case 'gestion-cobros': {
-            const cobros = await searchCobros(tipoBusqueda, searchParams.q);
+            const cobros = await searchCobros(tipoBusqueda, searchParams.q.trim());
             return cobros;
         }
         break;

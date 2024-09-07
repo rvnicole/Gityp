@@ -223,3 +223,9 @@ export const EmailSchema = z.object({
     asunto: z.string(),
     mensaje: z.string()
 });
+
+// Esquema de Rutas
+export const RutaSchema = z.object({
+    ruta: z.string(),
+    tipo: z.string()
+});

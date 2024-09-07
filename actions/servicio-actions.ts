@@ -18,7 +18,10 @@ export async function createServicio(formData: Omit<ServiceFormData, 'id'> & { s
         const ordenServicio = await OrdenServicio.findById(formData.searchOrdenes).populate('servicios'); 
         if( !ordenServicio ) {
             return { success: false, message: "Orden de Servicio No Encontrada"}
-        }       
+        } 
+        if( ordenServicio.estado === "complete" ) {
+            return { success: false, message: "Esta Orden de Servicio ya ha sido completada"}
+        }    
 
         const servicio = await new Servicio(formData);
         servicio.ordenServicio = ordenServicio.id; 

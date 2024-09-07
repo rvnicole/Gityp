@@ -14,7 +14,8 @@ type ButtonsServicioProps = {
 }
 
 export default function ButtonsServicio({documentID, estadoDocument}: ButtonsServicioProps) {
-    const [estado, setEstado] = useState<EstadoServicio>(estadoDocument);
+    console.log(estadoDocument, 'EStado document');
+    const [estado, setEstado] = useState<EstadoServicio>(estadoDocument || 'assign');
     const router = useRouter();
 
     const handleClick = async (data: {id: CardServicio['id'], estado: EstadoServicio}) => {
