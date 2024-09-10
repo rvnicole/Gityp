@@ -4,7 +4,7 @@ import { ServiceFormData, Servicio } from "@/src/types";
 import Link from "next/link";
 import { PrimaryButton } from "../../ui/Buttons";
 import { updateServicio } from "@/actions/servicio-actions";
-import { useRouter } from "next/navigation";
+import { toast } from 'react-toastify';
 
 type EditServiceProps = {
     defaultValues: Servicio
@@ -14,20 +14,18 @@ export default function EditService({defaultValues}: EditServiceProps){
     const  { register, handleSubmit, reset, formState: { errors } } = useForm<ServiceFormData & { searchOrdenes?: string }>({
         defaultValues
     });
-    const router = useRouter();
 
     const handleServiceFormData = async (formData: ServiceFormData & { searchOrdenes?: string }) => {
         const respuesta = await updateServicio(formData);
         
         if( respuesta.success ) {
-            alert(respuesta.message);
+            toast.success(respuesta.message as string);
+            reset();
+            setTimeout(() => location.href = location.pathname, 2000);
         }
         else {
-            alert(respuesta.message);
+            toast.error(respuesta.message as string);
         }
-
-        reset();
-        router.push(location.pathname);
     };
 
     return(

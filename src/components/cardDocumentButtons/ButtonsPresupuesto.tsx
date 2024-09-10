@@ -21,6 +21,7 @@ export default function ButtonsPresupuestos({documentID, estadoDocument}: Button
 
     const handleClickAccept = async (id: Presupuesto['id']) => {
         const res = await updateStatusPresupuesto(id, 'accept');
+        
         if( res.success ){
             toast.success(res.message as string);
             setEstado('accept');
@@ -32,9 +33,13 @@ export default function ButtonsPresupuestos({documentID, estadoDocument}: Button
 
     const handleClickReject = async (id: Presupuesto['id']) => {
         const res = await updateStatusPresupuesto(id, 'reject');
-        alert(res.message);
+        
         if( res.success ){
+            toast.success(res.message as string);
             setEstado('reject');
+        }
+        else{
+            toast.error(res.message as string);
         }; 
     }
 

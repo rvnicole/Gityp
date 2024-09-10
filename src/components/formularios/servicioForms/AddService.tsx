@@ -7,12 +7,11 @@ import Link from "next/link";
 import { getOrdenesServicioIDs } from "@/actions/orden-servicio-actions";
 import { OptionOrdenesServicios } from "@/src/schema";
 import { createServicio } from "@/actions/servicio-actions";
-import { useRouter } from "next/navigation";
+import { toast } from 'react-toastify';
 
 export default function AddService(){
     const  { register, handleSubmit, reset, formState: { errors } } = useForm<ServiceFormData & { searchOrdenes?: string }>();
     const [dataListOrdenes, setDataListOrdenes] = useState<OptionOrdenesServiciosIDs>([]); 
-    const router = useRouter();
     
     useEffect(() => {
         const fetchOrdenesServicioIDs = async () => {
@@ -36,13 +35,13 @@ export default function AddService(){
         const respuesta = await createServicio(formData);
         
         if( respuesta.success ) {
-            alert(respuesta.message);
+            toast.success(respuesta.message as string);
+            reset();
+            setTimeout(() => location.href = location.pathname, 2000);
         }
         else {
-            alert(respuesta.message);
+            toast.error(respuesta.message as string);
         }
-        reset();
-        location.href = location.pathname;
     };
 
     return(

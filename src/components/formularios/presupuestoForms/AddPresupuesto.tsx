@@ -6,7 +6,6 @@ import { formatCurrency } from "@/src/lib";
 import PresupuestoForm from "./PresupuestoForm";
 import Link from "next/link";
 import { createPresupuesto } from "@/actions/presupuesto-actions";
-import { useRouter } from "next/navigation";
 import { toast } from 'react-toastify';
 
 const montosIniciales = {
@@ -16,7 +15,6 @@ const montosIniciales = {
 }
 
 export default function AddPresupuesto(){
-    const router = useRouter();
     const [ servicios, setServicios ] = useState<ServiceFormData[]>([]);
     const [ openServiceForm, setOpenServiceForm ] = useState(true);
     const [ montos, setMontos ] = useState(montosIniciales); 
@@ -57,9 +55,7 @@ export default function AddPresupuesto(){
             toast.error(res.message as string);
         };
 
-        //router.refresh();
-        //router.push(location.pathname);
-        location.href = location.pathname;
+        setTimeout(() => location.href = location.pathname, 2000);
     };
 
     return (
