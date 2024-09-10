@@ -18,7 +18,7 @@ export default function GetionCobrosPage() {
 
         const observador = new IntersectionObserver((arreglo) => {
             if(arreglo[0].isIntersecting) {
-                fetchPresupuestos();
+                fetchGestionCobros();
             }
         });
 
@@ -27,7 +27,7 @@ export default function GetionCobrosPage() {
         return () => observador.unobserve(div);
     });
 
-    const fetchPresupuestos = async () => {
+    const fetchGestionCobros = async () => {
         const {data, totalResults} = await getCobros(limit, page) || {data: [], totalResults: 0};
 
         setCobros([...cobros, ...data]);

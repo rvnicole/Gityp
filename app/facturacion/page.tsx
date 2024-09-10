@@ -19,7 +19,7 @@ export default function FacturacionPage() {
 
         const observador = new IntersectionObserver((arreglo) => {
             if(arreglo[0].isIntersecting) {
-                fetchPresupuestos();
+                fetchFacturas();
             }
         });
 
@@ -28,7 +28,7 @@ export default function FacturacionPage() {
         return () => observador.unobserve(div);
     });
 
-    const fetchPresupuestos = async () => {
+    const fetchFacturas = async () => {
         const {data, totalResults} = await getFacturas(limit, page) || {data: [], totalResults: 0};
 
         setFacturas([...facturas, ...data]);
