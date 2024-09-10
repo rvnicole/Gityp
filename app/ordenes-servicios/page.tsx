@@ -1,29 +1,39 @@
-import { connectDB } from "@/config/db";
-import { OrdenServicio } from "@/model/OrdenServicio";
+"use client"
+
+import { useState, useRef, useEffect } from "react";
+import { getOrdenesServicio } from "@/actions/orden-servicio-actions";
 import CardTable from "@/src/components/cards/CardTable";
 import Spinner from "@/src/components/ui/Spinner";
-import { CardsOrdenServicioSchema } from "@/src/schema";
+import { CardOrdenServicio } from "@/src/types";
 
-export const revalidate = 0;
+export default function OrdenesServiciosPage() {
+    const [ordenesServicios, setOrdenesServicios] = useState<CardOrdenServicio []>([]);
+    const [totalOrdenesServicios, setTotalOrdenesServicios] = useState(0);
+    const [page, setPage] = useState(0);
+    const ref = useRef<HTMLDivElement>(null);
+    const limit = 10;
+   
+    useEffect(() => {
+        const div = ref.current!;
 
-async function getOrdenesServicio() {
-    try {
-        await connectDB();
+        const observador = new IntersectionObserver((arreglo) => {
+            if(arreglo[0].isIntersecting && (totalOrdenesServicios > ordenesServicios.length || page === 0)) {
+                fetchOrdenesServicios();
+            }
+        });
 
-        const ordenesServicio = await OrdenServicio.find().sort({ fecha: -1 });
-        const {success, data} = CardsOrdenServicioSchema.safeParse(ordenesServicio);
-        
-        if(success) {
-            return data;
-        };
+        observador.observe(div);        
+
+        return () => observador.unobserve(div);
+    });
+
+    const fetchOrdenesServicios = async () => {
+        const {data, totalResults} = await getOrdenesServicio(limit, page) || {data: [], totalResults: 0};
+
+        setOrdenesServicios([...ordenesServicios, ...data]);
+        setTotalOrdenesServicios(totalResults);
+        setPage( page + 1 );
     }
-    catch(error) {
-        console.log(error);
-    }
-}
-
-export default async function OrdenesServiciosPage() {
-    const ordenesServicios = await getOrdenesServicio() || [];
 
     return (
         <>
@@ -31,7 +41,14 @@ export default async function OrdenesServiciosPage() {
                 documents={ordenesServicios}
                 documentType="ordenes-servicios"
             />
-            <Spinner />
+
+            <div ref={ref} className="mx-auto">
+                {totalOrdenesServicios === ordenesServicios.length ? 
+                    <p className="text-center text-sm text-mutedColor-foreground">Son todas las Ordenes de Servicio Registradas</p> 
+                    : 
+                    <Spinner />
+                }
+            </div>
         </>
     )
 }

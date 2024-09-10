@@ -6,6 +6,7 @@ import { Servicio } from "@/model/Servicio";
 import { ServiceFormData, Servicio as ServicioType } from "@/src/types";
 import { determinaEstadoOS, calculaMontos } from "@/src/lib/servicios";
 import mongoose from "mongoose";
+import { CardsServiciosSchema } from "@/src/schema";
 
 export async function createServicio(formData: Omit<ServiceFormData, 'id'> & { searchOrdenes?: string }) {
     try {
@@ -43,6 +44,35 @@ export async function createServicio(formData: Omit<ServiceFormData, 'id'> & { s
         }      
         
         return { success: false, message: 'Error al crear el Servicio'}
+    }
+}
+
+export async function getServicios(limit: number, page: number) {
+    try {
+        await connectDB();
+
+        const skip = page * limit;
+
+        const consultaServicios = Servicio.find({
+                ordenServicio: { $ne: null }
+            })
+            .populate([
+                { path: 'idConductor' },
+                { path: 'ordenServicio'}
+            ])
+            .limit(limit)
+            .skip(skip)
+            .sort({ fechaEjecucion: -1 });
+        const consultaTotal = Servicio.find({ ordenServicio: { $ne: null } });
+        const [servicios, totalResults] = await Promise.all([consultaServicios, consultaTotal]);
+        
+        const {success, data, error} = CardsServiciosSchema.safeParse(servicios);        
+        if(success) {
+            return {data, totalResults: totalResults.length};
+        }
+    }
+    catch(error) {
+        console.log(error);
     }
 }
 

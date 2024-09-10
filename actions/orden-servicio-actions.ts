@@ -3,6 +3,7 @@
 import { connectDB } from "@/config/db";
 import { OrdenServicio } from "@/model/OrdenServicio";
 import { Presupuesto } from "@/model/Presupuesto";
+import { CardsOrdenServicioSchema } from "@/src/schema";
 import { 
     OrdenServicioFormData,
     Presupuesto as PresupuestoType,
@@ -45,6 +46,30 @@ export async function getOrdenesServicioIDs() {
 
         const ordenesServicioIDs = ordenesServicios.map( ordenServicio => ordenServicio.id.toString());
         return ordenesServicioIDs;
+    }
+    catch(error) {
+        console.log(error);
+    }
+}
+
+export async function getOrdenesServicio(limit: number, page:number) {
+    try {
+        await connectDB();
+
+        const skip = page * limit;
+
+        const ordenes = OrdenServicio
+            .find()
+            .limit(limit)
+            .skip(skip)
+            .sort({ fecha: -1 });
+        const total = OrdenServicio.countDocuments();
+        const [ordenesServicio, totalResults] = await Promise.all([ordenes, total]);
+
+        const {success, data} = CardsOrdenServicioSchema.safeParse(ordenesServicio);
+        if(success) {
+            return {data, totalResults};
+        };
     }
     catch(error) {
         console.log(error);
