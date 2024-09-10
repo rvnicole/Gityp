@@ -2,8 +2,36 @@
 
 import { connectDB } from "@/config/db";
 import { GestionCobro } from "@/model/GestionCobro";
+import { CardCobrosSchema } from "@/src/schema";
 import { GestionCobroFormData, GestionCobros } from "@/src/types";
 import mongoose from "mongoose";
+
+export async function getCobros( limit: number, page: number ) {
+    try {
+        await connectDB();
+
+        const queryCobros = GestionCobro.find()
+            .populate([ { path: 'factura', populate: { path: 'ordenServicio' } }])
+            .limit(limit)
+            .skip(page)
+            .sort({ fecha: -1 });
+
+        const queryTotalResults = GestionCobro.countDocuments();
+
+        const [ cobros, totalResults ] = await Promise.all([ queryCobros, queryTotalResults ]);
+
+        const {success, data, error} = CardCobrosSchema.safeParse(cobros);
+        
+        if(success) {
+            return {data, totalResults};
+        };
+
+        error.issues.forEach( error => console.log(error));
+    }
+    catch(error) {
+        console.log(error);
+    }
+}
 
 export async function updateCobro(formData: Omit<GestionCobroFormData, 'factura'>) {
     try {

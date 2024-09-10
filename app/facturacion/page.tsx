@@ -1,34 +1,40 @@
-import { connectDB } from "@/config/db";
-import { Factura } from "@/model/Factura";
+"use client"
+
+import { getFacturas } from "@/actions/factura-actions";
 import CardTable from "@/src/components/cards/CardTable";
 import ModalAdd from "@/src/components/ui/ModalAdd";
 import Spinner from "@/src/components/ui/Spinner";
-import { CardFacturasSchema } from "@/src/schema";
+import { CardFactura } from "@/src/types";
+import { useEffect, useRef, useState } from "react";
 
-export const revalidate = 0;
+export default function FacturacionPage() {
+    const [facturas, setFacturas] = useState<CardFactura[]>([]);
+    const [totalFacturas, setTotalFacturas] = useState(0);
+    const [page, setPage] = useState(0);
+    const ref = useRef<HTMLDivElement>(null);
+    const limit = 10;
+   
+    useEffect(() => {
+        const div = ref.current!;
 
-async function getFacturas(){
-    await connectDB();
-    const facturas = await Factura.find()
-                                    .populate({ path: 'ordenServicio' })
-                                    .populate({ path: 'ordenServicio', populate: [
-                                        { path: 'servicios' },
-                                        { path: 'servicios', populate: [
-                                            { path: 'idConductor' },
-                                            { path: 'ordenServicio', select: 'id solicito urlOrdenCompra ordenCompra' }
-                                        ]}
-                                    ]}).sort({ fecha: -1 });
-                                    
-    const { success, data, error } = CardFacturasSchema.safeParse(facturas);
-    if( success ){
-        return data;
+        const observador = new IntersectionObserver((arreglo) => {
+            if(arreglo[0].isIntersecting && (totalFacturas > facturas.length || page === 0 )) {
+                fetchFacturas();
+            }
+        });
+
+        observador.observe(div);        
+
+        return () => observador.unobserve(div);
+    });
+
+    const fetchFacturas = async () => {
+        const {data, totalResults} = await getFacturas(limit, page) || {data: [], totalResults: 0};
+
+        setFacturas([...facturas, ...data]);
+        setTotalFacturas(totalResults);
+        setPage( page + 1 );
     }
-    error.issues.forEach( issue => console.log(issue));
-}
-
-export default async function FacturacionPage() {
-
-    const facturas = await getFacturas() || [];
 
     return (
         <>
@@ -37,7 +43,9 @@ export default async function FacturacionPage() {
                 documentType="facturacion"
             />
             <ModalAdd documentType="factura"/>
-            <Spinner />
+            <div ref={ref} className="mx-auto">
+                {totalFacturas === facturas.length ? <p className="text-center text-sm text-mutedColor-foreground">Son todas las Facturas Registradas</p> : <Spinner />}
+            </div>
         </>
     )
 }

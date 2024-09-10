@@ -1,6 +1,35 @@
 "use server";
+import { connectDB } from "@/config/db";
 import { Factura } from "@/model/Factura";
+import { CardFacturasSchema } from "@/src/schema";
 import { FacturaFormData, Factura as FacturaType } from "@/src/types";
+
+export async function getFacturas( limit:number, page:number ){
+    await connectDB();
+    const skip = page * limit;
+    const queryFacturas = Factura.find()
+                                    .populate({ path: 'ordenServicio' })
+                                    .populate({ path: 'ordenServicio', populate: [
+                                        { path: 'servicios' },
+                                        { path: 'servicios', populate: [
+                                            { path: 'idConductor' },
+                                            { path: 'ordenServicio', select: 'id solicito urlOrdenCompra ordenCompra' }
+                                        ]}
+                                    ]})
+                                    .limit(limit)
+                                    .skip(skip)
+                                    .sort({ fecha: -1 });
+
+    const queryTotalResult = Factura.countDocuments();
+
+    const [ facturas, totalResults ] = await Promise.all([ queryFacturas, queryTotalResult ]);
+                                    
+    const { success, data, error } = CardFacturasSchema.safeParse(facturas);
+    if( success ){
+        return { data, totalResults };
+    }
+    error.issues.forEach( issue => console.log(issue));
+};
 
 export async function checkFullDataFactura(id: FacturaType['id']){
     try{

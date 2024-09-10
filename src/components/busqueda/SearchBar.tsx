@@ -1,5 +1,5 @@
 "use client"
-import { useRouter } from "next/navigation";
+import { useParams, useRouter } from "next/navigation";
 import { MagnifyingGlassIcon } from "@heroicons/react/24/outline";
 import { MouseEvent, useState } from "react";
 

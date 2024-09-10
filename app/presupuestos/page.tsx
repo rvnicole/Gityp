@@ -20,7 +20,7 @@ export default function PresupuestoPage() {
         const div = ref.current!;
 
         const observador = new IntersectionObserver((arreglo) => {
-            if(arreglo[0].isIntersecting) {
+            if(arreglo[0].isIntersecting && (totalPresupuestos > presupuestos.length || page === 0) ) {
                 fetchPresupuestos();
             }
         });
@@ -40,10 +40,12 @@ export default function PresupuestoPage() {
 
     return (
         <div className="space-y-5">
-            <div className="flex justify-center md:justify-end">
-                <Link href="/presupuestos?modal=create">
-                    <PrimaryButton>Crear Presupuesto</PrimaryButton>
-                </Link>
+            <div className="flex items-center justify-end gap-5">
+                <div className="flex justify-center md:justify-end">
+                    <Link href="/presupuestos?modal=create">
+                        <PrimaryButton>Crear Presupuesto</PrimaryButton>
+                    </Link>
+                </div>
             </div>
 
             <CardTable
