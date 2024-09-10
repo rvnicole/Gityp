@@ -20,7 +20,7 @@ export default function PresupuestoPage() {
         const div = ref.current!;
 
         const observador = new IntersectionObserver((arreglo) => {
-            if(arreglo[0].isIntersecting) {
+            if(arreglo[0].isIntersecting && (totalPresupuestos > presupuestos.length || page === 0) ) {
                 fetchPresupuestos();
             }
         });

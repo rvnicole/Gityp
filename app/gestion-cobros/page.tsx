@@ -17,7 +17,7 @@ export default function GetionCobrosPage() {
         const div = ref.current!;
 
         const observador = new IntersectionObserver((arreglo) => {
-            if(arreglo[0].isIntersecting) {
+            if(arreglo[0].isIntersecting && (totalCobros > cobros.length || page === 0)) {
                 fetchGestionCobros();
             }
         });

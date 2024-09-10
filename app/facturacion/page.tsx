@@ -18,7 +18,7 @@ export default function FacturacionPage() {
         const div = ref.current!;
 
         const observador = new IntersectionObserver((arreglo) => {
-            if(arreglo[0].isIntersecting) {
+            if(arreglo[0].isIntersecting && (totalFacturas > facturas.length || page === 0 )) {
                 fetchFacturas();
             }
         });
