@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import { ArrowRightCircleIcon, ArrowLeftCircleIcon } from "@heroicons/react/24/solid";
-import { HomeIcon, CalculatorIcon, ClipboardDocumentCheckIcon, CalendarDaysIcon, DocumentCurrencyDollarIcon, CurrencyDollarIcon, Cog8ToothIcon} from "@heroicons/react/24/outline";
+import { HomeIcon, CalculatorIcon, ClipboardDocumentCheckIcon, CalendarDaysIcon, DocumentCurrencyDollarIcon, CurrencyDollarIcon, Cog8ToothIcon, TruckIcon} from "@heroicons/react/24/outline";
 import MenuOption from "./MenuOption";
 
 export default function SideNavBar() {
@@ -43,7 +43,7 @@ export default function SideNavBar() {
                         url="/servicios"
                         showMenu={showMenu}
                     >
-                        <CalendarDaysIcon className="size-8"/>
+                        <TruckIcon className="size-8"/>
                     </MenuOption>
 
                     <MenuOption

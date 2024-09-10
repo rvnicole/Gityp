@@ -29,10 +29,12 @@ export default async function PresupuestoPage() {
 
     return (
         <div className="space-y-5">
-            <div className="flex justify-center md:justify-end">
-                <Link href="/presupuestos?modal=create">
-                    <PrimaryButton>Crear Presupuesto</PrimaryButton>
-                </Link>
+            <div className="flex items-center justify-end gap-5">
+                <div className="flex justify-center md:justify-end">
+                    <Link href="/presupuestos?modal=create">
+                        <PrimaryButton>Crear Presupuesto</PrimaryButton>
+                    </Link>
+                </div>
             </div>
 
             <CardTable
