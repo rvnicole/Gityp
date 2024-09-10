@@ -5,6 +5,7 @@ import { Servicio } from "@/model/Servicio";
 import { Presupuesto } from "@/model/Presupuesto";
 import { Presupuesto as PresupuestoType, PresupuestoFormData, ServiceFormData, Servicio as ServicioType} from "@/src/types";
 import ServiciosPage from "@/app/servicios/page";
+import { CardsPresupuestoSchema } from "@/src/schema";
 
 type ActionPresupuestoParams = {
     formData: PresupuestoFormData & { id?: PresupuestoType['id'], servicios?: ServiceFormData[] }, 
@@ -30,6 +31,31 @@ export async function createPresupuesto(fullFormData: ActionPresupuestoParams ){
             message: typeof error === 'object' && error !== null && 'message' in error ? error.message : 'Error al crear el presupuesto'
         }
     };
+};
+
+export async function getPresupuestos(limit:number, page:number){
+    try{
+        await connectDB();
+
+        const skip = page * limit;
+
+        const presupuestos = await Presupuesto
+            .find()
+            .limit(limit)
+            .skip(skip)
+            .sort({ fecha: -1 });
+
+        const totalResults = await Presupuesto.countDocuments();
+
+        const { success, data, error } = CardsPresupuestoSchema.safeParse(presupuestos);
+        if( success ){
+            return {data, totalResults};
+        };
+        error.issues.forEach( issue => console.log(issue));
+    }
+    catch(error){
+        console.log(error);
+    }
 };
 
 export async function updateStatusPresupuesto(id: PresupuestoType['id'], estado: PresupuestoType['estado']){
