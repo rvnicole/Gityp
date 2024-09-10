@@ -7,9 +7,7 @@ import PresupuestoForm from "./PresupuestoForm";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { updatePresupuesto } from "@/actions/presupuesto-actions";
-
-
-
+import { toast } from 'react-toastify';
 
 const montosIniciales = {
     subtotal: 0,
@@ -33,7 +31,7 @@ export default function EditPresupuesto({ defaultValues }: { defaultValues: Pres
 
     const handleEdit = async ( formData: PresupuestoFormData ) => {
         if( servicios.length < 1 ){
-            alert('Debe agregar al menos un servicio');
+            toast.warning('Debe agregar al menos un servicio');
             return;
         };
         const fullFormData = {
@@ -55,7 +53,12 @@ export default function EditPresupuesto({ defaultValues }: { defaultValues: Pres
         console.log(fullFormData);
         // AQUI SE LLAMA AL ACTION
         const res = await updatePresupuesto(fullFormData);
-        alert(res.message);
+        if( res.success ){
+            toast.success(res.message as string);
+        }
+        else{
+            toast.error(res.message as string);
+        };
         router.refresh();
         router.push(location.pathname);
     };

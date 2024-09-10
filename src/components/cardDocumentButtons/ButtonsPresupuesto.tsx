@@ -8,6 +8,7 @@ import { estadosPresupuesto } from "@/src/data/data";
 import type { CardPresupuesto, EstadoPresupuesto, OrdenServicio, Presupuesto } from "@/src/types";
 import { createOrdenServicio } from "@/actions/orden-servicio-actions";
 import { updateStatusPresupuesto } from "@/actions/presupuesto-actions";
+import { toast } from 'react-toastify';
 
 type ButtonsPresupuestosProps = {
     documentID: CardPresupuesto['id'];
@@ -20,9 +21,12 @@ export default function ButtonsPresupuestos({documentID, estadoDocument}: Button
 
     const handleClickAccept = async (id: Presupuesto['id']) => {
         const res = await updateStatusPresupuesto(id, 'accept');
-        alert(res.message);
         if( res.success ){
+            toast.success(res.message as string);
             setEstado('accept');
+        }
+        else{
+            toast.error(res.message as string);
         };        
     }
 

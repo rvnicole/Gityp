@@ -4,6 +4,8 @@ import "./globals.css";
 import SideNavBar from "@/src/components/menu/SideNavBar";
 import NavigationPath from "@/src/components/ui/NavigationPath";
 import SearchBar from "@/src/components/busqueda/SearchBar";
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -30,6 +32,7 @@ export default function RootLayout({
               <SearchBar />
             </div>
             {children}
+            <ToastContainer />
           </main>          
         </div>
       </body>
