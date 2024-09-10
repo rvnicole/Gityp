@@ -1,35 +1,39 @@
-import { connectDB } from "@/config/db";
-import { GestionCobro } from "@/model/GestionCobro";
+"use client"
+import { getCobros } from "@/actions/gestion-cobros-actions";
 import CardTable from "@/src/components/cards/CardTable";
 import ModalAdd from "@/src/components/ui/ModalAdd";
 import Spinner from "@/src/components/ui/Spinner";
-import { CardCobrosSchema } from "@/src/schema";
+import { CardCobro } from "@/src/types";
+import { useEffect, useRef, useState } from "react";
 
-async function getCobros() {
-    try {
-        await connectDB();
+export default function GetionCobrosPage() {
+    const [cobros, setCobros] = useState<CardCobro[]>([]);
+    const [totalCobros, setTotalCobros] = useState(0);
+    const [page, setPage] = useState(0);
+    const ref = useRef<HTMLDivElement>(null);
+    const limit = 10;
+   
+    useEffect(() => {
+        const div = ref.current!;
 
-        const cobros = await GestionCobro.find()
-            .populate([ { path: 'factura', populate: { path: 'ordenServicio' } }])
-            .sort({ fecha: -1 });
+        const observador = new IntersectionObserver((arreglo) => {
+            if(arreglo[0].isIntersecting) {
+                fetchPresupuestos();
+            }
+        });
 
-        console.log("Cobros", cobros);
+        observador.observe(div);        
 
-        const {success, data, error} = CardCobrosSchema.safeParse(cobros);
-        
-        if(success) {
-            return data;
-        };
+        return () => observador.unobserve(div);
+    });
 
-        error.issues.forEach( error => console.log(error));
+    const fetchPresupuestos = async () => {
+        const {data, totalResults} = await getCobros(limit, page) || {data: [], totalResults: 0};
+
+        setCobros([...cobros, ...data]);
+        setTotalCobros(totalResults);
+        setPage( page + 1 );
     }
-    catch(error) {
-        console.log(error);
-    }
-}
-
-export default async function GetionCobrosPage() {
-    const cobros = await getCobros() || [];
 
     return (
         <>
@@ -39,7 +43,9 @@ export default async function GetionCobrosPage() {
             />
 
             <ModalAdd documentType="gestionCobro" />
-            <Spinner />
+            <div ref={ref} className="mx-auto">
+                {totalCobros === cobros.length ? <p className="text-center text-sm text-mutedColor-foreground">Son todos las Cobros Registrados</p> : <Spinner />}
+            </div>
         </>
     )
 }
