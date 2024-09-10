@@ -42,7 +42,7 @@ export default function AddService(){
             alert(respuesta.message);
         }
         reset();
-        router.push(location.pathname);
+        location.href = location.pathname;
     };
 
     return(
