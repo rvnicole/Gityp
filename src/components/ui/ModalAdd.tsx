@@ -24,7 +24,7 @@ const formsAdd = {
     "title": 'Factura' 
   },
   'ordenServicio': { 
-    "tsx": <OrdenServicioForm />, //No se ocupa
+    "tsx": <OrdenServicioForm />,
     "title": 'Orden de servicio' 
   },
   'gestionCobro': { 

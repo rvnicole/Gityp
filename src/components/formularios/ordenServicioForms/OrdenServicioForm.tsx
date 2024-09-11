@@ -7,17 +7,17 @@ import { updateOrdenServicio } from "@/actions/orden-servicio-actions";
 import { toast } from 'react-toastify';
 
 type OrdenServicioFormProps = {
-    defaultValues: OrdenServicio
+    defaultValues?: OrdenServicio
 }
 
 export default function OrdenServicioForm({ defaultValues }: OrdenServicioFormProps){
-    const { register, handleSubmit, reset, formState: { errors } } = useForm<OrdenServicioFormData>({
+    const { register, handleSubmit, reset, formState: { errors } } = useForm<OrdenServicioFormData>(defaultValues ? {
         defaultValues: {
             id: defaultValues.id,
             ordenCompra: defaultValues.ordenCompra,
             comentarios: defaultValues.comentarios
         }
-    });
+    }: {});
 
     const handleEdit = async ( formData: OrdenServicioFormData  ) => {
         const respuesta = await updateOrdenServicio(formData);
