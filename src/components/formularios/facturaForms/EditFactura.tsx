@@ -4,22 +4,27 @@ import { useForm } from "react-hook-form"
 import { PrimaryButton } from "../../ui/Buttons";
 import FacturaForm from "./FacturaForm";
 import { updateFactura } from "@/actions/factura-actions";
-import { useRouter } from "next/navigation";
+import { toast } from "react-toastify";
 
 type FacturaFormProps = {
     defaultValues: Factura
 }
 
 export default function EditFactura({defaultValues}: FacturaFormProps){
-    const router = useRouter();
     const { register, handleSubmit, reset, formState: { errors } } = useForm<FacturaFormData>( defaultValues && {defaultValues});
 
     const handleEdit = async ( formData: FacturaFormData ) => {
-        console.log(formData);
         const res = await updateFactura( formData, defaultValues.id );
-        alert(res.message);
-        router.refresh();
-        router.push(location.pathname);
+        if( res.success ){
+            toast.success( res.message as string );
+        }
+        else{
+            toast.error(res.message as string);
+        }
+        
+        setTimeout(()=>{
+            location.href = location.pathname;
+        },2000);
     };
 
     return (

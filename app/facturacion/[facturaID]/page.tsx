@@ -6,6 +6,7 @@ import FacturaDetail from "@/src/components/documentView/FacturaDetail";
 import ModalEdit from "@/src/components/ui/ModalEdit";
 import { FacturaSchema } from "@/src/schema";
 import { Factura as FacturaType } from "@/src/types";
+import { ToastContainer } from "react-toastify";
 
 export const revalidate = 0;
 
@@ -27,6 +28,7 @@ async function getFacturaById(id: FacturaType['id']){
                                         ]);
                                             
     const { success, data, error } = FacturaSchema.safeParse(factura);
+    console.log('datos',factura);
     if( success ){
         return data;
     };
@@ -52,6 +54,7 @@ export default async function FacturaIDPage({ params }: { params: {facturaID: st
                 documentType="factura" 
                 defaultValues={factura}
             />
+            <ToastContainer />
         </>
     )
 }

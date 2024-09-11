@@ -4,6 +4,7 @@ import { DestructiveButton, OutlineButton } from "../ui/Buttons";
 import { useForm } from "react-hook-form";
 import { deleteEmisorReceptor, updateEmisorReceptor } from "@/actions/emisor-receptor-actions";
 import { useRouter } from "next/navigation";
+import { toast } from "react-toastify";
 
 type CardEntityProps = {
     emisor?: EmisoresReceptores,
@@ -20,28 +21,31 @@ export default function CardEntity({ emisor, receptor }: CardEntityProps){
         setEditar(false);
 
         if( respuesta.success ) {
-            alert(respuesta.message);
+            toast.success(respuesta.message as string);
         }
         else {
-            alert(respuesta.message);
+            toast.error(respuesta.message as string);
         }
 
-        router.refresh();
-        router.push(location.pathname);
+        setTimeout(()=>{
+            location.href = location.pathname;
+        }, 2000);
     }
 
     const handleDelete = async (id: EmisoresReceptores['id']) => {
         const respuesta = await deleteEmisorReceptor({ id });
 
         if( respuesta.success ) {
-            alert(respuesta.message);
+            toast.success(respuesta.message as string);
         }
         else {
-            alert(respuesta.message);
-        }
+            toast.error(respuesta.message as string);
+        };
 
-        router.refresh();
-        router.push(location.pathname);
+        setTimeout(()=>{
+            location.href = location.pathname;
+        }, 2000);
+        
     }
 
     if(emisor) return(

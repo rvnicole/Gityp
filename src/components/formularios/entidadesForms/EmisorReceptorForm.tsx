@@ -1,27 +1,28 @@
-import { Conductores, EmisorReceptor } from "@/src/types";
+import { EmisorReceptor } from "@/src/types";
 import { useForm } from "react-hook-form";
 import { PrimaryButton, SecondaryButton } from "../../ui/Buttons";
 import Link from "next/link";
 import { createEmisorReceptor } from "@/actions/emisor-receptor-actions";
 import { useRouter } from "next/navigation";
+import { toast } from "react-toastify";
 
 export default function EmisorReceptorForm(){
     const { register, handleSubmit, reset, formState: { errors } } = useForm<EmisorReceptor & { "emisor-receptor": string }>();
-    const router = useRouter();
 
     const handleGuardar = async (formData: EmisorReceptor) => {
         const respuesta = await createEmisorReceptor(formData);
     
         if( respuesta.success ) {
-            alert(respuesta.message);
+            toast.success(respuesta.message as string);
         }
         else {
-            alert(respuesta.message);
+            toast.error(respuesta.message as string);
         }
 
         reset();
-        router.refresh();
-        router.push(location.pathname);
+        setTimeout(()=>{
+            location.href = location.pathname;
+        }, 2000);
     };
 
     return(

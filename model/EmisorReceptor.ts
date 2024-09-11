@@ -1,5 +1,6 @@
 import mongoose, { Document, Schema, models } from "mongoose";
 import { EmisorReceptor as EmisorReceptorType } from "@/src/types";
+import { boolean } from "zod";
 
 export interface IEmisorReceptor extends Document {
     nombre: string,
@@ -23,6 +24,11 @@ const EmisorReceptorSchema: Schema = new Schema({
     tipo: {
         type: String,
         required: true
+    },
+    inactivo: {
+        type: Boolean,
+        required: true,
+        default: false
     }
 }, { timestamps: true });
 

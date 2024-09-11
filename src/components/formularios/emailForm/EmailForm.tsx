@@ -9,6 +9,7 @@ import { sendEmail } from "@/actions/email-actions";
 import { numberToWords } from "@/src/lib";
 import Spinner from "../../ui/Spinner";
 import { useState } from "react";
+import { toast } from "react-toastify";
 
 export default function EmailForm(){
     const [ spinner, setSpinner ] = useState(false);
@@ -94,9 +95,15 @@ export default function EmailForm(){
 
         const res = await sendEmail(formData, htmlString);
         console.log(formData);
-        alert(res.message);
         if( res.success ){
-            window.location.href = location.pathname;
+            toast.success(res.message as string);
+            setTimeout(()=>{
+                location.href = location.pathname;
+            },2000);
+            
+        }
+        else{
+            toast.error(res.message as string);
         };
     };
 

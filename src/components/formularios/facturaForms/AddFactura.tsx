@@ -4,20 +4,25 @@ import { useForm } from "react-hook-form"
 import { PrimaryButton } from "../../ui/Buttons";
 import FacturaForm from "./FacturaForm";
 import { updateFactura } from "@/actions/factura-actions";
-import { useRouter, useSearchParams } from "next/navigation";
+import { useSearchParams } from "next/navigation";
+import { toast } from "react-toastify";
 
 export default function AddFactura(){
-    const router = useRouter();
     const { register, handleSubmit, reset, formState: { errors } } = useForm<FacturaFormData>();
     const searchParams = useSearchParams();
     const facturaID = searchParams.get('documentID')!;
 
     const handleCompleteInfo = async (formData: FacturaFormData) => {
-        console.log(formData);
         const res = await updateFactura( formData, facturaID );
-        alert(res.message);
-        router.refresh();
-        router.push(location.pathname);
+        if( res.success ){
+            toast.success( res.message as string );
+        }
+        else{
+            toast.error( res.message as string );
+        };
+        setTimeout(()=>{
+            location.href = location.pathname;
+        },2000 );
     };
 
     return (

@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { OutlineButton } from "../../ui/Buttons";
 import { getConfig, setFolioInicial } from "@/actions/configuracion-actions";
+import { toast } from "react-toastify";
 
 export default function FolioFacturaForm(){
     const [ folio, setFolio ] = useState('');
@@ -22,8 +23,11 @@ export default function FolioFacturaForm(){
         if( res.success ){
             setFolio( formData.folio );
             setEditar(false);
+            toast.success(res.message as string);
         }
-        alert(res.message);       
+        else{
+            toast.error(res.message as string);
+        }
     };
 
     return (

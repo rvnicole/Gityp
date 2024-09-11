@@ -20,6 +20,11 @@ const ConductorSchema: Schema = new Schema({
     },
     licencia: {
         type: String
+    },
+    inactivo: {
+        type: Boolean,
+        required: true,
+        default: false
     }
 }, { timestamps: true });
 

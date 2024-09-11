@@ -13,6 +13,7 @@ export async function getConfig(){
         }
         else{
             const config = new Configuracion({ folioInicial: "1" });
+            await config.save();
             return {
                 folioInicial: config.folioInicial,
                 plantillas: []

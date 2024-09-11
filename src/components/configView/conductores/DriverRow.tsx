@@ -4,6 +4,7 @@ import { useForm } from "react-hook-form";
 import { DestructiveButton, OutlineButton } from "../../ui/Buttons";
 import { deleteConductor, updateConductor } from "@/actions/conductor-actions";
 import { useRouter } from "next/navigation";
+import { toast } from "react-toastify";
 
 type DriverRowProps = {
     conductor: Conductores
@@ -17,31 +18,29 @@ export default function DriverRow( {conductor}: DriverRowProps  ){
     const handleGuardar = async (formData: Conductores) => {
         const res = await updateConductor(formData);
         if( res.success ){
-            alert(res.message);
+            toast.success(res.message as string);
         }
         else{
-            alert(res.message)
+            toast.error(res.message as string);
         }
         setEditar(false);
-        //window.location.href = location.pathname;
-        
-        router.refresh();
-        router.push(location.pathname);
+        setTimeout(()=>{
+            location.href = location.pathname;
+        },2000);    
     };
 
     const handleDelete = async ( id: Conductores['id'] ) => {
         const res = await deleteConductor(id);
         if( res.success ){
-            alert(res.message);
+            toast.success(res.message as string);
         }
         else{
-            alert(res.message)
+            toast.error(res.message as string);
         }
         setEditar(false);
-        //window.location.href = location.pathname;
-        
-        router.refresh();
-        router.push(location.pathname);
+        setTimeout(()=>{
+            location.href = location.pathname;
+        },2000);    
     };
 
     return (

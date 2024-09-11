@@ -5,12 +5,13 @@ import { PrimaryButton } from "@/src/components/ui/Buttons";
 import ModalAdd from "@/src/components/ui/ModalAdd";
 import { ConductoresArrSchema } from "@/src/schema";
 import Link from "next/link";
+import { ToastContainer } from "react-toastify";
 
 export const revalidate = 0;
 
 async function getConductores(){
     await connectDB();
-    const res = await Conductor.find();
+    const res = await Conductor.find( { inactivo: false } );
     const { success, data } = ConductoresArrSchema.safeParse(res);
     if( success ){
         return data;
@@ -35,6 +36,7 @@ export default async function ConductoresPage(){
                 </div>                
             </section>
             <ModalAdd documentType="conductor"/>
+            <ToastContainer />
         </>
     )
 }

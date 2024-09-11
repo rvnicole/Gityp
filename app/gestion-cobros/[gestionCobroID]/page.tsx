@@ -5,6 +5,7 @@ import DocumentDetail from "@/src/components/documentView/DocumentDetail";
 import ModalEdit from "@/src/components/ui/ModalEdit";
 import { GestionCobrosSchema } from "@/src/schema";
 import { GestionCobros } from "@/src/types";
+import { ToastContainer } from "react-toastify";
 
 async function getCobro(id: GestionCobros['id']) {
     try {
@@ -41,7 +42,7 @@ export default async function GestionCobroIDPage({ params }: { params: {gestionC
     const { gestionCobroID } = params;
 
     const cobro = await getCobro( gestionCobroID );
-    //console.log("Cobro", cobro);
+    console.log("Cobro", cobro);
 
     if(cobro) return (
         <>
@@ -57,6 +58,7 @@ export default async function GestionCobroIDPage({ params }: { params: {gestionC
                 documentType="gestionCobro" 
                 defaultValues={cobro}
             />
+            <ToastContainer />
         </>
     )
 }

@@ -5,6 +5,7 @@ import { PrimaryButton } from "../../ui/Buttons";
 import GestionCobroForm from "./GestionCobroForm";
 import { useSearchParams, useRouter } from "next/navigation";
 import { updateCobro } from "@/actions/gestion-cobros-actions";
+import { toast } from "react-toastify";
 
 export default function AddGestionCobro(){
     const { register, handleSubmit, reset, formState: { errors } } = useForm<GestionCobroFormData>();
@@ -18,14 +19,14 @@ export default function AddGestionCobro(){
         const respuesta = await updateCobro({...formData, id: cobroID, pagado});
         
         if( respuesta.success ){
-            alert(respuesta.message);
+            toast.success(respuesta.message as string);
         }
         else {
-            alert(respuesta.message);
+            toast.error(respuesta.message as string);
         }
-
-        reset();
-        router.push(location.pathname);
+        setTimeout(()=>{
+            location.href = location.pathname;
+        },2000);
     };
 
     return (

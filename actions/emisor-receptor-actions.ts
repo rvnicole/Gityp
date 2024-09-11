@@ -51,7 +51,8 @@ export async function deleteEmisorReceptor({ id }: Pick<EmisorReceptorType, 'id'
         await connectDB();
 
         const emisorReceptor = await EmisorReceptor.findById(id);
-        await emisorReceptor.deleteOne();
+        emisorReceptor.inactivo = true;
+        await emisorReceptor.save();
         
         const tipoTexto = emisorReceptor.tipo === "emisor" ? "Emisor" : "Receptor";
         return { success: true, message: `${tipoTexto} Eliminado Correctamente`}
@@ -68,7 +69,7 @@ export async function deleteEmisorReceptor({ id }: Pick<EmisorReceptorType, 'id'
 export async function getEmisorReceptor(){
     try {
         await connectDB();
-        const emisorReceptor = await EmisorReceptor.find();
+        const emisorReceptor = await EmisorReceptor.find({ inactivo: false });
         const { data, success, error } = EmisoresReceptoresSchema.safeParse(emisorReceptor);
         if( success ){
             return data;

@@ -5,6 +5,7 @@ import ModalAdd from "@/src/components/ui/ModalAdd";
 import Spinner from "@/src/components/ui/Spinner";
 import { CardCobro } from "@/src/types";
 import { useEffect, useRef, useState } from "react";
+import { ToastContainer } from "react-toastify";
 
 export default function GetionCobrosPage() {
     const [cobros, setCobros] = useState<CardCobro[]>([]);
@@ -46,6 +47,7 @@ export default function GetionCobrosPage() {
             <div ref={ref} className="mx-auto">
                 {totalCobros === cobros.length ? <p className="text-center text-sm text-mutedColor-foreground">Son todos las Cobros Registrados</p> : <Spinner />}
             </div>
+            <ToastContainer />
         </>
     )
 }

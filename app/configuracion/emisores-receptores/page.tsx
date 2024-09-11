@@ -12,7 +12,7 @@ async function getEmisoresReceptores() {
     try {
         await connectDB();
 
-        const emisoresReceptores = await EmisorReceptor.find();
+        const emisoresReceptores = await EmisorReceptor.find({ inactivo: false });
         const result = EmisoresReceptoresSchema.safeParse(emisoresReceptores);
         
         if(result) {

@@ -4,6 +4,7 @@ import { PrimaryButton, SecondaryButton } from "../../ui/Buttons";
 import Link from "next/link";
 import { createConductor } from "@/actions/conductor-actions";
 import { useRouter } from "next/navigation";
+import { toast } from "react-toastify";
 
 export default function ConductoresForm(){
     const { register, handleSubmit, reset, formState: { errors } } = useForm<Conductores>();
@@ -12,14 +13,15 @@ export default function ConductoresForm(){
     const handleGuardar = async (formData: Conductores) => {
         const res = await createConductor(formData);
         if( res.success ){
-            alert(res.message);
+            toast.success(res.message as string);
         }
         else{
-            alert(`Error al crear conductor: ${res.message}`);
+            toast.error(`Error al crear conductor: ${res.message}`);
         }
         
-        router.refresh();
-        router.push(location.pathname);
+        setTimeout(()=>{
+            location.href = location.pathname;
+        },2000);
     };
 
     return(

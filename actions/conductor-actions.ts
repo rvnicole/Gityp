@@ -62,7 +62,8 @@ export async function deleteConductor(id: Conductores['id']){
                 message: 'Conductor no encontrado'
             };
         };
-        await conductor.deleteOne();
+        conductor.inactivo = true;
+        await conductor.save();
         return {
             success: true,
             message: 'Conductor eliminado'
@@ -80,7 +81,7 @@ export async function deleteConductor(id: Conductores['id']){
 export async function getConductoresAction(){
     try{
         await connectDB();
-        const conductores = await Conductor.find();
+        const conductores = await Conductor.find( { inactivo: false } );
         const { success, data } = ConductoresArrSchema.safeParse(conductores);
         if( success ){
             return data;
