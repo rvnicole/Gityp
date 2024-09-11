@@ -7,6 +7,7 @@ import { EyeIcon, PlayIcon, HandThumbUpIcon, NoSymbolIcon } from "@heroicons/rea
 import { estadosServicios } from "@/src/data/data";
 import type { CardServicio, EstadoServicio } from "@/src/types";
 import { updateEstadoServicio } from "@/actions/servicio-actions";
+import { toast } from 'react-toastify';
 
 type ButtonsServicioProps = {
     documentID: CardServicio['id'];
@@ -22,14 +23,13 @@ export default function ButtonsServicio({documentID, estadoDocument}: ButtonsSer
         const respuesta = await updateEstadoServicio(data);
 
         if( respuesta.success ) {
+            toast.success(respuesta.message as string);
             setEstado(data.estado);
-            alert(respuesta.message);
+            setTimeout(() => location.href = location.pathname, 2000);
         }
         else {
-            alert(respuesta.message);
+            toast.error(respuesta.message as string);
         }
-        
-        router.push(location.href);
     }
 
     return (

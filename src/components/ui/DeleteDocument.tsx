@@ -3,7 +3,8 @@ import { deleteOrdenServicio } from "@/actions/orden-servicio-actions"
 import { DestructiveRoundButton } from "./Buttons"
 import { deletePresupuesto } from "@/actions/presupuesto-actions"
 import { OrdenServicio, Presupuesto } from "@/src/types"
-import { useRouter } from "next/navigation"
+import { useRouter } from "next/navigation";
+import { toast } from 'react-toastify';
 
 type DeleteDocumentProps ={
     documentType?: 'presupuesto' | 'factura' |  'ordenServicio' | 'gestionCobro' | 'servicio' | 'conductor' | 'emisor-receptor',
@@ -19,10 +20,13 @@ export default function DeleteDocument( { documentType, documentID }: DeleteDocu
                 return;
             };
             const res = await deletePresupuesto(id);
-            alert(res.message);
             if( res.success ){
+                toast.success(res.message as string);
                 router.refresh();
                 router.push(`/presupuestos`);
+            }
+            else{
+                toast.error(res.message as string);
             };
         };
 
@@ -38,14 +42,13 @@ export default function DeleteDocument( { documentType, documentID }: DeleteDocu
             const respuesta = await deleteOrdenServicio(id);
            
             if( respuesta.success ) {
-                alert(respuesta.message);
+                toast.success(respuesta.message as string);
+                router.refresh();
+                router.push(`/ordenes-servicios`);
             }
             else {
-                alert(respuesta.message);
+                toast.error(respuesta.message as string);
             }
-
-            router.refresh();
-            router.push('/ordenes-servicios');
         };
 
         return (

@@ -5,7 +5,6 @@ import { PrimaryButton } from "../../ui/Buttons";
 import { evalDate, formatCurrency, formatDate } from "@/src/lib";
 import PresupuestoForm from "./PresupuestoForm";
 import Link from "next/link";
-import { useRouter } from "next/navigation";
 import { updatePresupuesto } from "@/actions/presupuesto-actions";
 import { toast } from 'react-toastify';
 
@@ -16,7 +15,6 @@ const montosIniciales = {
 }
 
 export default function EditPresupuesto({ defaultValues }: { defaultValues: Presupuesto }){
-    const router = useRouter();
     const ser = defaultValues.servicios;
     const [ servicios, setServicios ] = useState<ServiceFormData[]>(ser);
     const [ openServiceForm, setOpenServiceForm ] = useState(false);
@@ -55,12 +53,11 @@ export default function EditPresupuesto({ defaultValues }: { defaultValues: Pres
         const res = await updatePresupuesto(fullFormData);
         if( res.success ){
             toast.success(res.message as string);
+            setTimeout(() => location.href = location.pathname, 2000);
         }
         else{
             toast.error(res.message as string);
         };
-        router.refresh();
-        router.push(location.pathname);
     };
 
     return (

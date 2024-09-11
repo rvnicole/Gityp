@@ -4,7 +4,7 @@ import { PrimaryButton } from "../../ui/Buttons";
 import ErrorMessage from "../../Error";
 import { OrdenServicio, OrdenServicioFormData } from "@/src/types";
 import { updateOrdenServicio } from "@/actions/orden-servicio-actions";
-import { useRouter } from "next/navigation";
+import { toast } from 'react-toastify';
 
 type OrdenServicioFormProps = {
     defaultValues: OrdenServicio
@@ -19,21 +19,17 @@ export default function OrdenServicioForm({ defaultValues }: OrdenServicioFormPr
         }
     });
 
-    const router = useRouter();
-
     const handleEdit = async ( formData: OrdenServicioFormData  ) => {
         const respuesta = await updateOrdenServicio(formData);
 
-        if( respuesta.success ) {
-            alert(respuesta.message);
+        if( respuesta.success ){
+            toast.success(respuesta.message as string);
+            reset();
+            setTimeout(() => location.href = location.pathname, 2000);
         }
-        else {
-            alert(respuesta.message);
-        }
-
-        reset();
-        router.push(location.pathname);
-        router.refresh();
+        else{
+            toast.error(respuesta.message as string);
+        };
     };
 
     return (
