@@ -6,10 +6,16 @@ import ModalEdit from "@/src/components/ui/ModalEdit";
 import { GestionCobrosSchema } from "@/src/schema";
 import { GestionCobros } from "@/src/types";
 import { ToastContainer } from "react-toastify";
+import mongoose from "mongoose";
+import { notFound } from "next/navigation";
 
 async function getCobro(id: GestionCobros['id']) {
     try {
         await connectDB();
+
+        if( !mongoose.Types.ObjectId.isValid(id)) {
+            return 'not-found';
+        }
 
         const cobro = await GestionCobro.findById(id).populate([
             { path: 'factura', populate: [
@@ -24,13 +30,15 @@ async function getCobro(id: GestionCobros['id']) {
                 ]}
             ]}
         ]);
+
+        if( !cobro ) {
+            return 'not-found';
+        }
         
         const {success, data, error} = GestionCobrosSchema.safeParse(cobro);
-        
         if(success) {
             return data;
         }
-
         error.issues.forEach( error => console.log(error));
     }
     catch(error) {
@@ -42,7 +50,10 @@ export default async function GestionCobroIDPage({ params }: { params: {gestionC
     const { gestionCobroID } = params;
 
     const cobro = await getCobro( gestionCobroID );
-    console.log("Cobro", cobro);
+    
+    if(cobro === 'not-found') {
+        notFound();
+    }
 
     if(cobro) return (
         <>
