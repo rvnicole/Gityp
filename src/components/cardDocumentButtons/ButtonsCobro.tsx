@@ -33,8 +33,8 @@ export default function ButtonsCobro({document}: ContentCobroProps) {
     
     return (
         <>      
-            { document.pagado ? ( <p className="text-lime-500 font-bold pt-2 italic">Cobrado</p>) 
-                : (<p className="text-mutedColor-foreground pt-2 italic">Por cobrar</p>)}
+            { document.pagado ? ( <p className="text-lime-500 font-bold pt-2 italic">Pagado</p>) 
+                : (<p className="text-mutedColor-foreground pt-2 italic">Por pagar</p>)}
 
             <div className="flex justify-center gap-3 mt-4">
                 <OutlineButton 

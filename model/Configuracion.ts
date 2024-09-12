@@ -5,7 +5,11 @@ export interface IConfiguracion {
     plantillas: {
         nombre: string,
         tipo: 'impresion' | 'factura'
-    }[]
+    }[],
+    rutas: {
+        ordenesCompra: string,
+        facturas: string
+    }
 };
 
 const ConfiguracionSchema: Schema = new Schema({
@@ -17,7 +21,11 @@ const ConfiguracionSchema: Schema = new Schema({
             nombre: String,
             tipo: String
         }
-    ]
+    ],
+    rutas: {
+        ordenesCompra: String,
+        facturas: String
+    }
 }, { timestamps: true });
 
 export const Configuracion = models.Configuracion || mongoose.model<IConfiguracion>('Configuracion', ConfiguracionSchema);
