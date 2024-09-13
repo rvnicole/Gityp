@@ -76,6 +76,24 @@ export async function getOrdenesServicio(limit: number, page:number) {
     }
 }
 
+export async function getAllOrdenesServicio() {
+    try {
+        await connectDB();
+
+        const ordenes = OrdenServicio.find().sort({ fecha: -1 });
+        const total = OrdenServicio.countDocuments();
+        const [ordenesServicio, totalResults] = await Promise.all([ordenes, total]);
+
+        const {success, data} = CardsOrdenServicioSchema.safeParse(ordenesServicio);
+        if(success) {
+            return {data, totalResults};
+        };
+    }
+    catch(error) {
+        console.log(error);
+    }
+}
+
 export async function updateOrdenServicio(formData: OrdenServicioFormData) {
     try {
         await connectDB();

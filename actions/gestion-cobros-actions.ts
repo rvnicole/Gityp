@@ -15,17 +15,34 @@ export async function getCobros( limit: number, page: number ) {
             .limit(limit)
             .skip(page)
             .sort({ fecha: -1 });
-
         const queryTotalResults = GestionCobro.countDocuments();
-
         const [ cobros, totalResults ] = await Promise.all([ queryCobros, queryTotalResults ]);
 
         const {success, data, error} = CardCobrosSchema.safeParse(cobros);
-        
         if(success) {
             return {data, totalResults};
         };
+        error.issues.forEach( error => console.log(error));
+    }
+    catch(error) {
+        console.log(error);
+    }
+}
 
+export async function getAllCobros() {
+    try {
+        await connectDB();
+
+        const queryCobros = GestionCobro.find()
+            .populate([ { path: 'factura', populate: { path: 'ordenServicio' } }])
+            .sort({ fecha: -1 });
+        const queryTotalResults = GestionCobro.countDocuments();
+        const [ cobros, totalResults ] = await Promise.all([ queryCobros, queryTotalResults ]);
+
+        const {success, data, error} = CardCobrosSchema.safeParse(cobros);
+        if(success) {
+            return {data, totalResults};
+        };
         error.issues.forEach( error => console.log(error));
     }
     catch(error) {

@@ -76,6 +76,32 @@ export async function getServicios(limit: number, page: number) {
     }
 }
 
+export async function getAllServicios() {
+    try {
+        await connectDB();
+
+        const consultaServicios = Servicio.find({
+                ordenServicio: { $ne: null }
+            })
+            .populate([
+                { path: 'idConductor' },
+                { path: 'ordenServicio'}
+            ])
+            .sort({ fechaEjecucion: -1 });
+        const consultaTotal = Servicio.find({ ordenServicio: { $ne: null } });
+        const [servicios, totalResults] = await Promise.all([consultaServicios, consultaTotal]);
+        
+        const {success, data, error} = CardsServiciosSchema.safeParse(servicios);        
+        if(success) {
+            return {data, totalResults: totalResults.length};
+        }
+        error.issues.forEach( issue => console.log(issue));
+    }
+    catch(error) {
+        console.log(error);
+    }
+}
+
 export async function updateServicio(formData: ServiceFormData) {
     try {
         await connectDB();

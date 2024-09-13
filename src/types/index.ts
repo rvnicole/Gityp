@@ -45,6 +45,10 @@ export type CardServicio = z.infer<typeof CardServicioSchema>;
 export type CardFactura = z.infer<typeof CardFacturaSchema>;
 export type CardCobro = z.infer<typeof CardCobroSchema>;
 
+// Types Dashboard
+export type DashboardDocuments = CardPresupuesto[] | CardOrdenServicio[] | CardServicio[] | CardFactura[] | CardCobro[];
+export type DashboardDocumentsData = {data: DashboardDocuments, totalResults: number};
+
 // Types Estados
 export type EstadoPresupuesto = 'pending'|'accept'|'reject';
 export type EstadoOrdenServicio = 'assign'|'inProgress'|'complete'|'noShow';

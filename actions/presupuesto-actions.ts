@@ -58,6 +58,25 @@ export async function getPresupuestos(limit:number, page:number){
     }
 };
 
+export async function getAllPresupuestos(){
+    try{
+        await connectDB();
+
+        const consultaPresupuestos = Presupuesto.find().sort({ fecha: -1 });
+        const consultaTotalResults = Presupuesto.countDocuments();
+        const [presupuestos, totalResults] = await Promise.all([consultaPresupuestos, consultaTotalResults]);
+
+        const { success, data, error } = CardsPresupuestoSchema.safeParse(presupuestos);
+        if( success ){
+            return {data, totalResults};
+        };
+        error.issues.forEach( issue => console.log(issue));
+    }
+    catch(error){
+        console.log(error);
+    }
+};
+
 export async function updateStatusPresupuesto(id: PresupuestoType['id'], estado: PresupuestoType['estado']){
     try{
         await connectDB();
