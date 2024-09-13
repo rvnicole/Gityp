@@ -6,17 +6,46 @@ import { CardCobrosSchema } from "@/src/schema";
 import { GestionCobroFormData, GestionCobros } from "@/src/types";
 import mongoose from "mongoose";
 
-export async function getCobros( limit: number, page: number ) {
+export async function getCobros( limit: number, page: number, searchParams: { estado: string, fecha:string } ) {
     try {
         await connectDB();
 
-        const queryCobros = GestionCobro.find()
+        const { estado, fecha } = searchParams;
+
+        const filtros: { edicom?: boolean, pagado?: boolean, fecha?: { $gte: Date, $lte: Date } } = {};
+
+        const a = {
+            edicom: true,
+            noEdicom: false,
+            pagado: true,
+            pendiente: false
+        }
+
+        if( estado === 'edicom' || estado === 'noEdicom' ){
+            filtros.edicom = a[estado];
+        }
+        else if( estado === 'pagado' || estado === 'pendiente' ){
+            filtros.pagado = a[estado];
+        }
+        if( fecha ){
+            const start = new Date(fecha);
+            const end = new Date(fecha);
+            end.setDate(end.getDate()+1); // Sumar un dia para obtener el dia siguiente
+            end.setSeconds(end.getSeconds()-1); // Restar un segundo para obtener las 23:59:59
+            filtros.fecha = {
+                $gte: start,
+                $lte: end
+            };
+        }; 
+        console.log(filtros);
+
+        const queryCobros = GestionCobro.find(filtros)
             .populate([ { path: 'factura', populate: { path: 'ordenServicio' } }])
             .limit(limit)
             .skip(page)
             .sort({ fecha: -1 });
 
-        const queryTotalResults = GestionCobro.countDocuments();
+        const queryTotalResults = GestionCobro.countDocuments(filtros);
 
         const [ cobros, totalResults ] = await Promise.all([ queryCobros, queryTotalResults ]);
 

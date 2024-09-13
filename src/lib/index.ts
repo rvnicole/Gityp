@@ -8,7 +8,7 @@ export const formatCurrency = ( amount: number ) => {
 };
 
 export const formatDate = (date: Date) => {
-    return Intl.DateTimeFormat('es-MX').format(date);
+    return Intl.DateTimeFormat('es-MX').format(new Date(date.toISOString().replace('Z','')));
 };
 
 export const formatLongDate = (date: Date) => {
@@ -18,6 +18,7 @@ export const formatLongDate = (date: Date) => {
 };
 
 export const evalDate = ( fecha: Date | string ) => {
+    console.log('FEHCA QUE LLEGA', fecha);
     if( typeof fecha !== 'string' ){
         const year = fecha.getFullYear();
         const mes = fecha.getMonth() + 1 < 10 ? "0"+(fecha.getMonth() + 1 ) : fecha.getMonth() + 1;
@@ -27,6 +28,12 @@ export const evalDate = ( fecha: Date | string ) => {
     else{
         return fecha+'T00:00:00';
     };
+};
+
+export const myDateMX = () => {
+    const fechaUTC = new Date();
+    fechaUTC.setHours(fechaUTC.getHours() - 6);
+    return fechaUTC;
 };
 
 export const numberToWords = (num: number) => {

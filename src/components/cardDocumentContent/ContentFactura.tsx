@@ -9,11 +9,12 @@ type ContentFacturaProps = {
 export default function ContentFactura({document}: ContentFacturaProps) {
     return (
         <div>
-            <p className="text-right">{formatDate(document.fecha)}</p>
+            <p className="text-right">{formatDate(new Date(evalDate(document.fecha)))}</p>
                                      
             <p className="font-bold text-lg pt-3">Factura {' '}
-                <span className="text-2xl break-words">#{document.id}</span>
+                <span className="text-2xl break-words">#{document.folio}</span>
             </p>
+            <p>{document.id}</p>
                      
             <div className="w-full p-1 bg-charColor-char4 rounded-lg my-2"></div>
                      

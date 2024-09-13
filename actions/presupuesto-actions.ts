@@ -6,6 +6,7 @@ import { Presupuesto } from "@/model/Presupuesto";
 import { Presupuesto as PresupuestoType, PresupuestoFormData, ServiceFormData, Servicio as ServicioType} from "@/src/types";
 import ServiciosPage from "@/app/servicios/page";
 import { CardsPresupuestoSchema } from "@/src/schema";
+import { ReadonlyURLSearchParams } from "next/navigation";
 
 type ActionPresupuestoParams = {
     formData: PresupuestoFormData & { id?: PresupuestoType['id'], servicios?: ServiceFormData[] }, 
@@ -33,19 +34,31 @@ export async function createPresupuesto(fullFormData: ActionPresupuestoParams ){
     };
 };
 
-export async function getPresupuestos(limit:number, page:number){
+export async function getPresupuestos(limit:number, page:number, searchParams: { estado: string, fecha:string }){
     try{
         await connectDB();
+
+        const { estado, fecha } = searchParams;
+
+        const filtros: { estado?: string, fecha?: Date } = {};
+
+        if( estado ){
+            filtros.estado = estado
+        }
+        if( fecha ){
+            filtros.fecha = new Date(fecha);
+        }
 
         const skip = page * limit;
 
         const presupuestos = await Presupuesto
-            .find()
+            .find(filtros)
             .limit(limit)
             .skip(skip)
             .sort({ fecha: -1 });
 
-        const totalResults = await Presupuesto.countDocuments();
+        const totalResults = await Presupuesto.countDocuments(filtros);
+        console.log('total de resultados', totalResults, filtros);
 
         const { success, data, error } = CardsPresupuestoSchema.safeParse(presupuestos);
         if( success ){

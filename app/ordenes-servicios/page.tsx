@@ -5,8 +5,11 @@ import { getOrdenesServicio } from "@/actions/orden-servicio-actions";
 import CardTable from "@/src/components/cards/CardTable";
 import Spinner from "@/src/components/ui/Spinner";
 import { CardOrdenServicio } from "@/src/types";
+import { estadosOrdenServicio } from "@/src/data/data";
+import Filters from "@/src/components/Filtros/Filters";
 
 export default function OrdenesServiciosPage() {
+    const [ searchParams, setSearchParams ] = useState({ estado: '', fecha: '' });
     const [ordenesServicios, setOrdenesServicios] = useState<CardOrdenServicio []>([]);
     const [totalOrdenesServicios, setTotalOrdenesServicios] = useState(0);
     const [page, setPage] = useState(0);
@@ -28,15 +31,24 @@ export default function OrdenesServiciosPage() {
     });
 
     const fetchOrdenesServicios = async () => {
-        const {data, totalResults} = await getOrdenesServicio(limit, page) || {data: [], totalResults: 0};
+        const {data, totalResults} = await getOrdenesServicio(limit, page, searchParams) || {data: [], totalResults: 0};
 
         setOrdenesServicios([...ordenesServicios, ...data]);
         setTotalOrdenesServicios(totalResults);
         setPage( page + 1 );
     }
 
+    const estadosOSArr = Object.entries(estadosOrdenServicio);
+
     return (
         <>
+            <Filters 
+                estados={estadosOSArr}
+                setData={setOrdenesServicios}
+                setTotalData={setTotalOrdenesServicios}
+                setPage={setPage}
+                setSearchParams={setSearchParams}
+            />
             <CardTable
                 documents={ordenesServicios}
                 documentType="ordenes-servicios"
