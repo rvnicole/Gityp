@@ -65,8 +65,8 @@ PresupuestoSchema.post('save', async (doc: IPresupuesto) => {
     if( doc.estado === 'accept' ){
         try{
             const data = {
+                fecha: myDateMX(),
                 presupuesto: doc._id,
-                fecha: new Date(),
                 proveedor: doc.proveedor,
                 solicito: doc.solicito,
                 servicios: doc.servicios,

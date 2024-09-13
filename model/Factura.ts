@@ -3,6 +3,7 @@ import { IOrdenServicio, OrdenServicio } from "./OrdenServicio";
 import { EmisorReceptor, IEmisorReceptor } from "./EmisorReceptor";
 import { string } from "zod";
 import { GestionCobro } from "./GestionCobro";
+import { myDateMX } from "@/src/lib";
 
 const statusFactura = {
     SEALED: 'sealed',
@@ -65,6 +66,7 @@ FacturaSchema.post('save',async (doc)=>{
         console.log(doc.estado, 'estado del documento factura');
         if( doc.estado === 'sealed' ){
             const gestionCobroDoc = new GestionCobro();
+            gestionCobroDoc.fecha = myDateMX();
             gestionCobroDoc.factura = doc.id;
             await gestionCobroDoc.save();
         }

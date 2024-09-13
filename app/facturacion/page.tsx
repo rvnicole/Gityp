@@ -2,12 +2,15 @@
 
 import { getFacturas } from "@/actions/factura-actions";
 import CardTable from "@/src/components/cards/CardTable";
+import Filters from "@/src/components/Filtros/Filters";
 import ModalAdd from "@/src/components/ui/ModalAdd";
 import Spinner from "@/src/components/ui/Spinner";
+import { estadosFactura } from "@/src/data/data";
 import { CardFactura } from "@/src/types";
 import { useEffect, useRef, useState } from "react";
 
 export default function FacturacionPage() {
+    const [ searchParams, setSearchParams ] = useState({ estado: '', fecha: '' });
     const [facturas, setFacturas] = useState<CardFactura[]>([]);
     const [totalFacturas, setTotalFacturas] = useState(0);
     const [page, setPage] = useState(0);
@@ -29,15 +32,25 @@ export default function FacturacionPage() {
     });
 
     const fetchFacturas = async () => {
-        const {data, totalResults} = await getFacturas(limit, page) || {data: [], totalResults: 0};
+        const {data, totalResults} = await getFacturas(limit, page, searchParams) || {data: [], totalResults: 0};
 
         setFacturas([...facturas, ...data]);
         setTotalFacturas(totalResults);
         setPage( page + 1 );
     }
 
+    const estadosFacturasArr = Object.entries(estadosFactura);
+
     return (
         <>
+            <Filters
+                estados={estadosFacturasArr}
+                setData={setFacturas}
+                setTotalData={setTotalFacturas}
+                setPage={setPage}
+                setSearchParams={setSearchParams}
+            />
+
             <CardTable
                 documents={facturas}
                 documentType="facturacion"

@@ -9,8 +9,11 @@ import { formatDate } from "@/src/lib";
 import { CardServicio, FechasDuplicadasType } from "@/src/types";
 import Spinner from "@/src/components/ui/Spinner";
 import { getServicios } from "@/actions/servicio-actions";
+import Filters from "@/src/components/Filtros/Filters";
+import { estadosServicios } from "@/src/data/data";
 
 export default function ServiciosPage() {
+    const [ searchParams, setSearchParams ] = useState({ estado: '', fecha: '' });
     const [servicios, setServicios] = useState<CardServicio []>([]);
     const [totalServicios, setTotalServicios] = useState(0);
     const [page, setPage] = useState(0);
@@ -32,7 +35,7 @@ export default function ServiciosPage() {
     });
 
     const fetchServicios = async () => {
-        const {data, totalResults} = await getServicios(limit, page) || {data: [], totalResults: 0};
+        const {data, totalResults} = await getServicios(limit, page, searchParams) || {data: [], totalResults: 0};
 
         setServicios([...servicios, ...data]);
         setTotalServicios(totalResults);
@@ -42,8 +45,18 @@ export default function ServiciosPage() {
     const fechasDuplicadas: FechasDuplicadasType = {};
     servicios.forEach( document => fechasDuplicadas[formatDate(document.fechaEjecucion)] = fechasDuplicadas[formatDate(document.fechaEjecucion)] ? fechasDuplicadas[formatDate(document.fechaEjecucion)] + 1 : 1);
 
+    const estadosServicioArr = Object.entries(estadosServicios);
+
     return (
         <div className="space-y-5">
+            <Filters
+                estados={estadosServicioArr}
+                setData={setServicios}
+                setTotalData={setTotalServicios}
+                setPage={setPage}
+                setSearchParams={setSearchParams}
+            />
+
             <div className="flex justify-center md:justify-end">
                 <Link href="/servicios?modal=create">
                     <PrimaryButton>Crear Servicio</PrimaryButton>

@@ -47,14 +47,33 @@ export async function createServicio(formData: Omit<ServiceFormData, 'id'> & { s
     }
 }
 
-export async function getServicios(limit: number, page: number) {
+export async function getServicios(limit: number, page: number, searchParams: { estado: string, fecha:string }) {
     try {
         await connectDB();
+
+        const { estado, fecha } = searchParams;
+
+        const filtros: { estado?: string, fechaEjecucion?: { $gte: Date, $lte: Date } } = {};
+
+        if( estado ){
+            filtros.estado = estado
+        }
+        if( fecha ){
+            const start = new Date(fecha);
+            const end = new Date(fecha);
+            end.setDate(end.getDate()+1); // Sumar un dia para obtener el dia siguiente
+            end.setSeconds(end.getSeconds()-1); // Restar un segundo para obtener las 23:59:59
+            filtros.fechaEjecucion = {
+                $gte: start,
+                $lte: end
+            };
+        }; 
 
         const skip = page * limit;
 
         const consultaServicios = Servicio.find({
-                ordenServicio: { $ne: null }
+                ordenServicio: { $ne: null },
+                ...filtros
             })
             .populate([
                 { path: 'idConductor' },
@@ -63,7 +82,7 @@ export async function getServicios(limit: number, page: number) {
             .limit(limit)
             .skip(skip)
             .sort({ fechaEjecucion: -1 });
-        const consultaTotal = Servicio.find({ ordenServicio: { $ne: null } });
+        const consultaTotal = Servicio.find({ ordenServicio: { $ne: null }, ...filtros });
         const [servicios, totalResults] = await Promise.all([consultaServicios, consultaTotal]);
         
         const {success, data, error} = CardsServiciosSchema.safeParse(servicios);        

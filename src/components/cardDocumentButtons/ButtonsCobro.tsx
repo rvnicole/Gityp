@@ -5,6 +5,7 @@ import { useRouter } from "next/navigation";
 import { ConfirmButton, OutlineButton, SecondaryButton } from "../ui/Buttons";
 import { BanknotesIcon, DocumentCheckIcon, EyeIcon} from "@heroicons/react/24/outline";
 import { updateEstadoCobro } from "@/actions/gestion-cobros-actions";
+import { toast } from "react-toastify";
 
 type ContentCobroProps = {
     document: CardCobro;
@@ -22,13 +23,13 @@ export default function ButtonsCobro({document}: ContentCobroProps) {
         const respuesta = await updateEstadoCobro({id: document.id, pagado: document.pagado});
         
         if( respuesta.success ){
-            alert(respuesta.message);
+            toast.success(respuesta.message as string);
         }
         else {
-            alert(respuesta.message);
+            toast.error(respuesta.message as string);
         }
 
-        router.push(location.pathname);
+        setTimeout(()=>location.href = location.pathname, 2000);
     }
     
     return (

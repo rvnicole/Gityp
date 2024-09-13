@@ -4,31 +4,59 @@ import { Factura } from "@/model/Factura";
 import { CardFacturasSchema } from "@/src/schema";
 import { FacturaFormData, Factura as FacturaType } from "@/src/types";
 
-export async function getFacturas( limit:number, page:number ){
-    await connectDB();
-    const skip = page * limit;
-    const queryFacturas = Factura.find()
-                                    .populate({ path: 'ordenServicio' })
-                                    .populate({ path: 'ordenServicio', populate: [
-                                        { path: 'servicios' },
-                                        { path: 'servicios', populate: [
-                                            { path: 'idConductor' },
-                                            { path: 'ordenServicio', select: 'id solicito urlOrdenCompra ordenCompra' }
-                                        ]}
-                                    ]})
-                                    .limit(limit)
-                                    .skip(skip)
-                                    .sort({ fecha: -1 });
+export async function getFacturas( limit:number, page:number,  searchParams: { estado: string, fecha:string } ){
+    try{
+        
+        await connectDB();
 
-    const queryTotalResult = Factura.countDocuments();
+        const { estado, fecha } = searchParams;
 
-    const [ facturas, totalResults ] = await Promise.all([ queryFacturas, queryTotalResult ]);
-                                    
-    const { success, data, error } = CardFacturasSchema.safeParse(facturas);
-    if( success ){
-        return { data, totalResults };
+        const filtros: { estado?: string, fecha?: { $gte: Date, $lte: Date } } = {};
+
+        if( estado ){
+            filtros.estado = estado
+        }
+        if( fecha ){
+            const start = new Date(fecha);
+            const end = new Date(fecha);
+            end.setDate(end.getDate()+1); // Sumar un dia para obtener el dia siguiente
+            end.setSeconds(end.getSeconds()-1); // Restar un segundo para obtener las 23:59:59
+            filtros.fecha = {
+                $gte: start,
+                $lte: end
+            };
+            console.log(start, end);
+        }; 
+        
+
+        const skip = page * limit;
+        const queryFacturas = Factura.find(filtros)
+                                        .populate({ path: 'ordenServicio' })
+                                        .populate({ path: 'ordenServicio', populate: [
+                                            { path: 'servicios' },
+                                            { path: 'servicios', populate: [
+                                                { path: 'idConductor' },
+                                                { path: 'ordenServicio', select: 'id solicito urlOrdenCompra ordenCompra' }
+                                            ]}
+                                        ]})
+                                        .limit(limit)
+                                        .skip(skip)
+                                        .sort({ fecha: -1 });
+
+        const queryTotalResult = Factura.countDocuments(filtros);
+
+        const [ facturas, totalResults ] = await Promise.all([ queryFacturas, queryTotalResult ]);
+                                        
+        const { success, data, error } = CardFacturasSchema.safeParse(facturas);
+        if( success ){
+            console.log('DATOS', data);
+            return { data, totalResults };
+        }
+        error.issues.forEach( issue => console.log(issue));
     }
-    error.issues.forEach( issue => console.log(issue));
+    catch(error){
+        console.log(error);
+    };
 };
 
 export async function getAllFacturas(){

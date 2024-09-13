@@ -4,6 +4,7 @@ import { IServicio, Servicio } from "./Servicio";
 import { Factura } from "./Factura";
 import { Configuracion } from "./Configuracion";
 import { GestionCobro } from "./GestionCobro";
+import { myDateMX } from "@/src/lib";
 
 const statusPresupuesto = {
     ASSIGN: 'assign',
@@ -104,7 +105,7 @@ OrdenServicioSchema.post('save', async (doc) => {
         }
 
         const factura = new Factura();
-        factura.fecha = new Date();
+        factura.fecha = myDateMX();
         factura.folio = folio;
         factura.ordenServicio = doc.id;
         await factura.save();
