@@ -30,8 +30,7 @@ const FacturaSchema: Schema = new Schema({
     },
     ordenServicio: {
         type: Types.ObjectId,
-        ref: 'OrdenServicio' || OrdenServicio,
-        required: true
+        ref: 'OrdenServicio' || OrdenServicio
     },
     fechaSellado: {
         type: Date

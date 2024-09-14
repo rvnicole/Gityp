@@ -1,7 +1,7 @@
 "use client"
 
 import { useRouter } from "next/navigation";
-import { ButtonHTMLAttributes, Children, ReactNode } from "react";
+import { ButtonHTMLAttributes, Children, MouseEvent, ReactNode } from "react";
 
 type ButtonsProps = {
     children: ReactNode;

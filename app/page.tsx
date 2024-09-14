@@ -36,7 +36,7 @@ function getServiciosProximos(servicios: CardServicio[]) {
   hoy.setHours(0, 0, 0, 0);
   console.log(hoy);
 
-  const serviciosProximos = servicios.filter(servicio => servicio.fechaEjecucion >= hoy);
+  const serviciosProximos = servicios.filter(servicio => servicio.fechaEjecucion >= hoy && (servicio.estado === "assign" || servicio.estado === "inProgress"));
   return serviciosProximos;
 }
 
