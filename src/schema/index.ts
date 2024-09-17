@@ -61,8 +61,8 @@ export const EmisorReceptorSchema = z.object({
 export const EmisoresReceptoresSchema = z.array( EmisorReceptorSchema );
 
 export const FacturaSchema = z.object({
-    id: z.string(),
-    ordenServicio: OrdenServicioSchema,
+    id: z.string().optional(),
+    ordenServicio: OrdenServicioSchema.optional(),
     fecha: z.date(),
     urlFactura: z.string().optional(),
     emisor: EmisorReceptorSchema.optional(),
@@ -70,7 +70,19 @@ export const FacturaSchema = z.object({
     folio: z.string(),
     folioFiscal: z.string().optional(),
     fechaSellado: z.date().optional(),
-    estado: z.string()
+    estado: z.string(),
+    total: z.number().optional()
+});
+
+export const FacturaImportSchema = FacturaSchema.pick({
+    fecha: true,
+    folio: true,
+    folioFiscal: true,
+    fechaSellado: true,
+    estado: true
+}).extend({
+    emisor: z.string(),
+    receptor: z.string()
 });
 
 export const GestionCobrosSchema = z.object({
@@ -190,6 +202,7 @@ export const CardFacturaSchema = FacturaSchema.pick({
     fecha: true,
     estado: true,
     folio: true,
+    total: true,
 }).extend({
     ordenServicio: OrdenServicioSchema.pick({
         id: true,
@@ -197,7 +210,7 @@ export const CardFacturaSchema = FacturaSchema.pick({
         solicito: true,
         total: true,
         ordenCompra: true
-    })
+    }).optional()
 });
 export const CardFacturasSchema = z.array(CardFacturaSchema);
 

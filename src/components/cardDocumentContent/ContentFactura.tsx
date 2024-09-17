@@ -7,6 +7,7 @@ type ContentFacturaProps = {
 }
 
 export default function ContentFactura({document}: ContentFacturaProps) {
+
     return (
         <div>
             <p className="text-right">{formatDate(document.fecha)}</p>
@@ -19,10 +20,10 @@ export default function ContentFactura({document}: ContentFacturaProps) {
             <div className="w-full p-1 bg-charColor-char4 rounded-lg my-2"></div>
                      
             <p className="font-semibold">Solicito: {' '}
-                <span className="font-normal">{document.ordenServicio.solicito}</span>
+                <span className="font-normal">{document.ordenServicio ? document.ordenServicio.solicito : 'Factura importada por XML'}</span>
             </p>
                      
-            { document.ordenServicio.proveedor && (
+            { document.ordenServicio?.proveedor && (
                 <p className="font-semibold">Proveedor: {' '}
                     <span className="font-normal">{document.ordenServicio.proveedor}</span>
                 </p>
@@ -34,11 +35,11 @@ export default function ContentFactura({document}: ContentFacturaProps) {
                 </p>
             )}
                      
-            { document.ordenServicio.ordenCompra && (
+            { document.ordenServicio?.ordenCompra && (
                 <p className="inline-block font-semibold py-1 px-3 my-1 bg-mutedColor-foreground text-white rounded-full">{document.ordenServicio.ordenCompra}</p> 
             )}
             
-            <p className="font-semibold py-2 text-right text-xl">{formatCurrency(document.ordenServicio.total)}</p>
+            <p className="font-semibold py-2 text-right text-xl">{document.ordenServicio ? formatCurrency(document.ordenServicio.total) : formatCurrency(document.total!)}</p>
 
             <ButtonsFactura
                 documentID={document.id}

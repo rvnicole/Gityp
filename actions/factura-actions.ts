@@ -4,6 +4,43 @@ import { Factura } from "@/model/Factura";
 import { CardFacturasSchema } from "@/src/schema";
 import { FacturaFormData, Factura as FacturaType } from "@/src/types";
 
+export async function createInvoice( invoicesData: FacturaType ){
+    try{
+        await connectDB();
+
+        const queryFactura = await Factura.find({ folioFiscal: invoicesData.folioFiscal });
+        if( queryFactura ){
+            return {
+                success: false,
+                message: 'La factura ya se encuentra registrada',
+                folio: invoicesData.folio,
+                folioFiscal: invoicesData.folioFiscal
+            };
+    
+        }
+
+        const factura = await new Factura(invoicesData);
+        await factura.save();
+
+        return {
+            success: true,
+            message: 'Factura creada',
+            folio: invoicesData.folio,
+            folioFiscal: invoicesData.folioFiscal
+        };
+
+    }
+    catch(error){
+        console.log(error);
+        return {
+            success: false,
+            message: typeof error === 'object' && error !== null && 'message' in error ? error.message as string : 'Error al generar las facturas',
+            folio: invoicesData.folio,
+            folioFiscal: invoicesData.folioFiscal
+        }
+    }
+};
+
 export async function getFacturas( limit:number, page:number,  searchParams: { estado: string, fecha:string } ){
     try{
         

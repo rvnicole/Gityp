@@ -19,7 +19,8 @@ import {
     CardCobroSchema,
     OptionOrdenesServicios,
     EmailSchema,
-    RutaSchema
+    RutaSchema,
+    FacturaImportSchema
 } from "../schema";
 
 export type Servicio = z.infer<typeof ServicioSchema>;
@@ -76,3 +77,6 @@ export type Email = z.infer<typeof EmailSchema>;
 
 // Type
 export type Ruta = z.infer<typeof RutaSchema>;
+
+// Type Importacion de facturas
+export type FacturaImport = z.infer<typeof FacturaImportSchema>;

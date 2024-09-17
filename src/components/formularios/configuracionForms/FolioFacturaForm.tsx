@@ -1,7 +1,7 @@
 "use client"
 import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
-import { OutlineButton } from "../../ui/Buttons";
+import { OutlineButton, SecondaryButton } from "../../ui/Buttons";
 import { getConfig, setFolioInicial } from "@/actions/configuracion-actions";
 import { toast } from "react-toastify";
 
@@ -36,16 +36,18 @@ export default function FolioFacturaForm(){
             editar ? 
                 <form
                     onSubmit={handleSubmit(handleGuardar)}
+                    className="flex flex-col sm:items-center space-y-3 sm:flex-row sm:space-x-2"
                 >
                     <label htmlFor="folio">Folio: </label>
                     <input
                         id="folio" 
                         type="number" 
-                        className={`mr-3 w-16 p-1 border border-borderColor placeholder:text-inputColor rounded focus:outline-none focus:ring-2 focus:border-ringColor ${errors.folio && "border-2 border-destructiveColor"}`}
+                        className={`mr-3 w-full sm:w-20 p-1 border border-borderColor placeholder:text-inputColor rounded focus:outline-none focus:ring-2 focus:border-ringColor ${errors.folio && "border-2 border-destructiveColor"}`}
                         { ...register('folio',{
                             required: true
                         })}
                     />
+                    <SecondaryButton onClick={() => setEditar(false)}>Cancelar</SecondaryButton>
                     <OutlineButton>Guardar</OutlineButton>
                 </form>
             :

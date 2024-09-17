@@ -8,12 +8,21 @@ import { EmisorReceptor as EmisorReceptorType } from "@/src/types";
 export async function createEmisorReceptor(formData: Pick<EmisorReceptorType, 'nombre'|'rfc'|'tipo'>) {
     try {
         await connectDB();
-
-        const createEmisorReceptor = await new EmisorReceptor(formData);
-        await createEmisorReceptor.save();
-
         const tipoTexto = formData.tipo === "emisor" ? "Emisor" : "Receptor";
-        return { success: true, message: `${tipoTexto} Creado Correctamente`}
+
+        const queryEmisorReceptor = await EmisorReceptor.find({ rfc: formData.rfc, inactivo: false });
+        if( queryEmisorReceptor.length > 0 ){
+            return {
+                success: true,
+                message: `${tipoTexto} Encontrado`, 
+                data: JSON.stringify(queryEmisorReceptor[0])
+            }
+        };
+
+        const emisorReceptor = await new EmisorReceptor(formData);
+        await emisorReceptor.save();
+        
+        return { success: true, message: `${tipoTexto} Creado Correctamente`, data: JSON.stringify(emisorReceptor) }
     }
     catch(error) {
         if (typeof error === 'object' && error !== null && 'message' in error) {

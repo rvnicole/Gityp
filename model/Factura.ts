@@ -57,13 +57,15 @@ const FacturaSchema: Schema = new Schema({
     },
     folioFiscal: {
         type: String
+    },
+    total: {
+        type: Number
     }
 }, { timestamps: true });
 
 FacturaSchema.post('save',async (doc)=>{
     try{
-        console.log(doc.estado, 'estado del documento factura');
-        if( doc.estado === 'sealed' ){
+        if( doc.estado === 'sealed' && doc.ordenServicio ){
             const gestionCobroDoc = new GestionCobro();
             gestionCobroDoc.fecha = myDateMX();
             gestionCobroDoc.factura = doc.id;
