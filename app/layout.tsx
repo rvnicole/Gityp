@@ -22,7 +22,7 @@ export default function RootLayout({
   return (
     <html lang="en">      
       <body className={`${inter.className} bg-primaryColor-foreground`}>
-        <div className="w-full flex">
+        <div className="w-full flex flex-col md:flex-row">
           <aside>
             <SideNavBar />
           </aside>

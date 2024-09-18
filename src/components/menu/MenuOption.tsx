@@ -11,8 +11,9 @@ type MenuOptionProps = {
 export default function MenuOption({ children, option, url, showMenu}: MenuOptionProps) {
     return (
         <Link
-            className="flex items-center p-2 mx-1 rounded-xl hover:text-accentColor-foreground hover:bg-accentColor"
+            className="flex items-center p-2 my-1 mx-1 md:my-0 rounded-xl hover:text-accentColor-foreground hover:bg-accentColor"
             href={url}
+            title={option}
         >
             {children}
             { showMenu && <p className="px-2 w-32">{option}</p>}
