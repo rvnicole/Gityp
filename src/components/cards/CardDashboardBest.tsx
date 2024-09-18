@@ -83,11 +83,11 @@ export default async function CardDashboardBest(){
 
     // Obtén el mes con mayor número de servicios realizados
     const masServiciosArr = Object.values(serviceMonths).map( service => service.cuenta );
-    const masServicios = Math.max(...masServiciosArr);
+    const masServicios = Math.max(...masServiciosArr, 0);
     const entries = Object.entries(serviceMonths);
     const indiceMasServicios = entries.findIndex( servicio => servicio[1].cuenta === masServicios );
-    const mesMasServicios = entries[indiceMasServicios][0];
-    const acumuladoMes = entries[indiceMasServicios][1].acumulado;
+    const mesMasServicios = entries[indiceMasServicios] ? entries[indiceMasServicios][0] : '';
+    const acumuladoMes = entries[indiceMasServicios] ? entries[indiceMasServicios][1].acumulado : '';
 
     /* Mes con mayor recaudacion */
     gestionCobros.forEach( cobro => {
@@ -106,9 +106,9 @@ export default async function CardDashboardBest(){
 
     const entriesRecaudacion = Object.entries(cobroMonths);
     const mayorRecaudacionArr = entriesRecaudacion.map( mesCobro => mesCobro[1].acumulado );
-    const mayorRecaudacion = Math.max(...mayorRecaudacionArr);
+    const mayorRecaudacion = Math.max(...mayorRecaudacionArr, 0);
     const mesMayorRecaudacionIndice = entriesRecaudacion.findIndex( mesCobro => mesCobro[1].acumulado === mayorRecaudacion );
-    const mesMayorRecaudacion = entriesRecaudacion[mesMayorRecaudacionIndice][0];
+    const mesMayorRecaudacion = entriesRecaudacion[mesMayorRecaudacionIndice] ? entriesRecaudacion[mesMayorRecaudacionIndice][0] : '';
 
 
     /* Mejor cliente */
@@ -125,9 +125,9 @@ export default async function CardDashboardBest(){
     const solicitoMayoTotalArr = entriesSolicito.map( os => {
         return os[1] 
     });
-    const mayorTotalSolicitado = Math.max(...solicitoMayoTotalArr);
+    const mayorTotalSolicitado = Math.max(...solicitoMayoTotalArr, 0);
     const findSolicito = entriesSolicito.find( os => os[1] === mayorTotalSolicitado );
-    const solicito = findSolicito ? findSolicito[0] : 'Importacion xml'
+    const solicito = findSolicito ? findSolicito[0] : ''
 
     return (
         <div className="py-3 w-full grid gap-5 xl:grid-cols-3 lg:grid-cols-2 md:grid-cols-1">
@@ -139,9 +139,9 @@ export default async function CardDashboardBest(){
                 <p className="text-mutedColor-foreground font-bold text-2xl">{ mesesEspanol[+mesMasServicios] }</p>
                 <div className="grid grid-cols-2">
                     <p className="text-xl">{masServicios}</p>
-                    <p className="text-2xl font-bold">{ formatCurrency(acumuladoMes) }</p>
+                    <p className="text-2xl font-bold">{ formatCurrency(acumuladoMes ? acumuladoMes : 0) }</p>
                     <p className="text-mutedColor-foreground text-center">Servicios realizados</p>
-                    <p className="text-mutedColor-foreground text-center">Costo acumulado</p>
+                    <p className="text-mutedColor-foreground text-center">Costo acumulado sin IVA</p>
                 </div>                
             </div>
             <div 
