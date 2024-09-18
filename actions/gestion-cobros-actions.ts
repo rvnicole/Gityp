@@ -81,6 +81,43 @@ export async function getAllCobros() {
     }
 }
 
+export async function getCobrosByRangeDate({mes, anio}: {mes: string, anio:string}) {
+    try {
+        await connectDB();
+
+        const fechaInicial = new Date(`${anio}-${mes ? mes : '01'}-01T00:00:00.000Z`);
+        const fechaFinal = new Date(`${anio}-${mes ? mes : '12'}-31T00:00:00.000Z`);
+        console.log("Cobros por Rango de Fechas", {fechaInicial, fechaFinal});
+
+        const queryCobros = GestionCobro
+            .find({
+                fecha: {
+                    $gte: fechaInicial,
+                    $lt: fechaFinal
+                }
+            })
+            .populate([ { path: 'factura', populate: { path: 'ordenServicio' } }])
+            .sort({ fecha: -1 });
+
+        const queryTotalResults = GestionCobro.countDocuments({
+            fecha: {
+                $gte: fechaInicial,
+                $lt: fechaFinal
+            }
+        });
+        const [ cobros, totalResults ] = await Promise.all([ queryCobros, queryTotalResults ]);
+
+        const {success, data, error} = CardCobrosSchema.safeParse(cobros);
+        if(success) {
+            return {data, totalResults};
+        };
+        error.issues.forEach( error => console.log(error));
+    }
+    catch(error) {
+        console.log(error);
+    }
+}
+
 export async function updateCobro(formData: Omit<GestionCobroFormData, 'factura'>) {
     try {
         await connectDB();

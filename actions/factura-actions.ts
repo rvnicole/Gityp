@@ -120,6 +120,45 @@ export async function getAllFacturas(){
     error.issues.forEach( issue => console.log(issue));
 };
 
+export async function getFacturasByRangeDate({mes, anio}: {mes: string, anio:string}){
+    await connectDB();
+
+    const fechaInicial = new Date(`${anio}-${mes ? mes : '01'}-01T00:00:00.000Z`);
+    const fechaFinal = new Date(`${anio}-${mes ? mes : '12'}-31T00:00:00.000Z`);
+    console.log("Facturas por Rango de Fechas", {fechaInicial, fechaFinal});
+    
+    const queryFacturas = Factura
+        .find({
+            fecha: {
+                $gte: fechaInicial,
+                $lt: fechaFinal
+            }
+        })
+        .populate({ path: 'ordenServicio' })
+        .populate({ path: 'ordenServicio', populate: [
+            { path: 'servicios' },
+            { path: 'servicios', populate: [
+                { path: 'idConductor' },
+                { path: 'ordenServicio', select: 'id solicito urlOrdenCompra ordenCompra' }
+            ]}
+        ]})
+        .sort({ fecha: -1 });
+
+    const queryTotalResult = Factura.countDocuments({
+        fecha: {
+            $gte: fechaInicial,
+            $lt: fechaFinal
+        }
+    });
+    const [ facturas, totalResults ] = await Promise.all([ queryFacturas, queryTotalResult ]);
+                                    
+    const { success, data, error } = CardFacturasSchema.safeParse(facturas);
+    if( success ){
+        return { data, totalResults };
+    }
+    error.issues.forEach( issue => console.log(issue));
+};
+
 export async function checkFullDataFactura(id: FacturaType['id']){
     try{
         const factura = await Factura.findById(id);
