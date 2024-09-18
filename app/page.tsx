@@ -5,6 +5,7 @@ import { getAllPresupuestos } from "@/actions/presupuesto-actions";
 import { getAllServicios } from "@/actions/servicio-actions";
 import { Configuracion } from "@/model/Configuracion";
 import CardDashboard from "@/src/components/cards/CardDashboard";
+import CardDashboardBest from "@/src/components/cards/CardDashboardBest";
 import CardDashboardGanancias from "@/src/components/cards/CardDashboardGanancias";
 import { evalDate, formatLongDate } from "@/src/lib";
 import {CardServicio, DashboardDocumentsData} from "@/src/types";
@@ -77,6 +78,7 @@ export default async function Home() {
       </div>
 
       <CardDashboardGanancias />
+      <CardDashboardBest />
     </div>
   );
 }
