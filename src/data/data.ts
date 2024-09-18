@@ -44,3 +44,8 @@ export const tipoServicio = {
     personal: 'Transporte de Personal',
     paqueteria: 'Paquetería' 
 };
+
+export const mesesEspanol = [
+    'Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 
+    'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'
+];
