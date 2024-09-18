@@ -23,7 +23,7 @@ export default function RootLayout({
     <html lang="en">      
       <body className={`${inter.className} bg-primaryColor-foreground`}>
         <div className="w-full flex flex-col md:flex-row">
-          <aside>
+          <aside className="mb-16 md:mb-0">
             <SideNavBar />
           </aside>
           <main className="w-full mr-5 sm:mr-10 my-3">
@@ -31,7 +31,11 @@ export default function RootLayout({
               <NavigationPath />
               <SearchBar />
             </div>
-            {children}
+
+            <div className="mx-3 md:mx-0">
+              {children}
+            </div>
+            
             <ToastContainer />
           </main>          
         </div>

@@ -9,7 +9,7 @@ export default function SideNavBar() {
     const [showMenu, setShowMenu] = useState<boolean>(false);
 
     return (
-        <div className={`${showMenu? "md:w-60" : "md:w-28"} w-full sticky top-0 h-16 md:h-screen p-3`}>
+        <div className={`${showMenu? "md:w-60" : "md:w-28"} w-full fixed md:sticky top-0 h-20 md:h-screen p-3 backdrop-blur-md`}>
             <div className="flex">
                 <div 
                     className={`${showMenu ? "md:w-56" : "md:w-14"} w-full h-14 md:h-[96.5vh] flex md:flex-col justify-center bg-backgroundColor rounded-xl text-mutedColor-foreground border border-borderColor`}

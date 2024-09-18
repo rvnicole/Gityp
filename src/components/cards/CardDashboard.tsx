@@ -61,7 +61,7 @@ export default function CardDashboard({title, type, documents, children}: CardDa
 
             <div className="flex pt-6 justify-center">
                 { estados.map((estado, indice) => (
-                    <div key={estado} className={`${indice != 0 && "border-l border-borderColor"} w-28 flex flex-col`}>
+                    <div key={estado} className={`${indice != 0 && "border-l border-borderColor"} w-full md:w-28 flex flex-col`}>
                         <p className={`text-3xl font-bold py-2 ${estadosGreen.includes(estado) ? "text-lime-500" : estadosBlue.includes(estado) ? "text-primaryColor" : "text-mutedColor-foreground"}`}>
                             {grupos[estado].length}
                         </p>
