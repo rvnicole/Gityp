@@ -59,13 +59,19 @@ export default function EmailForm(){
 
         for( let i = 0; i < divDataTable.length; i++ ){
             console.log({ etiqueta: divDataTable[i] });
-            divDataTable[i].classList.add('grid-cols-8');
+            divDataTable[i].className = `${i % 2 !== 0 && 'bg-sky-50'} grid grid-cols-8 gap-1 p-1 border-b border-borderColor`
+            
+            const spans = divDataTable[i].querySelectorAll('span');
+            for( let i = 0; i < spans.length; i++ ){
+                spans[i].remove();
+            }
         };
 
         const total = Number(parrafoTotalHtml.getAttribute('data-set')!);
         const centavos = total.toFixed(2).toString().split('.')[1];
         divDataProveedor.innerHTML = divDataProveedor.innerHTML + dataProveedor;
         columnasHtml.classList.add('bg-sky-500', 'text-white', 'grid-cols-8');  
+        columnasHtml.parentElement!.className = '';
         script.setAttribute('src', "https://cdn.tailwindcss.com");
         parrafo.textContent = 'Se requiere Orden de compra antes del servicio';
         parrafo.classList.add('font-semibold', 'text-slate-600', 'text-center');
