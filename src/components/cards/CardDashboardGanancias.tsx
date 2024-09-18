@@ -30,15 +30,7 @@ export default function CardDashboardGanancias({}: CardDashboardGananciasProps) 
             });
 
             const selladas = facturas!.data.filter(factura => factura.estado === "sealed");
-            selladas.forEach(factura => {
-                if( factura.ordenServicio ) {
-                    data.facturado = data.facturado + factura.ordenServicio.total;
-                }
-                else if( factura.total ){
-                    data.facturado = data.facturado + factura.total;
-                    data.pagado = data.pagado + factura.total;
-                }
-            });
+            data.facturado = selladas.reduce((suma, factura) => factura.ordenServicio ? suma + factura.ordenServicio.total : suma, 0);
 
             setGanancias(data);
         }
