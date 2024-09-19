@@ -48,7 +48,7 @@ export default function ButtonsCobro({document}: ContentCobroProps) {
                 { !document.edicom && (
                     <SecondaryButton
                         onClick={() => {
-                            document.edicom = true;
+                            //document.edicom = true;
                             handleClick(document)
                         }}
                         attributes={{ title: "Cargado a Edicom"}}

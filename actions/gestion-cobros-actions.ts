@@ -8,6 +8,7 @@ import mongoose from "mongoose";
 
 export async function getCobros( limit: number, page: number, searchParams: { estado: string, fecha:string } ) {
     try {
+        console.log('LIMITe', { limit, page });
         await connectDB();
 
         const { estado, fecha } = searchParams;
@@ -38,11 +39,11 @@ export async function getCobros( limit: number, page: number, searchParams: { es
             };
         }; 
         console.log(filtros);
-
+        const skip = limit * page;
         const queryCobros = GestionCobro.find(filtros)
             .populate([ { path: 'factura', populate: { path: 'ordenServicio' } }])
             .limit(limit)
-            .skip(page)
+            .skip(skip)
             .sort({ fecha: -1 });
 
         const queryTotalResults = GestionCobro.countDocuments(filtros);

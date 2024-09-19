@@ -42,13 +42,15 @@ export default function OrdenesServiciosPage() {
 
     return (
         <>
-            <Filters 
-                estados={estadosOSArr}
-                setData={setOrdenesServicios}
-                setTotalData={setTotalOrdenesServicios}
-                setPage={setPage}
-                setSearchParams={setSearchParams}
-            />
+            <div className="flex items-center flex-col md:flex-row md:justify-between gap-5">
+                <Filters 
+                    estados={estadosOSArr}
+                    setData={setOrdenesServicios}
+                    setTotalData={setTotalOrdenesServicios}
+                    setPage={setPage}
+                    setSearchParams={setSearchParams}
+                />
+            </div>            
             <CardTable
                 documents={ordenesServicios}
                 documentType="ordenes-servicios"

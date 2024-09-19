@@ -29,7 +29,7 @@ export default function ServicesData( { servicio, setServicioEdit, servicios, se
     return (
         <>
             
-                <span className="bg-accentColor p-3">{formatDate(new Date(fecha))}</span>
+                <span className="bg-accentColor p-3"><span className="md:hidden font-bold"></span>{formatDate(new Date(fecha))}</span>
                 { /*
                 <input 
                     readOnly 
@@ -39,10 +39,10 @@ export default function ServicesData( { servicio, setServicioEdit, servicios, se
                 /> 
                 */
                 }
-                <span className="text-center bg-accentColor p-3">{tiposServicio.find((serv)=> servicio.tipoServicio === serv.value)!.tipo}</span>
-                <span className="bg-accentColor break-words py-3">{servicio.descripcion}</span>
-                <span className="text-center bg-accentColor p-3">{servicio.costo}</span>
-                <span className="bg-accentColor py-3">{servicio.nota}</span>
+                <span className="text-center bg-accentColor p-3"><span className="md:hidden font-bold">Tipo: </span>{tiposServicio.find((serv)=> servicio.tipoServicio === serv.value)!.tipo}</span>
+                <span className="bg-accentColor break-words py-3"><span className="md:hidden font-bold">Descripción: </span>{servicio.descripcion}</span>
+                <span className="text-center bg-accentColor p-3"><span className="md:hidden font-bold">Costo: </span>{servicio.costo}</span>
+                <span className="bg-accentColor py-3"><span className="md:hidden font-bold">Nota: </span>{servicio.nota}</span>
                 <div className="flex justify-center items-center gap-2 text-center bg-accentColor p-3">
                     <a onClick={() => handleEditService(servicio)}>
                         <PencilSquareIcon className="size-7 text-charColor-char4 hover:text-primaryColor cursor-pointer"/>
@@ -51,6 +51,7 @@ export default function ServicesData( { servicio, setServicioEdit, servicios, se
                         <XCircleIcon className="size-7 text-destructiveColor hover:text-destructiveColor-hover cursor-pointer"/>
                     </a>
                 </div>
+                <hr className="md:hidden p-1 my-3 bg-mutedColor-foreground rounded-lg"/>
         </>
     )
 }

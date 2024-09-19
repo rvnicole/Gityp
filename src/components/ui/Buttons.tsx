@@ -36,7 +36,7 @@ export function OutlineRoundButton({ children, onClick, attributes }: ButtonsPro
 export function PrimaryButton({ children, onClick, attributes }: ButtonsProps) {
     return (
         <button 
-            className="bg-primaryColor hover:bg-primaryColor-hover text-white border border-primaryColor hover:border-primaryColor-hover py-1 px-3 rounded"
+            className="bg-primaryColor hover:bg-primaryColor-hover text-white border border-primaryColor hover:border-primaryColor-hover py-1 px-3 rounded w-full md:w-auto"
             onClick={onClick}
             {...attributes}
         >

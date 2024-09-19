@@ -26,8 +26,11 @@ export default function ServicioForm({ register, errors, children  }: ServicioFo
         <fieldset className="px-5 border border-slate-200">
                 <legend className="font-bold">Servicio: </legend>
                 <div className="p-3 space-y-5">
-                    <div>
-                        <label htmlFor="fecha-ejecucion">Fecha de ejecución del servicio: </label>
+                    <div className="flex flex-col md:flex-row md:items-center">
+                        <div className="flex items-center">
+                            <label htmlFor="fecha-ejecucion">Fecha de ejecución del servicio: </label>
+                            <span className="inline text-destructiveColor p-2">*</span>
+                        </div>
                         <input 
                             id="fecha-ejecucion" 
                             type="date" 
@@ -36,7 +39,7 @@ export default function ServicioForm({ register, errors, children  }: ServicioFo
                                 required: true
                             })}
                         />
-                        <span className="inline text-destructiveColor p-2">*</span>
+                        
                     </div>
                     <div>
                         <label htmlFor="descripcion">Descripción: </label>
@@ -50,13 +53,16 @@ export default function ServicioForm({ register, errors, children  }: ServicioFo
                             })}
                         />                        
                     </div>
-                    <div className="flex justify-between ">
-                        <div>
-                            <label htmlFor="conductor">Conductor: </label>
+                    <div className="flex flex-col gap-3 lg:gap-0 lg:flex-row lg:justify-between ">
+                        <div className="flex flex-col md:flex-row md:items-center">
+                            <div className="flex items-center">
+                                <label htmlFor="conductor">Conductor: </label>
+                                <span className="inline text-destructiveColor p-2">*</span>
+                            </div>
                             <select
                                 id="idConductor"
                                 onClick={handleSelectDrivers} 
-                                className={`p-1 border border-borderColor placeholder:text-inputColor rounded focus:outline-none focus:ring-2 focus:border-ringColor ${errors.idConductor && "border-2 border-destructiveColor"}`}
+                                className={`w-full md:w-auto p-1 border border-borderColor placeholder:text-inputColor rounded focus:outline-none focus:ring-2 focus:border-ringColor ${errors.idConductor && "border-2 border-destructiveColor"}`}
                                 { ...register('idConductor',{
                                     required: true
                                 })}
@@ -77,11 +83,13 @@ export default function ServicioForm({ register, errors, children  }: ServicioFo
                                         Cargando...
                                     </option>
                                 }
-                            </select>
-                            <span className="inline text-destructiveColor p-2">*</span>
+                            </select>                            
                         </div>
-                        <div>
-                            <label htmlFor="conductor">Tipo: </label>
+                        <div className="flex flex-col md:flex-row md:items-center">
+                            <div className="flex items-center">
+                                <label htmlFor="conductor">Tipo: </label>
+                                <span className="inline text-destructiveColor p-2">*</span>
+                            </div>
                             <select 
                                 id="tipo-servicio" 
                                 className={`p-1 border border-borderColor placeholder:text-inputColor rounded focus:outline-none focus:ring-2 focus:border-ringColor ${errors.tipoServicio && "border-2 border-destructiveColor"}`}
@@ -96,10 +104,13 @@ export default function ServicioForm({ register, errors, children  }: ServicioFo
                                     )
                                 }
                             </select>
-                            <span className="inline text-destructiveColor p-2">*</span>
+                            
                         </div>
-                        <div>
-                            <label htmlFor="conductor">Estado: </label>
+                        <div className="flex flex-col md:flex-row md:items-center">
+                            <div className="flex items-center">
+                                <label htmlFor="conductor">Estado: </label>
+                                <span className="inline text-destructiveColor p-2">*</span>
+                            </div>
                             <select
                                 id="estado" 
                                 className={`p-1 border border-borderColor placeholder:text-inputColor rounded focus:outline-none focus:ring-2 focus:border-ringColor ${errors.estado && "border-2 border-destructiveColor"}`}
@@ -110,20 +121,21 @@ export default function ServicioForm({ register, errors, children  }: ServicioFo
                                         <option key={estado.value} value={estado.value}>{estado.estado}</option>
                                     )
                                 }
-                            </select>
-                            <span className="inline text-destructiveColor p-2">*</span>
+                            </select>                            
                         </div>
                     </div>                    
-                    <div>
-                        <label htmlFor="costo">Costo: </label>
+                    <div className="flex flex-col md:flex-row md:items-center">
+                            <div className="flex items-center">
+                                <label htmlFor="costo">Costo: </label>
+                                <span className="inline text-destructiveColor p-2">*</span>
+                            </div>
                         <input 
                             type="number" 
                             className={`p-1 border border-borderColor placeholder:text-inputColor rounded focus:outline-none focus:ring-2 focus:border-ringColor ${errors.costo && "border-2 border-destructiveColor"}`}
                             { ...register('costo',{
                                 required: true
                             })}
-                        />
-                        <span className="inline text-destructiveColor p-2">*</span>
+                        />                        
                     </div> 
                     <div>
                         <label htmlFor="costo">Nota: </label>

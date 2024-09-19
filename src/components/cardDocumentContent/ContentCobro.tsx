@@ -21,10 +21,10 @@ export default function ContentCobro({document, search}: ContentCobroProps) {
             <div className="w-full p-1 bg-charColor-char4 rounded-lg my-2"></div>
                      
             <p className="font-semibold">Solicito: {' '}
-                <span className="font-normal">{document.factura.ordenServicio.solicito}</span>
+                <span className="font-normal">{document.factura.ordenServicio?.solicito}</span>
             </p>
                      
-            { document.factura.ordenServicio.proveedor && (
+            { document.factura.ordenServicio?.proveedor && (
                 <p className="font-semibold">Proveedor: {' '}
                     <span className="font-normal">{document.factura.ordenServicio.proveedor}</span>
                 </p>
@@ -47,11 +47,11 @@ export default function ContentCobro({document, search}: ContentCobroProps) {
                 : (<p className="font-semibold">Sin cargar en Edicom</p>)
             }
                      
-            { document.factura.ordenServicio.ordenCompra && (
+            { document.factura.ordenServicio?.ordenCompra && (
                 <p className="inline-block font-semibold py-1 px-3 my-1 bg-mutedColor-foreground text-white rounded-full">{document.factura.ordenServicio.ordenCompra}</p> 
             )}
             
-            <p className="font-semibold py-2 text-right text-xl">{formatCurrency(document.factura.ordenServicio.total)}</p>
+            <p className="font-semibold py-2 text-right text-xl">{formatCurrency(document.factura.ordenServicio ? document.factura.ordenServicio.total : 0)}</p>
         
             {search ? 
                 <div className="flex justify-center text-secondaryColor-foreground">

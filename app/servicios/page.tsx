@@ -49,13 +49,15 @@ export default function ServiciosPage() {
 
     return (
         <div className="space-y-5">
-            <Filters
-                estados={estadosServicioArr}
-                setData={setServicios}
-                setTotalData={setTotalServicios}
-                setPage={setPage}
-                setSearchParams={setSearchParams}
-            />
+            <div className="flex items-center flex-col md:flex-row md:justify-between gap-5">
+                <Filters
+                    estados={estadosServicioArr}
+                    setData={setServicios}
+                    setTotalData={setTotalServicios}
+                    setPage={setPage}
+                    setSearchParams={setSearchParams}
+                />
+            </div>
 
             <div className="flex justify-center md:justify-end">
                 <Link href="/servicios?modal=create">
