@@ -57,6 +57,18 @@ export function PrimaryRoundButton({ children, onClick, attributes }: ButtonsPro
     )
 }
 
+export function PrimaryShortButton({ children, onClick, attributes }: ButtonsProps) {
+    return (
+        <button 
+            className="bg-primaryColor hover:bg-primaryColor-hover text-white border border-primaryColor hover:border-primaryColor-hover py-1 px-3 rounded"
+            onClick={onClick}
+            {...attributes}
+        >
+            {children}
+        </button>
+    )
+}
+
 export function SecondaryButton({ children, onClick, attributes }: ButtonsProps) {
     return (
         <button 

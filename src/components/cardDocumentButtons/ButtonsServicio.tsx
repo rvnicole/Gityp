@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import { useRouter } from 'next/navigation';
-import { ConfirmButton, OutlineButton, PrimaryButton, SecondaryButton } from "../ui/Buttons";
+import { ConfirmButton, OutlineButton, PrimaryShortButton, SecondaryButton } from "../ui/Buttons";
 import { EyeIcon, PlayIcon, HandThumbUpIcon, NoSymbolIcon } from "@heroicons/react/24/outline";
 import { estadosServicios } from "@/src/data/data";
 import type { CardServicio, EstadoServicio } from "@/src/types";
@@ -49,12 +49,12 @@ export default function ButtonsServicio({documentID, estadoDocument}: ButtonsSer
                 { (estado === "assign" || estado === "inProgress") && (
                     <>
                         { estado !== "inProgress" && (
-                            <PrimaryButton
+                            <PrimaryShortButton
                                 onClick={() => handleClick({id: documentID, estado: "inProgress"})}
                                 attributes={{ title: "En progreso"}}
                             >
                                 <PlayIcon className="size-7 text-white" />
-                            </PrimaryButton>
+                            </PrimaryShortButton>
                         )}
 
                         <ConfirmButton

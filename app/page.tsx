@@ -35,10 +35,21 @@ async function initConfiguracion(){
 
 function getServiciosProximos(servicios: CardServicio[]) {
   const hoy = new Date();
-  hoy.setHours(0, 0, 0, 0);
-  console.log(hoy);
+  const dia = hoy.getDate();
+  const mes = hoy.getMonth() + 1;
+  const anio = hoy.getFullYear();
+  console.log("Hoy es", {dia, mes, anio});
 
-  const serviciosProximos = servicios.filter(servicio => servicio.fechaEjecucion >= hoy && (servicio.estado === "assign" || servicio.estado === "inProgress"));
+  const serviciosProximos = servicios.filter(servicio => {
+    const day = servicio.fechaEjecucion.getUTCDate();
+    const month = servicio.fechaEjecucion.getUTCMonth() + 1;
+    const year = servicio.fechaEjecucion.getUTCFullYear();
+    console.log("Fecha de Ejecución", {fecha: servicio.fechaEjecucion, day, month, year, estado: servicio.estado});
+
+    if(year >= anio && ((month === mes && day >= dia) || month > mes) && (servicio.estado === "assign" || servicio.estado === "inProgress")) {
+      return true;
+    }
+  });
   return serviciosProximos;
 }
 
