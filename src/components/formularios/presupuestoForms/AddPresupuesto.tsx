@@ -111,10 +111,10 @@ export default function AddPresupuesto(){
                     { ...register('total')}
                 />
             </div>
-            <div className="flex justify-end gap-5 px-5">
+            <div className="flex flex-col md:flex-row justify-end gap-5 px-5">
                 <Link 
                     href={`${location.pathname}`}
-                    className="bg-secondaryColor hover:bg-secondaryColor-hover text-secondaryColor-foreground border border-secondaryColor hover:border-secondaryColor-hover py-1 px-3 rounded cursor-pointer"
+                    className="bg-secondaryColor hover:bg-secondaryColor-hover text-secondaryColor-foreground border border-secondaryColor hover:border-secondaryColor-hover py-1 px-3 rounded cursor-pointer w-full md:w-auto text-center"
                 >
                         Cancelar
                 </Link>

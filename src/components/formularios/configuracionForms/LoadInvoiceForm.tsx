@@ -62,17 +62,17 @@ export default function LoadInvoiceForm(){
                                 const receptorId = JSON.parse(receptorResult.data)._id;
 
                                 const invoiceData = {
-                                    fecha: myDateMX(),
+                                    fecha: myDateMX(fechaTimbrado),
                                     estado: 'sealed',
                                     folio,
                                     emisor: emisorId,
                                     receptor: receptorId,
                                     folioFiscal: uuid,
-                                    fechaSellado: new Date(fechaTimbrado),
+                                    fechaSellado: myDateMX(fechaTimbrado),
                                     inactivo: false,
                                     total: Number(total)
                                 };
-                                
+                                console.log(invoiceData);
                                 const response = await createInvoice(invoiceData);
                                 console.log(response.message);
                                 if( !response.success ){

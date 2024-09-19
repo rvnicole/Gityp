@@ -100,7 +100,7 @@ export default function FacturaDetail({ factura }: FacturaDetailProps) {
                 </p>
 
                 <p className="font-semibold">Fecha de Sellado: {' '}
-                    <span className="font-normal">{factura.fechaSellado ? formatDate(new Date(evalDate(factura.fechaSellado))) : ''}</span>
+                    <span className="font-normal">{factura.fechaSellado ? formatDate(factura.fechaSellado) : ''}</span>
                 </p>
 
                 <a

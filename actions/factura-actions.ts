@@ -1,6 +1,7 @@
 "use server";
 import { connectDB } from "@/config/db";
 import { Factura } from "@/model/Factura";
+import { myDateMX } from "@/src/lib";
 import { CardFacturasSchema } from "@/src/schema";
 import { FacturaFormData, Factura as FacturaType } from "@/src/types";
 
@@ -9,7 +10,8 @@ export async function createInvoice( invoicesData: FacturaType ){
         await connectDB();
 
         const queryFactura = await Factura.find({ folioFiscal: invoicesData.folioFiscal });
-        if( queryFactura ){
+        console.log(queryFactura);
+        if( queryFactura.length > 0 ){
             return {
                 success: false,
                 message: 'La factura ya se encuentra registrada',
@@ -202,12 +204,16 @@ export async function updateEstadoFactura( id: FacturaType['id']){
 
 export async function updateFactura(formData: FacturaFormData, id: FacturaType['id']){
     try{
+        console.log('DATOS DE FACTRUA',formData);
         const factura = await Factura.findById(id);
         factura.folioFiscal = formData.folioFiscal;
-        factura.fechaSellado = formData.fechaSellado;
+        factura.fechaSellado = myDateMX(formData.fechaSellado!.toISOString());
         factura.emisor = formData.emisor!.id;
         factura.receptor = formData.receptor!.id;
         factura.estado = 'sealed';
+
+        console.log('FECHA DE SELLADO',myDateMX(formData.fechaSellado!.toISOString()));
+        
         await factura.save();
         return {
             success: true,

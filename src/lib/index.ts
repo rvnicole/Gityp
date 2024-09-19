@@ -30,8 +30,8 @@ export const evalDate = ( fecha: Date | string ) => {
     };
 };
 
-export const myDateMX = () => {
-    const fechaUTC = new Date();
+export const myDateMX = (dateStr?: string) => {
+    const fechaUTC = dateStr ? new Date(dateStr) : new Date();
     fechaUTC.setHours(fechaUTC.getHours() - 6);
     return fechaUTC;
 };

@@ -45,14 +45,15 @@ export default function GetionCobrosPage() {
 
     return (
         <>
-            <Filters
-                estados={estadosCobroArr}
-                setData={setCobros}
-                setTotalData={setTotalCobros}
-                setPage={setPage}
-                setSearchParams={setSearchParams}
-            />
-
+            <div className="flex items-center flex-col md:flex-row md:justify-between gap-5">
+                <Filters
+                    estados={estadosCobroArr}
+                    setData={setCobros}
+                    setTotalData={setTotalCobros}
+                    setPage={setPage}
+                    setSearchParams={setSearchParams}
+                />
+            </div>
             <CardTable
                 documents={cobros}
                 documentType="gestion-cobros"

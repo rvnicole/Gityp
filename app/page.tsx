@@ -7,6 +7,7 @@ import { Configuracion } from "@/model/Configuracion";
 import CardDashboard from "@/src/components/cards/CardDashboard";
 import CardDashboardBest from "@/src/components/cards/CardDashboardBest";
 import CardDashboardGanancias from "@/src/components/cards/CardDashboardGanancias";
+import CardDashboardImportXml from "@/src/components/cards/CardDashboardImportXml";
 import { evalDate, formatLongDate } from "@/src/lib";
 import {CardServicio, DashboardDocumentsData} from "@/src/types";
 import Link from "next/link";
@@ -79,6 +80,7 @@ export default async function Home() {
 
       <CardDashboardGanancias />
       <CardDashboardBest />
+      <CardDashboardImportXml />
     </div>
   );
 }

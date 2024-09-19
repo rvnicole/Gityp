@@ -43,14 +43,15 @@ export default function FacturacionPage() {
 
     return (
         <>
-            <Filters
-                estados={estadosFacturasArr}
-                setData={setFacturas}
-                setTotalData={setTotalFacturas}
-                setPage={setPage}
-                setSearchParams={setSearchParams}
-            />
-
+            <div className="flex items-center flex-col md:flex-row md:justify-between gap-5">
+                <Filters
+                    estados={estadosFacturasArr}
+                    setData={setFacturas}
+                    setTotalData={setTotalFacturas}
+                    setPage={setPage}
+                    setSearchParams={setSearchParams}
+                />
+            </div>
             <CardTable
                 documents={facturas}
                 documentType="facturacion"
