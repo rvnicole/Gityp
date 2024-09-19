@@ -9,17 +9,17 @@ export default function SideNavBar() {
     const [showMenu, setShowMenu] = useState<boolean>(false);
 
     return (
-        <div className={`${showMenu? "w-60" : "w-28"} sticky top-0 h-screen p-3`}>
+        <div className={`${showMenu? "md:w-60" : "md:w-28"} w-full fixed md:sticky top-0 h-20 md:h-screen p-3 backdrop-blur-md`}>
             <div className="flex">
                 <div 
-                    className={`${showMenu ? "w-56" : "w-14"} bg-backgroundColor h-[96.5vh] flex flex-col justify-center rounded-xl text-mutedColor-foreground border border-borderColor`}
+                    className={`${showMenu ? "md:w-56" : "md:w-14"} w-full h-14 md:h-[96.5vh] flex md:flex-col justify-center bg-backgroundColor rounded-xl text-mutedColor-foreground border border-borderColor`}
                 >
                     <MenuOption
                         option="Inicio"
                         url="/"
                         showMenu={showMenu}
                     >
-                        <HomeIcon className="size-8"/>
+                        <HomeIcon className="size-7 md:size-8"/>
                     </MenuOption>
 
                     <MenuOption
@@ -27,7 +27,7 @@ export default function SideNavBar() {
                         url="/presupuestos"
                         showMenu={showMenu}
                     >
-                        <CalculatorIcon className="size-8"/>
+                        <CalculatorIcon className="size-7 md:size-8"/>
                     </MenuOption>
 
                     <MenuOption
@@ -35,7 +35,7 @@ export default function SideNavBar() {
                         url="/ordenes-servicios"
                         showMenu={showMenu}
                     >
-                        <ClipboardDocumentCheckIcon className="size-8"/>
+                        <ClipboardDocumentCheckIcon className="size-7 md:size-8"/>
                     </MenuOption>
 
                     <MenuOption
@@ -43,7 +43,7 @@ export default function SideNavBar() {
                         url="/servicios"
                         showMenu={showMenu}
                     >
-                        <TruckIcon className="size-8"/>
+                        <TruckIcon className="size-7 md:size-8"/>
                     </MenuOption>
 
                     <MenuOption
@@ -51,7 +51,7 @@ export default function SideNavBar() {
                         url="/facturacion"
                         showMenu={showMenu}
                     >
-                        <DocumentCurrencyDollarIcon className="size-8"/>
+                        <DocumentCurrencyDollarIcon className="size-7 md:size-8"/>
                     </MenuOption>
 
                     <MenuOption
@@ -59,7 +59,7 @@ export default function SideNavBar() {
                         url="/gestion-cobros"
                         showMenu={showMenu}
                     >
-                        <CurrencyDollarIcon className="size-8"/>
+                        <CurrencyDollarIcon className="size-7 md:size-8"/>
                     </MenuOption>
 
                     <MenuOption
@@ -67,11 +67,11 @@ export default function SideNavBar() {
                         url="/configuracion"
                         showMenu={showMenu}
                     >
-                        <Cog8ToothIcon className="size-8"/>
+                        <Cog8ToothIcon className="size-7 md:size-8"/>
                     </MenuOption>                    
                 </div>
 
-                <div className="m-auto">
+                <div className="hidden m-auto md:block">
                     <button
                         onClick={() => setShowMenu(!showMenu)}
                     >
