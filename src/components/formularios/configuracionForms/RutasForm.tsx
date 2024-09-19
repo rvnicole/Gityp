@@ -46,34 +46,39 @@ export default function RutasForm({ tipo }: RutasFormProps){
         {
             editar ? 
                 <form
-                    className="space-x-3"
+                    className="space-x-3 flex gap-3 flex-col md:flex-row"
                     onSubmit={handleSubmit(handleGuardar)}
                 >
-                    <label htmlFor="ruta">Ruta: </label>
-                    <input
-                        id="ruta" 
-                        type="string"
-                        defaultValue={datos.ruta}
-                        className={`mr-3 w-1/2 p-1 border border-borderColor placeholder:text-inputColor rounded focus:outline-none focus:ring-2 focus:border-ringColor ${errors.ruta && "border-2 border-destructiveColor"}`}
-                        { ...register('ruta',{
-                            required: true
-                        })}
-                    />
+                    <div className="flex items-center gap-3 md:w-1/2 ml-5 md:ml-0">
+                        <label htmlFor="ruta">Ruta: </label>
+                        <input
+                            id="ruta" 
+                            type="string"
+                            defaultValue={datos.ruta}
+                            className={`mr-3 w-full p-1 border border-borderColor placeholder:text-inputColor rounded focus:outline-none focus:ring-2 focus:border-ringColor ${errors.ruta && "border-2 border-destructiveColor"}`}
+                            { ...register('ruta',{
+                                required: true
+                            })}
+                        />
 
-                    <input
-                        id="tipo" 
-                        type="hidden" 
-                        defaultValue={tipo}
-                        { ...register('tipo',{
-                            required: true
-                        })}
-                    />
-                    <OutlineButton>Guardar</OutlineButton>
-                    <SecondaryButton onClick={() => setEditar(false)}>Cancelar</SecondaryButton>
+                        <input
+                            id="tipo" 
+                            type="hidden" 
+                            defaultValue={tipo}
+                            { ...register('tipo',{
+                                required: true
+                            })}
+                        />
+                    </div>
+
+                    <div className="grid grid-cols-2 gap-3">
+                        <OutlineButton>Guardar</OutlineButton>
+                        <SecondaryButton onClick={() => setEditar(false)}>Cancelar</SecondaryButton>
+                    </div>
                 </form>
             :
-                <div className="flex items-center">
-                    <p className="text-foregroundColor mr-3">Ruta: {datos.ruta}</p>
+                <div className="flex items-center gap-3">
+                    <p className="text-foregroundColor mr-3">Ruta: {(datos.ruta).substring(0, 15)}...</p>
                     <OutlineButton onClick={() => setEditar(true)}>Editar</OutlineButton>
                 </div>
         }

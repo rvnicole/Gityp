@@ -49,7 +49,7 @@ export default function DriverRow( {conductor}: DriverRowProps  ){
                 editar ? 
                     <form
                         key={conductor.id} 
-                        className="grid grid-cols-5 bg-accentColor p-3 rounded-lg gap-3"
+                        className="grid md:grid-cols-5 bg-accentColor p-3 rounded-lg gap-3"
                     >
                         <input 
                             id='id'
@@ -86,7 +86,8 @@ export default function DriverRow( {conductor}: DriverRowProps  ){
                             className="rounded w-40 p-1" 
                             { ...register('licencia')}
                         />
-                        <div className='flex justify-center gap-3'>
+
+                        <div className='grid grid-cols-2 justify-center gap-3'>
                             <OutlineButton onClick={handleSubmit(handleGuardar)}>
                                 Guardar
                             </OutlineButton>
@@ -98,13 +99,14 @@ export default function DriverRow( {conductor}: DriverRowProps  ){
                 :
                     <div
                         key={conductor.id} 
-                        className="grid grid-cols-5 gap-3 bg-accentColor p-3 rounded-lg items-center"
+                        className="grid grid-cols-2 md:grid-cols-5 gap-3 bg-accentColor p-3 rounded-lg items-center"
                     >
                         <p>{`${conductor.nombre}`}</p>
                         <p>{`${conductor.apellido}`}</p>
                         <p>{conductor.edad}</p>
                         <p>{conductor.licencia}</p>
-                        <div className="flex justify-center gap-3">
+
+                        <div className="grid grid-cols-2 justify-center gap-3 col-span-2 md:col-span-1">
                             <OutlineButton onClick={() => setEditar(true)}>
                                 Editar
                             </OutlineButton>

@@ -3,7 +3,6 @@ import { useState } from "react";
 import { DestructiveButton, OutlineButton } from "../ui/Buttons";
 import { useForm } from "react-hook-form";
 import { deleteEmisorReceptor, updateEmisorReceptor } from "@/actions/emisor-receptor-actions";
-import { useRouter } from "next/navigation";
 import { toast } from "react-toastify";
 
 type CardEntityProps = {
@@ -14,7 +13,6 @@ type CardEntityProps = {
 export default function CardEntity({ emisor, receptor }: CardEntityProps){
     const [ editar, setEditar ] = useState(false);
     const { register, handleSubmit, reset, formState: { errors } } = useForm<EmisoresReceptores>({ defaultValues: emisor ? emisor : receptor });
-    const router = useRouter();
 
     const handleGuardar = async (formData: EmisoresReceptores) => {
         const respuesta = await updateEmisorReceptor(formData);
@@ -53,7 +51,7 @@ export default function CardEntity({ emisor, receptor }: CardEntityProps){
             {
             editar ? 
                 <form
-                    className="grid grid-cols-3 bg-accentColor p-3 rounded-lg items-center gap-3"
+                    className="grid md:grid-cols-3 bg-accentColor p-3 rounded-lg items-center gap-3"
                     onSubmit={handleSubmit(handleGuardar)}
                 >
                     <input
@@ -77,11 +75,11 @@ export default function CardEntity({ emisor, receptor }: CardEntityProps){
                     <OutlineButton>Guardar</OutlineButton>
                 </form>
             :
-                <div className="grid grid-cols-3 gap-2 bg-accentColor p-3 rounded-lg items-center">
+                <div className="grid md:grid-cols-3 gap-2 bg-accentColor p-3 rounded-lg items-center">
                     <p>{`${emisor.nombre}`}</p>
                     <p>{`${emisor.rfc}`}</p>
 
-                    <div className="flex justify-center gap-3">
+                    <div className="grid grid-cols-2 justify-center gap-3">
                         <OutlineButton onClick={() => setEditar(true)}>
                             Editar
                         </OutlineButton>
@@ -100,7 +98,7 @@ export default function CardEntity({ emisor, receptor }: CardEntityProps){
             {
             editar ? 
                 <form
-                    className="grid grid-cols-3 bg-accentColor p-3 rounded-lg items-center gap-3"
+                    className="grid md:grid-cols-3 bg-accentColor p-3 rounded-lg items-center gap-3"
                     onSubmit={handleSubmit(handleGuardar)}
                 >
                     <input
@@ -124,11 +122,11 @@ export default function CardEntity({ emisor, receptor }: CardEntityProps){
                     <OutlineButton>Guardar</OutlineButton>
                 </form>
             :
-                <div className="grid grid-cols-3 bg-accentColor p-3 rounded-lg items-center">
+                <div className="grid md:grid-cols-3 bg-accentColor p-3 rounded-lg items-center gap-2">
                     <p>{`${receptor.nombre}`}</p>
                     <p>{`${receptor.rfc}`}</p>
 
-                    <div className="flex justify-center gap-3">
+                    <div className="grid grid-cols-2 justify-center gap-3">
                         <OutlineButton onClick={() => setEditar(true)}>
                             Editar
                         </OutlineButton>
