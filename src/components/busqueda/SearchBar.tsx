@@ -24,7 +24,7 @@ export default function SearchBar(){
     };
 
     return(
-        <form className="w-full md:w-auto">
+        <form className="w-full pr-2 md:w-auto md:pr-0">
             <div className="flex items-center border border-inputColor rounded-lg">
                 <button
                     className="bg-backgroundColor text-foregroundColor hover:bg-charColor-char4 hover:text-white font-bold py-2 px-2 border rounded"

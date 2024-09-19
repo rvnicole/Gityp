@@ -53,17 +53,21 @@ export default function FacturaForm({register, errors}: FacturaFormProps){
 
     return (
         <>
-            <div className="px-5 mt-5">
-                <label htmlFor="fecha">Fecha sellado: </label>
+            <div className="px-5 mt-5 flex flex-col">
+                <div className="flex items-center">
+                    <label htmlFor="fecha">Fecha sellado: </label>
+                    <span className="p-1 text-destructiveColor">*</span> 
+                </div>
+                 
                 <input 
                     id="fechaSellado"
                     type="date" 
-                    className={`p-1 border border-borderColor placeholder:text-inputColor rounded focus:outline-none focus:ring-2 focus:border-ringColor ${errors.fechaSellado && "border-2 border-destructiveColor"}`}
+                    className={`w-full md:w-1/4 p-1 border border-borderColor placeholder:text-inputColor rounded focus:outline-none focus:ring-2 focus:border-ringColor ${errors.fechaSellado && "border-2 border-destructiveColor"}`}
                     { ...register('fechaSellado', {
                         required: true
                     })}
                 />
-                <span className="p-1 text-destructiveColor">*</span>                
+                              
             </div>
             <div className="px-5">
                 <label htmlFor="folio-fiscal">Folio Fiscal</label>
@@ -81,7 +85,7 @@ export default function FacturaForm({register, errors}: FacturaFormProps){
                 <div className="p-5 space-y-5">
                     <select 
                         id="emisor"
-                        className={`text-foregroundColor p-1 border border-borderColor placeholder:text-inputColor rounded focus:outline-none focus:ring-2 focus:border-ringColor ${errors.emisor && "border-2 border-destructiveColor"}`}
+                        className={`w-full md:w-auto text-foregroundColor p-1 border border-borderColor placeholder:text-inputColor rounded focus:outline-none focus:ring-2 focus:border-ringColor ${errors.emisor && "border-2 border-destructiveColor"}`}
                         { ...register('emisor.id', {
                             required: true
                         })}
@@ -90,7 +94,7 @@ export default function FacturaForm({register, errors}: FacturaFormProps){
                         <option value="">--- Seleccione ---</option>
                         {
                             emisores.map( emisor => 
-                                <option key={emisor.id} value={emisor.id} className="text-foregroundColor">{emisor.nombre}</option>
+                                <option key={emisor.id} value={emisor.id} className="w-full md:w-auto text-foregroundColor">{emisor.nombre}</option>
                             )
                         }
                     </select>
@@ -102,7 +106,7 @@ export default function FacturaForm({register, errors}: FacturaFormProps){
                             readOnly 
                             disabled={true}
                             value={rfcs.rfcEmisor} 
-                            className="text-foregroundColor font-bold"
+                            className="w-full md:w-auto text-foregroundColor font-bold"
                         />
                     </div>
                 </div>
@@ -112,7 +116,7 @@ export default function FacturaForm({register, errors}: FacturaFormProps){
                 <div className="p-5 space-y-5">
                     <select 
                         id="receptor"
-                        className={`p-1 border border-borderColor placeholder:text-inputColor rounded focus:outline-none focus:ring-2 focus:border-ringColor ${errors.receptor && "border-2 border-destructiveColor"}`}
+                        className={`w-full md:w-auto p-1 border border-borderColor placeholder:text-inputColor rounded focus:outline-none focus:ring-2 focus:border-ringColor ${errors.receptor && "border-2 border-destructiveColor"}`}
                         { ...register('receptor.id', {
                             required: true
                         })}
@@ -121,7 +125,7 @@ export default function FacturaForm({register, errors}: FacturaFormProps){
                         <option value="">--- Seleccione ---</option>
                         {
                             receptores.map( receptor => 
-                                <option key={receptor.id} value={receptor.id}>{receptor.nombre}</option>
+                                <option key={receptor.id} value={receptor.id} className="w-full md:w-auto">{receptor.nombre}</option>
                             )
                         }
                     </select>
@@ -133,7 +137,7 @@ export default function FacturaForm({register, errors}: FacturaFormProps){
                             readOnly 
                             disabled={true}
                             value={rfcs.rfcReceptor}
-                            className="text-foregroundColor font-bold"
+                            className="w-full md:w-auto text-foregroundColor font-bold"
                         />
                     </div>
                 </div>
