@@ -8,7 +8,8 @@ export async function getConfig(){
     try{
         await connectDB(); 
 
-        const config = await Configuracion.find<IConfiguracion>();
+        const config = await Configuracion.find<IConfiguracion>().limit(1);
+        console.log(config);
         
         if( config.length > 0 ){
             return {
@@ -42,7 +43,7 @@ export async function setFolioInicial( formData: { folio: string } ){
     try{
         await connectDB();
         const { folio } = formData;
-        const config = await Configuracion.find();
+        const config = await Configuracion.find().limit(1);
         if( config.length > 0 ){
             config[0].folioInicial = folio;
             await config[0].save();
@@ -69,7 +70,7 @@ export async function updateRutas( {ruta, tipo}: Ruta ){
     try{
         await connectDB();  
 
-        const config = await Configuracion.find();
+        const config = await Configuracion.find().limit(1);
 
         if( config.length > 0 ){
             config[0].rutas[tipo] = ruta;

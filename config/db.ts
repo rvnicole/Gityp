@@ -9,7 +9,11 @@ export const connectDB = async () => {
     }
     try{
         console.log(process.env.DATABASE_URL, 'URL DE LA BD');
-        const { connection } = await mongoose.connect(process.env.DATABASE_URL!);
+        const { connection } = await mongoose.connect(process.env.DATABASE_URL!, {
+            socketTimeoutMS: 30000, // Aumentar el tiempo de espera a 30 segundos
+            connectTimeoutMS: 30000,
+            serverSelectionTimeoutMS: 30000
+          });
         const urlConnection = `Conectado a: ${connection.host} port: ${connection.port}`;
         console.log(urlConnection);
     }

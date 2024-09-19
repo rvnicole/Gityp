@@ -23,7 +23,7 @@ export default function AddPresupuesto(){
     useMemo(()=>{ 
         const subtotal = servicios.reduce((acumulado, servicio) => acumulado + +servicio.costo, 0);
         setMontos({...montosIniciales, subtotal, iva: subtotal * 0.16, total: subtotal * 0.16 + subtotal }); 
-    } , [servicios, iva]);
+    } , [servicios]);
 
     const handleAdd = async ( formData: PresupuestoFormData ) => {
         if( servicios.length < 1 ){

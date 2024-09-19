@@ -6,7 +6,7 @@ import ModalAdd from "@/src/components/ui/ModalAdd";
 import Spinner from "@/src/components/ui/Spinner";
 import { estadosCobro } from "@/src/data/data";
 import { CardCobro } from "@/src/types";
-import { useEffect, useRef, useState } from "react";
+import { Suspense, useEffect, useRef, useState } from "react";
 import { ToastContainer } from "react-toastify";
 
 export default function GetionCobrosPage() {
@@ -44,7 +44,7 @@ export default function GetionCobrosPage() {
    // console.log(estadosCobrossArr);
 
     return (
-        <>
+        <Suspense fallback={<div>Loading...</div>}>
             <div className="flex items-center flex-col md:flex-row md:justify-between gap-5">
                 <Filters
                     estados={estadosCobroArr}
@@ -64,6 +64,6 @@ export default function GetionCobrosPage() {
                 {totalCobros === cobros.length ? <p className="text-center text-sm text-mutedColor-foreground">Son todos las Cobros Registrados</p> : <Spinner />}
             </div>
             <ToastContainer />
-        </>
+        </Suspense>
     )
 }

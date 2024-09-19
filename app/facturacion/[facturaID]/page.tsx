@@ -15,7 +15,7 @@ async function getFacturaById(id: FacturaType['id']){
     try {
         await connectDB();
 
-        if( !mongoose.Types.ObjectId.isValid(id)) {
+        if( !mongoose.Types.ObjectId.isValid(id!)) {
             return 'not-found';
         }
 

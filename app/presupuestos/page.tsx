@@ -1,6 +1,6 @@
 "use client"
 
-import { useEffect, useState, useRef } from "react";
+import { useEffect, useState, useRef, Suspense } from "react";
 import CardTable from "@/src/components/cards/CardTable";
 import { PrimaryButton } from "@/src/components/ui/Buttons";
 import ModalAdd from "@/src/components/ui/ModalAdd";
@@ -21,16 +21,17 @@ export default function PresupuestoPage() {
    
     useEffect(() => {
         const div = ref.current!;
+        if(div){
+            const observador = new IntersectionObserver((arreglo) => {
+                if(arreglo[0].isIntersecting && (totalPresupuestos > presupuestos.length || page === 0) ) {
+                    fetchPresupuestos();
+                }
+            });
 
-        const observador = new IntersectionObserver((arreglo) => {
-            if(arreglo[0].isIntersecting && (totalPresupuestos > presupuestos.length || page === 0) ) {
-                fetchPresupuestos();
-            }
-        });
+            observador.observe(div);        
 
-        observador.observe(div);        
-
-        return () => observador.unobserve(div);
+            return () => observador.unobserve(div);
+        };
     });
 
     const fetchPresupuestos = async () => {
@@ -44,32 +45,34 @@ export default function PresupuestoPage() {
     const estadosPresupuestoArr = Object.entries(estadosPresupuesto);
 
     return (
-        <div className="space-y-5">
-            <div className="flex items-center flex-col md:flex-row md:justify-between gap-5">
-                <Filters 
-                    estados={estadosPresupuestoArr}
-                    setData={setPresupuestos}
-                    setTotalData={setTotalPresupuestos}
-                    setPage={setPage}
-                    setSearchParams={setSearchParams}
+        <Suspense fallback={<div>Loading...</div>}>
+            <div className="space-y-5">
+                <div className="flex items-center flex-col md:flex-row md:justify-between gap-5">
+                    <Filters 
+                        estados={estadosPresupuestoArr}
+                        setData={setPresupuestos}
+                        setTotalData={setTotalPresupuestos}
+                        setPage={setPage}
+                        setSearchParams={setSearchParams}
+                    />
+                    <div className="flex justify-center md:justify-end">
+                        <Link href="/presupuestos?modal=create">
+                            <PrimaryButton>Crear Presupuesto</PrimaryButton>
+                        </Link>
+                    </div>
+                </div>
+
+                <CardTable
+                    documents={presupuestos}
+                    documentType="presupuestos"
                 />
-                <div className="flex justify-center md:justify-end">
-                    <Link href="/presupuestos?modal=create">
-                        <PrimaryButton>Crear Presupuesto</PrimaryButton>
-                    </Link>
+
+                <ModalAdd documentType="presupuesto"/>
+
+                <div ref={ref} className="mx-auto">
+                    {totalPresupuestos === presupuestos.length ? <p className="text-center text-sm text-mutedColor-foreground">Son todo los Presupuestos Registrados</p> : <Spinner />}
                 </div>
             </div>
-
-            <CardTable
-                documents={presupuestos}
-                documentType="presupuestos"
-            />
-
-            <ModalAdd documentType="presupuesto"/>
-
-            <div ref={ref} className="mx-auto">
-                {totalPresupuestos === presupuestos.length ? <p className="text-center text-sm text-mutedColor-foreground">Son todo los Presupuestos Registrados</p> : <Spinner />}
-            </div>
-        </div>
+        </Suspense>
     )
 }

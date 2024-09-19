@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "next dev && node ./config/db.js",
+    "dev": "next dev && node ./config/db.ts",
     "build": "next build",
     "start": "next start",
     "lint": "next lint"
@@ -12,6 +12,7 @@
     "@headlessui/react": "^2.1.2",
     "@heroicons/react": "^2.1.5",
     "@types/nodemailer": "^6.4.15",
+    "electron": "^32.1.1",
     "mongoose": "^8.6.0",
     "next": "^14.2.8",
     "nodemailer": "^6.9.15",

@@ -3,6 +3,7 @@ import { getAllCobros } from "@/actions/gestion-cobros-actions";
 import { getAllOrdenesServicio } from "@/actions/orden-servicio-actions";
 import { getAllPresupuestos } from "@/actions/presupuesto-actions";
 import { getAllServicios } from "@/actions/servicio-actions";
+import { connectDB } from "@/config/db";
 import { Configuracion } from "@/model/Configuracion";
 import CardDashboard from "@/src/components/cards/CardDashboard";
 import CardDashboardBest from "@/src/components/cards/CardDashboardBest";
@@ -14,6 +15,7 @@ import Link from "next/link";
 
 async function initConfiguracion(){
   try{
+      await connectDB();
       const config = await Configuracion.find();
       if( config.length === 0 ){
           const configParams = {
@@ -38,13 +40,13 @@ function getServiciosProximos(servicios: CardServicio[]) {
   const dia = hoy.getDate();
   const mes = hoy.getMonth() + 1;
   const anio = hoy.getFullYear();
-  console.log("Hoy es", {dia, mes, anio});
+  //console.log("Hoy es", {dia, mes, anio});
 
   const serviciosProximos = servicios.filter(servicio => {
     const day = servicio.fechaEjecucion.getUTCDate();
     const month = servicio.fechaEjecucion.getUTCMonth() + 1;
     const year = servicio.fechaEjecucion.getUTCFullYear();
-    console.log("Fecha de Ejecución", {fecha: servicio.fechaEjecucion, day, month, year, estado: servicio.estado});
+    //console.log("Fecha de Ejecución", {fecha: servicio.fechaEjecucion, day, month, year, estado: servicio.estado});
 
     if(year >= anio && ((month === mes && day >= dia) || month > mes) && (servicio.estado === "assign" || servicio.estado === "inProgress")) {
       return true;

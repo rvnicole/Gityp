@@ -12,12 +12,12 @@ export default function CobroDetail({ cobro }: CobroDetailProps) {
         <div className="grid grid-cols-1 gap-5 md:grid-cols-3 text-secondaryColor-foreground">
             <div className="md:col-span-2 md:row-span-2">
                 <h3 className="mb-4 font-bold text-xl md:text-3xl text-foregroundColor break-words">Cobro #{cobro.id}</h3>
-                <p><span className="font-semibold">Solicito:{' '}</span>{cobro.factura.ordenServicio.solicito}</p>
-                <p><span className="font-semibold">PO:{' '}</span>{cobro.factura.ordenServicio.ordenCompra}</p>
+                <p><span className="font-semibold">Solicito:{' '}</span>{cobro.factura.ordenServicio?.solicito}</p>
+                <p><span className="font-semibold">PO:{' '}</span>{cobro.factura.ordenServicio?.ordenCompra}</p>
 
                 <a
                     className="inline-flex gap-1 justify-center items-center w-24 max-h-8 my-1 p-1 rounded-full text-sm text-white bg-charColor-char5 hover:bg-primaryColor"
-                    href={cobro.factura.ordenServicio.urlOrdenCompra}
+                    href={cobro.factura.ordenServicio?.urlOrdenCompra}
                     target="_blank"
                 >
                     Ver PO
@@ -45,15 +45,15 @@ export default function CobroDetail({ cobro }: CobroDetailProps) {
                 </p>
 
                 <p className="font-semibold">Proveedor: {' '}
-                    <span className="font-normal">{cobro.factura.ordenServicio.proveedor}</span>
+                    <span className="font-normal">{cobro.factura.ordenServicio?.proveedor}</span>
                 </p>
 
                 <p className="font-semibold">Presupuesto: {' '}
-                    <span className="font-normal">#{cobro.factura.ordenServicio.presupuesto.id}</span>
+                    <span className="font-normal">#{cobro.factura.ordenServicio?.presupuesto.id}</span>
                 </p>
 
                 <p className="font-semibold">Orden de Servicio: {' '}
-                    <span className="font-normal">#{cobro.factura.ordenServicio.id}</span>
+                    <span className="font-normal">#{cobro.factura.ordenServicio?.id}</span>
                 </p>  
 
                 <p className="font-semibold">Factura: {' '}
@@ -81,7 +81,7 @@ export default function CobroDetail({ cobro }: CobroDetailProps) {
 
             <div className="md:col-span-3">
                 <p className="font-semibold">Comentarios sobre el cobro:</p>
-                <p className="text-mutedColor-foreground bg-accentColor py-2 px-1 rounded-lg">{cobro.factura.ordenServicio.comentarios}</p>
+                <p className="text-mutedColor-foreground bg-accentColor py-2 px-1 rounded-lg">{cobro.factura.ordenServicio?.comentarios}</p>
             </div>
 
             <div className="md:col-span-3 flex flex-col md:flex-row gap-5 text-mutedColor-foreground">
@@ -137,14 +137,17 @@ export default function CobroDetail({ cobro }: CobroDetailProps) {
 
             <div className="md:col-span-3">
                 <p className="font-semibold">Comentarios de la Orden de Servicio: </p>
-                <p className="text-mutedColor-foreground bg-accentColor py-2 px-1 rounded-lg">{cobro.factura.ordenServicio.comentarios}</p>
+                <p className="text-mutedColor-foreground bg-accentColor py-2 px-1 rounded-lg">{cobro.factura.ordenServicio?.comentarios}</p>
             </div>
 
             <div className="md:col-span-3">
                 <p className="font-semibold">Servicio(s)</p>
-                <TableServicesDetails 
-                    services={cobro.factura.ordenServicio.servicios}
-                />
+                {
+                    cobro.factura.ordenServicio &&
+                    <TableServicesDetails 
+                        services={cobro.factura.ordenServicio.servicios}
+                    />
+                }
             </div>
 
             <div className="md:col-start-3 flex justify-end gap-5">
@@ -155,9 +158,9 @@ export default function CobroDetail({ cobro }: CobroDetailProps) {
                 </div>
 
                 <div className="text-right">
-                    <p>{formatCurrency(cobro.factura.ordenServicio.subtotal)}</p>
-                    <p>{formatCurrency(cobro.factura.ordenServicio.iva)}</p>
-                    <p className="font-bold text-2xl">{formatCurrency(cobro.factura.ordenServicio.total)}</p>
+                    <p>{formatCurrency(cobro.factura.ordenServicio ? cobro.factura.ordenServicio.subtotal : 0)}</p>
+                    <p>{formatCurrency(cobro.factura.ordenServicio ? cobro.factura.ordenServicio.iva : 0)}</p>
+                    <p className="font-bold text-2xl">{formatCurrency(cobro.factura.ordenServicio ? cobro.factura.ordenServicio.total : cobro.factura.total!)}</p>
                 </div>
             </div>
         </div>

@@ -1,10 +1,12 @@
+import { connectDB } from "@/config/db";
 import { Configuracion } from "@/model/Configuracion";
 import CardIconConfig from "@/src/components/cards/CardIconConfig";
 import { UnderlineIcon } from "@heroicons/react/24/outline";
 
 async function initConfiguracion(){
     try{
-        const config = await Configuracion.find();
+        await connectDB();
+        const config = await Configuracion.find().limit(1);
         if( config.length === 0 ){
             const configParams = {
                 folioInicial: 0,

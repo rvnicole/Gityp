@@ -7,7 +7,7 @@ import ModalAdd from "@/src/components/ui/ModalAdd";
 import Spinner from "@/src/components/ui/Spinner";
 import { estadosFactura } from "@/src/data/data";
 import { CardFactura } from "@/src/types";
-import { useEffect, useRef, useState } from "react";
+import { Suspense, useEffect, useRef, useState } from "react";
 
 export default function FacturacionPage() {
     const [ searchParams, setSearchParams ] = useState({ estado: '', fecha: '' });
@@ -42,7 +42,7 @@ export default function FacturacionPage() {
     const estadosFacturasArr = Object.entries(estadosFactura);
 
     return (
-        <>
+        <Suspense fallback={<div>Loading...</div>}>
             <div className="flex items-center flex-col md:flex-row md:justify-between gap-5">
                 <Filters
                     estados={estadosFacturasArr}
@@ -60,6 +60,6 @@ export default function FacturacionPage() {
             <div ref={ref} className="mx-auto">
                 {totalFacturas === facturas.length ? <p className="text-center text-sm text-mutedColor-foreground">Son todas las Facturas Registradas</p> : <Spinner />}
             </div>
-        </>
+        </Suspense>
     )
 }

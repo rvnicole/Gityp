@@ -17,7 +17,9 @@ export default function RutasForm({ tipo }: RutasFormProps){
     const { register, handleSubmit, formState: { errors } } = useForm<Ruta>();
 
     useEffect(()=>{
+        /*
         const fetchConfig = async () => {
+            
             const config = await getConfig();
 
             if(config.rutas) {
@@ -26,10 +28,11 @@ export default function RutasForm({ tipo }: RutasFormProps){
             }
         }
 
-        fetchConfig();
+        fetchConfig();*/
     }, []);
 
     const handleGuardar = async (formData: Ruta) => {
+        /*
         const respuesta = await updateRutas(formData); 
         
         if( respuesta.success ) {
@@ -38,7 +41,7 @@ export default function RutasForm({ tipo }: RutasFormProps){
         }
         else {
             toast.error(respuesta.message as string);
-        }
+        }*/
     };
 
     return (

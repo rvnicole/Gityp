@@ -1,8 +1,8 @@
 "use client"
 
 import { useEffect, useState } from "react";
-import { getCobrosByRangeDate } from "@/actions/gestion-cobros-actions";
-import { getFacturasByRangeDate } from "@/actions/factura-actions";
+import { cobrosRange } from "@/actions/gestion-cobros-actions";
+import { facturasRange } from "@/actions/factura-actions";
 import { SelectMonth, SelectYear } from "../ui/Selects";
 import { formatCurrency } from './../../lib/index';
 
@@ -15,8 +15,11 @@ export default function CardDashboardGanancias({}: CardDashboardGananciasProps) 
 
     useEffect(() => {
         const getCobros = async () => {
-            const [cobros, facturas] = await Promise.all([getCobrosByRangeDate(filtros), getFacturasByRangeDate(filtros)]);
+            //const [cobros, facturas] = await Promise.all([getCobrosByRangeDate(filtros), getFacturasByRangeDate(filtros)]);
+            const cobros = await cobrosRange(filtros);
+            const facturas = await facturasRange(filtros);
             const data = {facturado: 0, pagado: 0, porPagar: 0};
+            console.log({cobros, facturas});
 
             cobros!.data.forEach(cobro => {
                 if( cobro.pagado ) {

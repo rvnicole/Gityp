@@ -1,8 +1,8 @@
 "use client"
 
 import { useEffect, useState } from "react";
-import { getCobrosByRangeDate } from "@/actions/gestion-cobros-actions";
-import { getFacturasByRangeDate } from "@/actions/factura-actions";
+import { cobrosRange } from "@/actions/gestion-cobros-actions";
+import { facturasRange } from "@/actions/factura-actions";
 import { SelectMonth, SelectYear } from "../ui/Selects";
 import { formatCurrency } from './../../lib/index';
 
@@ -13,8 +13,11 @@ export default function CardDashboardImportXml() {
 
     useEffect(() => {
         const getCobros = async () => {
-            const [cobros, facturas] = await Promise.all([getCobrosByRangeDate(filtros), getFacturasByRangeDate(filtros)]);
+            //const [cobros, facturas] = await Promise.all([getCobrosByRangeDate(filtros), getFacturasByRangeDate(filtros)]);
+            const cobros = await cobrosRange(filtros);
+            const facturas = await facturasRange(filtros);
             const data = {facturado: 0, pagado: 0, porPagar: 0};
+            console.log({facturas});
 
             const selladas = facturas!.data.filter(factura => factura.estado === "sealed");
             selladas.forEach(factura => {

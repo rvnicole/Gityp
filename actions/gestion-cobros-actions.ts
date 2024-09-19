@@ -6,6 +6,46 @@ import { CardCobrosSchema } from "@/src/schema";
 import { GestionCobroFormData, GestionCobros } from "@/src/types";
 import mongoose from "mongoose";
 
+export async function cobrosRange({mes, anio}: {mes: string, anio:string}) {
+    try {
+        console.log('connect desde getCobrosByRange');
+        await connectDB();
+        console.log('conectado');
+
+        const fechaInicial = new Date(`${anio}-${mes ? mes : '01'}-01T00:00:00.000Z`);
+        const fechaFinal = new Date(`${anio}-${mes ? mes : '12'}-31T00:00:00.000Z`);
+        console.log("Cobros por Rango de Fechas", {fechaInicial, fechaFinal});
+
+        const queryCobros = GestionCobro
+            .find({
+                fecha: {
+                    $gte: fechaInicial,
+                    $lt: fechaFinal
+                }
+            })
+            .populate([ { path: 'factura', populate: { path: 'ordenServicio' } }])
+            .sort({ fecha: -1 });
+
+        const queryTotalResults = GestionCobro.countDocuments({
+            fecha: {
+                $gte: fechaInicial,
+                $lt: fechaFinal
+            }
+        });
+        const [ cobros, totalResults ] = await Promise.all([ queryCobros, queryTotalResults ]);
+        console.log({cobros, totalResults});
+
+        const {success, data, error} = CardCobrosSchema.safeParse(cobros);
+        if(success) {
+            return {data, totalResults};
+        };
+        error.issues.forEach( error => console.log(error));
+    }
+    catch(error) {
+        console.log(error);
+    }
+}
+
 export async function getCobros( limit: number, page: number, searchParams: { estado: string, fecha:string } ) {
     try {
         console.log('LIMITe', { limit, page });
@@ -69,43 +109,6 @@ export async function getAllCobros() {
             .populate([ { path: 'factura', populate: { path: 'ordenServicio' } }])
             .sort({ fecha: -1 });
         const queryTotalResults = GestionCobro.countDocuments();
-        const [ cobros, totalResults ] = await Promise.all([ queryCobros, queryTotalResults ]);
-
-        const {success, data, error} = CardCobrosSchema.safeParse(cobros);
-        if(success) {
-            return {data, totalResults};
-        };
-        error.issues.forEach( error => console.log(error));
-    }
-    catch(error) {
-        console.log(error);
-    }
-}
-
-export async function getCobrosByRangeDate({mes, anio}: {mes: string, anio:string}) {
-    try {
-        await connectDB();
-
-        const fechaInicial = new Date(`${anio}-${mes ? mes : '01'}-01T00:00:00.000Z`);
-        const fechaFinal = new Date(`${anio}-${mes ? mes : '12'}-31T00:00:00.000Z`);
-        console.log("Cobros por Rango de Fechas", {fechaInicial, fechaFinal});
-
-        const queryCobros = GestionCobro
-            .find({
-                fecha: {
-                    $gte: fechaInicial,
-                    $lt: fechaFinal
-                }
-            })
-            .populate([ { path: 'factura', populate: { path: 'ordenServicio' } }])
-            .sort({ fecha: -1 });
-
-        const queryTotalResults = GestionCobro.countDocuments({
-            fecha: {
-                $gte: fechaInicial,
-                $lt: fechaFinal
-            }
-        });
         const [ cobros, totalResults ] = await Promise.all([ queryCobros, queryTotalResults ]);
 
         const {success, data, error} = CardCobrosSchema.safeParse(cobros);
