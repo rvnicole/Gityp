@@ -58,7 +58,7 @@ export default function CardEntity({ emisor, receptor }: CardEntityProps){
                         id='nombre'
                         type="text"
                         placeholder="Razón social"
-                        className="rounded w-72 p-1"
+                        className="rounded md:w-72 p-1"
                         { ...register('nombre',{
                             required: true
                         }) }
@@ -67,7 +67,7 @@ export default function CardEntity({ emisor, receptor }: CardEntityProps){
                         id='rfc'
                         type="text"
                         placeholder="RFC"
-                        className="rounded w-64 p-1"
+                        className="rounded md:w-64 p-1"
                         { ...register('rfc',{
                             required: true
                         }) }
@@ -105,7 +105,7 @@ export default function CardEntity({ emisor, receptor }: CardEntityProps){
                         id='nombre'
                         type="text"
                         placeholder="Razón social"
-                        className="rounded w-72 p-1"
+                        className="rounded md:w-72 p-1"
                         { ...register('nombre',{
                             required: true
                         }) }
@@ -114,7 +114,7 @@ export default function CardEntity({ emisor, receptor }: CardEntityProps){
                         id='rfc'
                         type="text"
                         placeholder="RFC"
-                        className="rounded w-64 p-1"
+                        className="rounded md:w-64 p-1"
                         { ...register('rfc',{
                             required: true
                         }) }
