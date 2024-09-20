@@ -48,42 +48,43 @@ export default function ServiciosPage() {
     const estadosServicioArr = Object.entries(estadosServicios);
 
     return (
-        <Suspense fallback={<div>Loading...</div>}>
-            <div className="space-y-5">
-                <div className="flex items-center flex-col md:flex-row md:justify-between gap-5">
-                    <Filters
-                        estados={estadosServicioArr}
-                        setData={setServicios}
-                        setTotalData={setTotalServicios}
-                        setPage={setPage}
-                        setSearchParams={setSearchParams}
+        <>
+            <Suspense fallback={<div>Loading...</div>}>
+                <div className="space-y-5">
+                    <div className="flex items-center flex-col md:flex-row md:justify-between gap-5">
+                        <Filters
+                            estados={estadosServicioArr}
+                            setData={setServicios}
+                            setTotalData={setTotalServicios}
+                            setPage={setPage}
+                            setSearchParams={setSearchParams}
+                        />
+                    </div>
+
+                    <div className="flex justify-center md:justify-end">
+                        <Link href="/servicios?modal=create">
+                            <PrimaryButton>Crear Servicio</PrimaryButton>
+                        </Link>
+                    </div>
+
+                    <CardTable
+                        documents={servicios}
+                        documentType="servicios"
+                        fechasDuplicadas={fechasDuplicadas}
                     />
+
+                    <ModalAdd 
+                        documentType="servicio"
+                    />                
                 </div>
-
-                <div className="flex justify-center md:justify-end">
-                    <Link href="/servicios?modal=create">
-                        <PrimaryButton>Crear Servicio</PrimaryButton>
-                    </Link>
-                </div>
-
-                <CardTable
-                    documents={servicios}
-                    documentType="servicios"
-                    fechasDuplicadas={fechasDuplicadas}
-                />
-
-                <ModalAdd 
-                    documentType="servicio"
-                />
-
-                <div ref={ref} className="mx-auto">
-                    {totalServicios === servicios.length ? 
-                        <p className="text-center text-sm text-mutedColor-foreground">Son todos los Servicios Registrados</p> 
-                        : 
-                        <Spinner />
-                    }
-                </div>
+            </Suspense>
+            <div ref={ref} className="mx-auto">
+                {totalServicios === servicios.length ? 
+                    <p className="text-center text-sm text-mutedColor-foreground">Son todos los Servicios Registrados</p> 
+                    : 
+                    <Spinner />
+                }
             </div>
-        </Suspense>
+        </>
     )
 }

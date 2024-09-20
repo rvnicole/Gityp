@@ -20,6 +20,7 @@ export default function PresupuestoPage() {
     const limit = 10;
    
     useEffect(() => {
+        
         const div = ref.current!;
         if(div){
             const observador = new IntersectionObserver((arreglo) => {
@@ -45,34 +46,35 @@ export default function PresupuestoPage() {
     const estadosPresupuestoArr = Object.entries(estadosPresupuesto);
 
     return (
-        <Suspense fallback={<div>Loading...</div>}>
-            <div className="space-y-5">
-                <div className="flex items-center flex-col md:flex-row md:justify-between gap-5">
-                    <Filters 
-                        estados={estadosPresupuestoArr}
-                        setData={setPresupuestos}
-                        setTotalData={setTotalPresupuestos}
-                        setPage={setPage}
-                        setSearchParams={setSearchParams}
-                    />
-                    <div className="flex justify-center md:justify-end">
-                        <Link href="/presupuestos?modal=create">
-                            <PrimaryButton>Crear Presupuesto</PrimaryButton>
-                        </Link>
+        <>
+            <Suspense fallback={<div>Loading...</div>}>
+                <div className="space-y-5">
+                    <div className="flex items-center flex-col md:flex-row md:justify-between gap-5">
+                        <Filters 
+                            estados={estadosPresupuestoArr}
+                            setData={setPresupuestos}
+                            setTotalData={setTotalPresupuestos}
+                            setPage={setPage}
+                            setSearchParams={setSearchParams}
+                        />
+                        <div className="flex justify-center md:justify-end">
+                            <Link href="/presupuestos?modal=create">
+                                <PrimaryButton>Crear Presupuesto</PrimaryButton>
+                            </Link>
+                        </div>
                     </div>
+
+                    <CardTable
+                        documents={presupuestos}
+                        documentType="presupuestos"
+                    />
+
+                    <ModalAdd documentType="presupuesto"/>
                 </div>
-
-                <CardTable
-                    documents={presupuestos}
-                    documentType="presupuestos"
-                />
-
-                <ModalAdd documentType="presupuesto"/>
-
-                <div ref={ref} className="mx-auto">
-                    {totalPresupuestos === presupuestos.length ? <p className="text-center text-sm text-mutedColor-foreground">Son todo los Presupuestos Registrados</p> : <Spinner />}
-                </div>
+            </Suspense>
+            <div ref={ref} className="mx-auto">
+                {totalPresupuestos === presupuestos.length ? <p className="text-center text-sm text-mutedColor-foreground">Son todo los Presupuestos Registrados</p> : <Spinner />}
             </div>
-        </Suspense>
+        </>
     )
 }

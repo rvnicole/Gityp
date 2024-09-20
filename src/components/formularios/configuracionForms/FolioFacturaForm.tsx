@@ -10,16 +10,15 @@ export default function FolioFacturaForm(){
     const [ editar, setEditar ] = useState(false);
     const { register, handleSubmit, reset, formState: { errors } } = useForm<{ folio: string }>();
     useEffect(()=>{
-        /*
         const fetchFolio = async () => {
             const config = await getConfig();
             setFolio(config.folioInicial);
         }
-        fetchFolio();*/
+        fetchFolio();
     },[]);
 
     const handleGuardar = async (formData: { folio: string }) => {
-        /*
+        
         console.log(formData);
         const res = await setFolioInicial(formData);
         if( res.success ){
@@ -29,7 +28,7 @@ export default function FolioFacturaForm(){
         }
         else{
             toast.error(res.message as string);
-        }*/
+        }
     };
 
     return (

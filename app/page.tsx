@@ -3,6 +3,62 @@ import { getAllCobros } from "@/actions/gestion-cobros-actions";
 import { getAllOrdenesServicio } from "@/actions/orden-servicio-actions";
 import { getAllPresupuestos } from "@/actions/presupuesto-actions";
 import { getAllServicios } from "@/actions/servicio-actions";
+
+// Actions para inicializar
+import { 
+  facturasRange,
+  checkFullDataFactura,
+  createInvoice,
+  getFacturas,
+  updateEstadoFactura,
+  updateFactura 
+} from "@/actions/factura-actions";
+import {
+  createConductor,
+  deleteConductor,
+  getConductoresAction,
+  updateConductor
+} from "@/actions/conductor-actions";
+import { sendEmail } from "@/actions/email-actions";
+import {
+  createEmisorReceptor,
+  deleteEmisorReceptor,
+  getEmisorReceptor,
+  updateEmisorReceptor
+} from "@/actions/emisor-receptor-actions"
+import { 
+  cobrosRange,
+  getCobros,
+  updateCobro,
+  updateEstadoCobro
+} from "@/actions/gestion-cobros-actions";
+import {
+  createOrdenServicio,
+  deleteOrdenServicio,
+  getOrdenesServicio,
+  getOrdenesServicioIDs,
+  updateOrdenServicio
+} from "@/actions/orden-servicio-actions"
+import {
+  createPresupuesto,
+  deletePresupuesto,
+  getPresupuestos,
+  updatePresupuesto,
+  updateStatusPresupuesto
+} from "@/actions/presupuesto-actions"
+import {
+  createServicio,
+  deleteServicio,
+  getServicios,
+  updateEstadoServicio,
+  updateServicio
+} from "@/actions/servicio-actions"
+import {
+  getConfig,
+  setFolioInicial,
+  updateRutas
+} from "@/actions/configuracion-actions"
+
 import { connectDB } from "@/config/db";
 import { Configuracion } from "@/model/Configuracion";
 import CardDashboard from "@/src/components/cards/CardDashboard";
@@ -13,8 +69,81 @@ import { evalDate, formatLongDate } from "@/src/lib";
 import {CardServicio, DashboardDocumentsData} from "@/src/types";
 import Link from "next/link";
 
+export const revalidate = 0;
+
 async function initConfiguracion(){
   try{
+      // Inicializar las actions
+      
+      const initActionsFactura = {
+        facturasRange,
+        checkFullDataFactura,
+        createInvoice,
+        getFacturas,
+        updateEstadoFactura,
+        updateFactura
+      }
+      const initActionsConductor = {
+        createConductor,
+        deleteConductor,
+        getConductoresAction,
+        updateConductor
+      }
+      const initActionsEmail = {
+        sendEmail
+      }
+      const initActionsEmisorReceptor = {
+        createEmisorReceptor,
+        deleteEmisorReceptor,
+        getEmisorReceptor,
+        updateEmisorReceptor
+      }
+      const initActionsCobros = { 
+        cobrosRange,
+        getCobros,
+        updateCobro,
+        updateEstadoCobro
+      }
+      const initActionsOS = {
+        createOrdenServicio,
+        deleteOrdenServicio,
+        getOrdenesServicio,
+        getOrdenesServicioIDs,
+        updateOrdenServicio
+      }
+      const initActionsPresupuesto = {
+        createPresupuesto,
+        deletePresupuesto,
+        getPresupuestos,
+        updatePresupuesto,
+        updateStatusPresupuesto
+      }
+      const initActionsServicio = {
+        createServicio,
+        deleteServicio,
+        getServicios,
+        updateEstadoServicio,
+        updateServicio
+      }
+
+      const initActionsConfig = {
+        getConfig,
+        setFolioInicial,
+        updateRutas
+      }
+
+      console.log(
+        initActionsFactura, 
+        initActionsConductor, 
+        initActionsEmail,
+        initActionsEmisorReceptor,
+        initActionsCobros, 
+        initActionsOS,
+        initActionsPresupuesto,
+        initActionsServicio,
+        initActionsConfig
+      );
+
       await connectDB();
       const config = await Configuracion.find();
       if( config.length === 0 ){
@@ -56,6 +185,7 @@ function getServiciosProximos(servicios: CardServicio[]) {
 }
 
 export default async function Home() {
+  //const cacheControl = { cache: "no-store" };
   await initConfiguracion();
   const presupuestos = await getAllPresupuestos() as DashboardDocumentsData;
   const ordenesServicios = await getAllOrdenesServicio() as DashboardDocumentsData;

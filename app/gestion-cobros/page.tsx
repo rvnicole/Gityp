@@ -44,26 +44,28 @@ export default function GetionCobrosPage() {
    // console.log(estadosCobrossArr);
 
     return (
-        <Suspense fallback={<div>Loading...</div>}>
-            <div className="flex items-center flex-col md:flex-row md:justify-between gap-5">
-                <Filters
-                    estados={estadosCobroArr}
-                    setData={setCobros}
-                    setTotalData={setTotalCobros}
-                    setPage={setPage}
-                    setSearchParams={setSearchParams}
+        <>
+            <Suspense fallback={<div>Loading...</div>}>
+                <div className="flex items-center flex-col md:flex-row md:justify-between gap-5">
+                    <Filters
+                        estados={estadosCobroArr}
+                        setData={setCobros}
+                        setTotalData={setTotalCobros}
+                        setPage={setPage}
+                        setSearchParams={setSearchParams}
+                    />
+                </div>
+                <CardTable
+                    documents={cobros}
+                    documentType="gestion-cobros"
                 />
-            </div>
-            <CardTable
-                documents={cobros}
-                documentType="gestion-cobros"
-            />
 
-            <ModalAdd documentType="gestionCobro" />
+                <ModalAdd documentType="gestionCobro" />
+                <ToastContainer />
+            </Suspense>
             <div ref={ref} className="mx-auto">
                 {totalCobros === cobros.length ? <p className="text-center text-sm text-mutedColor-foreground">Son todos las Cobros Registrados</p> : <Spinner />}
             </div>
-            <ToastContainer />
-        </Suspense>
+        </>
     )
 }

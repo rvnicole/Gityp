@@ -36,8 +36,8 @@ export const estadosFactura = {
 };
 
 export const estadosCobro = {
-    paid: 'Pagado',
-    pending: 'Pendiente de pago'
+    paid: 'Cobrado',
+    pending: 'Por cobrar'
 };
 
 export const tipoServicio = { 

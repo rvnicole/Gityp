@@ -25,7 +25,7 @@ export default function ButtonsServicio({documentID, estadoDocument}: ButtonsSer
         if( respuesta.success ) {
             toast.success(respuesta.message as string);
             setEstado(data.estado);
-            setTimeout(() => location.href = location.pathname, 2000);
+            //setTimeout(() => location.href = location.pathname, 2000);
         }
         else {
             toast.error(respuesta.message as string);

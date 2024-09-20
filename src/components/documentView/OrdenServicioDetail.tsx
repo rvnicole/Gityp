@@ -3,6 +3,7 @@ import TableServicesDetails from "./TableServicesDetails";
 import { EstadoOrdenServicio, OrdenServicio } from "@/src/types";
 import { estadosOrdenServicio } from "@/src/data/data";
 import { evalDate, formatCurrency, formatDate } from "@/src/lib";
+import ButtonOpenFile from "../ui/ButtonOpenFile";
 
 type OrdenServicioDetailProps = {
     ordenServicio: OrdenServicio;
@@ -16,14 +17,13 @@ export default function OrdenServicioDetail({ ordenServicio }: OrdenServicioDeta
                 <p><span className="font-semibold">Solicito:{' '}</span>{ordenServicio.solicito}</p>
                 <p><span className="font-semibold">PO:{' '}</span>{ordenServicio.ordenCompra}</p>
 
-                <a
-                    className="flex gap-1 justify-center items-center w-24 max-h-8 my-1 p-1 rounded-full text-sm text-white bg-charColor-char5 hover:bg-primaryColor"
-                    href={ordenServicio.urlOrdenCompra}
-                    target="_blank"
-                >
-                    Ver PO
-                    <ArrowTopRightOnSquareIcon className="size-5 inline"/>
-                </a>
+                {
+                    ordenServicio.ordenCompra && 
+                    <ButtonOpenFile 
+                        document="PO"
+                        url={ordenServicio.ordenCompra}
+                    />
+                }
             </div>
 
             <div className="max-h-8	flex md:justify-end text-white text-xs md:text-sm font-semibold">

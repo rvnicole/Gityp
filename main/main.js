@@ -1,40 +1,68 @@
-const { app, BrowserWindow } = require('electron');
+const { app, BrowserWindow, ipcMain, shell } = require('electron');
 const path = require('path');
+const { exec } = require('child_process');  // Para ejecutar comandos de terminal
 
-let mainWindow;
+let win;
+let nextServer;
 
 function createWindow() {
-    mainWindow = new BrowserWindow({
-            width: 800,
-            height: 600,
-            webPreferences: {
-            nodeIntegration: false,
-            contextIsolation: true
-        },
-    });
+  win = new BrowserWindow({
+    width: 800,
+    height: 600,
+    webPreferences: {
+      preload: path.join(__dirname, 'preload.js'),  // Opcional
+      nodeIntegration: true,
+    },
+  });
 
-    if (process.env.NODE_ENV === 'development') {
-        mainWindow.loadURL('http://localhost:3000'); // Donde se ejecuta Next.js en desarrollo
-    } 
-    else {
-        mainWindow.loadFile(path.join(__dirname, '../out/index.html')); // En producción, carga el HTML generado
-    };
-
-    mainWindow.on('closed', () => {
-        mainWindow = null;
-    });
+  // Cargar la aplicación Next.js en Electron
+  win.loadURL('http://localhost:3000');  // Cambia esto si tienes un puerto diferente
 }
 
-app.on('ready', createWindow);
+// Inicia el servidor de Next.js y luego crea la ventana de Electron
+app.whenReady().then(() => {
+  nextServer = exec('npm run start', (error, stdout, stderr) => {
+    if (error) {
+      console.error(`Error al iniciar el servidor de Next.js: ${error}`);
+      return;
+    }
+    console.log(`Servidor de Next.js en ejecución: ${stdout}`);
+  });
+
+  // Espera 5 segundos para asegurarte de que el servidor esté listo
+  setTimeout(() => {
+    createWindow();
+  }, 5000);  // Ajusta el tiempo si es necesario
+
+  nextServer.stdout.pipe(process.stdout);
+  nextServer.stderr.pipe(process.stderr);
+});
+
+
+// Handle file open requests
+ipcMain.handle('open-file', async (event, filePath) => {
+    shell.openPath(filePath);
+});
+
 
 app.on('window-all-closed', () => {
-    if (process.platform !== 'darwin') {
-        app.quit();
+  if (process.platform !== 'darwin') {
+
+    exec('npm run stop', (error, stdout, stderr) => {
+        if (error) {
+            console.error(`Error al detener el servidor de Next.js: ${error}`);
+            return;
+        }
+        console.log(`Servidor de Next.js detenido: ${stdout}`);
+    });
+
+    if (nextServer) {
+        nextServer.kill('SIGTERM');  // Matar el proceso
+        nextServer.on('exit', (code) => {
+            console.log(`Servidor de Next.js detenido con código ${code}`);
+        });
     }
+    app.quit();
+  }
 });
 
-app.on('activate', () => {
-    if (mainWindow === null) {
-        createWindow();
-    }
-});

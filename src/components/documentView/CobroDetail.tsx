@@ -2,6 +2,7 @@ import { evalDate, formatCurrency, formatDate } from "@/src/lib";
 import { GestionCobros } from "@/src/types";
 import { ArrowTopRightOnSquareIcon, BanknotesIcon, ClockIcon, DocumentCheckIcon, DocumentCurrencyDollarIcon } from "@heroicons/react/24/outline";
 import TableServicesDetails from "./TableServicesDetails";
+import ButtonOpenFile from "../ui/ButtonOpenFile";
 
 type CobroDetailProps = {
     cobro: GestionCobros;
@@ -15,14 +16,13 @@ export default function CobroDetail({ cobro }: CobroDetailProps) {
                 <p><span className="font-semibold">Solicito:{' '}</span>{cobro.factura.ordenServicio?.solicito}</p>
                 <p><span className="font-semibold">PO:{' '}</span>{cobro.factura.ordenServicio?.ordenCompra}</p>
 
-                <a
-                    className="inline-flex gap-1 justify-center items-center w-24 max-h-8 my-1 p-1 rounded-full text-sm text-white bg-charColor-char5 hover:bg-primaryColor"
-                    href={cobro.factura.ordenServicio?.urlOrdenCompra}
-                    target="_blank"
-                >
-                    Ver PO
-                    <ArrowTopRightOnSquareIcon className="size-5 inline"/>
-                </a>
+                {
+                    cobro.factura.ordenServicio && cobro.factura.ordenServicio.ordenCompra &&
+                    <ButtonOpenFile 
+                        document="PO"
+                        url={cobro.factura.ordenServicio.ordenCompra}
+                    />
+                }
             </div>
 
             <div className="max-h-8	flex md:justify-end text-white text-xs md:text-sm font-semibold">
@@ -125,14 +125,13 @@ export default function CobroDetail({ cobro }: CobroDetailProps) {
                     <span className="font-normal">{cobro.factura.fechaSellado && formatDate(cobro.factura.fechaSellado)}</span>
                 </p>
 
-                <a
-                    className="inline-flex gap-1 justify-center items-center w-36 max-h-8 my-1 p-1 rounded-full text-sm text-white bg-charColor-char5 hover:bg-primaryColor"
-                    href={cobro.factura.urlFactura}
-                    target="_blank"
-                >
-                    Ver Factura
-                    <ArrowTopRightOnSquareIcon className="size-5 inline"/>
-                </a>
+                {
+                    cobro.factura.folioFiscal && 
+                    <ButtonOpenFile 
+                        document="PO"
+                        url={cobro.factura.folio}
+                    />
+                }
             </div>
 
             <div className="md:col-span-3">

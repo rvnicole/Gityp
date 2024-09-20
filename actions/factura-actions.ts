@@ -207,12 +207,12 @@ export async function updateFactura(formData: FacturaFormData, id: FacturaType['
         console.log('DATOS DE FACTRUA',formData);
         const factura = await Factura.findById(id);
         factura.folioFiscal = formData.folioFiscal;
-        factura.fechaSellado = myDateMX(formData.fechaSellado!.toISOString());
+        factura.fechaSellado = myDateMX( typeof formData.fechaSellado! === 'string' ? formData.fechaSellado : formData.fechaSellado!.toISOString());
         factura.emisor = formData.emisor!.id;
         factura.receptor = formData.receptor!.id;
         factura.estado = 'sealed';
 
-        console.log('FECHA DE SELLADO',myDateMX(formData.fechaSellado!.toISOString()));
+        //console.log('FECHA DE SELLADO',myDateMX(formData.fechaSellado!.toISOString()));
         
         await factura.save();
         return {

@@ -42,24 +42,26 @@ export default function FacturacionPage() {
     const estadosFacturasArr = Object.entries(estadosFactura);
 
     return (
-        <Suspense fallback={<div>Loading...</div>}>
-            <div className="flex items-center flex-col md:flex-row md:justify-between gap-5">
-                <Filters
-                    estados={estadosFacturasArr}
-                    setData={setFacturas}
-                    setTotalData={setTotalFacturas}
-                    setPage={setPage}
-                    setSearchParams={setSearchParams}
+        <>
+            <Suspense fallback={<div>Loading...</div>}>
+                <div className="flex items-center flex-col md:flex-row md:justify-between gap-5">
+                    <Filters
+                        estados={estadosFacturasArr}
+                        setData={setFacturas}
+                        setTotalData={setTotalFacturas}
+                        setPage={setPage}
+                        setSearchParams={setSearchParams}
+                    />
+                </div>
+                <CardTable
+                    documents={facturas}
+                    documentType="facturacion"
                 />
-            </div>
-            <CardTable
-                documents={facturas}
-                documentType="facturacion"
-            />
-            <ModalAdd documentType="factura"/>
+                <ModalAdd documentType="factura"/>
+            </Suspense>
             <div ref={ref} className="mx-auto">
                 {totalFacturas === facturas.length ? <p className="text-center text-sm text-mutedColor-foreground">Son todas las Facturas Registradas</p> : <Spinner />}
             </div>
-        </Suspense>
+        </>
     )
 }

@@ -1,15 +1,13 @@
 "use client"
-
-import { useEffect, useState } from "react";
-import { cobrosRange } from "@/actions/gestion-cobros-actions";
 import { facturasRange } from "@/actions/factura-actions";
+import { cobrosRange } from "@/actions/gestion-cobros-actions";
+import { useEffect, useState } from "react";
 import { SelectMonth, SelectYear } from "../ui/Selects";
 import { formatCurrency } from './../../lib/index';
 
-type CardDashboardGananciasProps = {
-};
 
-export default function CardDashboardGanancias({}: CardDashboardGananciasProps) {
+
+export default function CardDashboardGanancias() {
     const [filtros, setFiltros] = useState<{mes: string, anio:string}>({mes: '', anio: new Date().getFullYear().toString()});
     const [ganancias, setGanancias] = useState<{facturado: number, pagado: number, porPagar: number}>({facturado: 0, pagado: 0, porPagar: 0});
 
@@ -62,12 +60,12 @@ export default function CardDashboardGanancias({}: CardDashboardGananciasProps) 
 
                 <div className="my-3">
                     <p className="text-secondaryColor-foreground text-4xl font-bold">{formatCurrency(ganancias.pagado)}</p>
-                    <p className="text-mutedColor-foreground font-semibold mt-2">Pagado</p>
+                    <p className="text-mutedColor-foreground font-semibold mt-2">Cobrado</p>
                 </div>
 
                 <div className="my-3">
                     <p className="text-secondaryColor-foreground text-4xl font-bold">{formatCurrency(ganancias.porPagar)}</p>
-                    <p className="text-mutedColor-foreground font-semibold mt-2">Por pagar</p>
+                    <p className="text-mutedColor-foreground font-semibold mt-2">Por cobrar</p>
                 </div>
             </div>
         </div>

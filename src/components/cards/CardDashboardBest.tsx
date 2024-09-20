@@ -158,12 +158,12 @@ export default async function CardDashboardBest(){
              <div 
                 className="py-6 px-4 bg-backgroundColor border border-borderColor rounded-xl text-center space-y-3"
             >
-                <h3 className="text-mutedColor-foreground text-lg font-semibold">Mejor cliente</h3>
+                <h3 className="text-mutedColor-foreground text-lg font-semibold">Mejor cliente en el año</h3>
                 <hr />
                 <p className="text-mutedColor-foreground font-bold text-2xl">{ solicito }</p>
                 <div className="grid grid-cols-1">
                     <p className="text-2xl font-bold">{ formatCurrency(+mayorTotalSolicitado) }</p>
-                    <p className="text-mutedColor-foreground text-center">Total</p>
+                    <p className="text-mutedColor-foreground text-center">Total en servicios completados</p>
                 </div>                
             </div>
         </div>

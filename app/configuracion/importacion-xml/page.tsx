@@ -3,6 +3,8 @@ import FolioFacturaForm from "@/src/components/formularios/configuracionForms/Fo
 import LoadInvoiceForm from "@/src/components/formularios/configuracionForms/LoadInvoiceForm";
 import { PrimaryButton } from "@/src/components/ui/Buttons";
 
+export const revalidate = 0;
+
 export default function ImportacionXMLPage(){
     return(
         <>

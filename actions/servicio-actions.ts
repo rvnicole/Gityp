@@ -106,7 +106,7 @@ export async function getAllServicios() {
                 { path: 'idConductor' },
                 { path: 'ordenServicio'}
             ])
-            .sort({ fechaEjecucion: -1 });
+            //.sort({ fechaEjecucion: -1 });
         const consultaTotal = Servicio.find({ ordenServicio: { $ne: null } });
         const [servicios, totalResults] = await Promise.all([consultaServicios, consultaTotal]);
         

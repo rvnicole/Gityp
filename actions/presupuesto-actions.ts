@@ -7,6 +7,7 @@ import { Presupuesto as PresupuestoType, PresupuestoFormData, ServiceFormData, S
 import ServiciosPage from "@/app/servicios/page";
 import { CardsPresupuestoSchema } from "@/src/schema";
 import { ReadonlyURLSearchParams } from "next/navigation";
+import { revalidatePath } from "next/cache";
 
 type ActionPresupuestoParams = {
     formData: PresupuestoFormData & { id?: PresupuestoType['id'], servicios?: ServiceFormData[] }, 
@@ -20,6 +21,7 @@ export async function createPresupuesto(fullFormData: ActionPresupuestoParams ){
         const presupuesto =  new Presupuesto(fullFormData.formData);
         presupuesto.servicios = servicios;
         await presupuesto.save();
+        revalidatePath('/presupuestos');
         return {
             success: true,
             message: 'Presupuesto creado'
@@ -62,6 +64,7 @@ export async function getPresupuestos(limit:number, page:number, searchParams: {
 
         const { success, data, error } = CardsPresupuestoSchema.safeParse(presupuestos);
         if( success ){
+            revalidatePath('/presupuestos');
             return {data, totalResults};
         };
         error.issues.forEach( issue => console.log(issue));

@@ -3,6 +3,7 @@ import { evalDate, formatCurrency, formatDate } from "@/src/lib";
 import { EstadoFactura, Factura } from "@/src/types";
 import { ArrowTopRightOnSquareIcon, CheckBadgeIcon, XMarkIcon } from "@heroicons/react/24/outline";
 import TableServicesDetails from "./TableServicesDetails";
+import ButtonOpenFile from "../ui/ButtonOpenFile";
 
 type FacturaDetailProps = {
     factura: Factura;
@@ -18,14 +19,13 @@ export default function FacturaDetail({ factura }: FacturaDetailProps) {
                 <p><span className="font-semibold">Solicito:{' '}</span>{factura.ordenServicio?.solicito}</p>
                 <p><span className="font-semibold">PO:{' '}</span>{factura.ordenServicio?.ordenCompra}</p>
 
-                <a
-                    className="inline-flex gap-1 justify-center items-center w-24 max-h-8 my-1 p-1 rounded-full text-sm text-white bg-charColor-char5 hover:bg-primaryColor"
-                    href={factura.ordenServicio?.urlOrdenCompra ? factura.ordenServicio.urlOrdenCompra: ''}
-                    target="_blank"
-                >
-                    Ver PO
-                    <ArrowTopRightOnSquareIcon className="size-5 inline"/>
-                </a>
+                {
+                    factura.ordenServicio && factura.ordenServicio.ordenCompra &&
+                    <ButtonOpenFile 
+                        document="PO"
+                        url={factura.ordenServicio.ordenCompra}
+                    />
+                }
             </div>
 
             <div className="max-h-8	flex md:justify-end text-white text-xs md:text-sm font-semibold">
@@ -103,14 +103,13 @@ export default function FacturaDetail({ factura }: FacturaDetailProps) {
                     <span className="font-normal">{factura.fechaSellado ? formatDate(factura.fechaSellado) : ''}</span>
                 </p>
 
-                <a
-                    className="inline-flex gap-1 justify-center items-center w-36 max-h-8 my-1 p-1 rounded-full text-sm text-white bg-charColor-char5 hover:bg-primaryColor"
-                    href={factura.urlFactura}
-                    target="_blank"
-                >
-                    Ver Factura
-                    <ArrowTopRightOnSquareIcon className="size-5 inline"/>
-                </a>
+                {
+                    factura.folioFiscal &&
+                    <ButtonOpenFile 
+                        document="Factura"
+                        url={factura.folio}
+                    />
+                }
             </div>
 
             {   factura.ordenServicio ?
