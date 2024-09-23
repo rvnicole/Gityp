@@ -8,8 +8,8 @@ export const connectDB = async () => {
         return;
     }
     try{
-        console.log(process.env.DATABASE_URL, 'URL DE LA BD');
-        const { connection } = await mongoose.connect(process.env.DATABASE_URL!, {
+        console.log(process.env.DATABASE_URL_MONGO, 'URL DE LA BD');
+        const { connection } = await mongoose.connect(process.env.DATABASE_URL_MONGO!, {
             socketTimeoutMS: 30000, // Aumentar el tiempo de espera a 30 segundos
             connectTimeoutMS: 30000,
             serverSelectionTimeoutMS: 30000
