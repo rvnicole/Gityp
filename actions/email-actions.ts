@@ -26,13 +26,13 @@ export async function sendEmail( dataSend: Email, htmlString: string ){
         const transportador = nodemailer.createTransport({
             service: 'hotmail',
             auth: {
-                user: process.env.USER_EMAIL,
-                pass: process.env.PASS_EMAIL
+                user: process.env.USER_EMAIL_GITYP,
+                pass: process.env.PASS_EMAIL_GITYP
             }
         })
 
         await transportador.sendMail({
-            from: `"Eduardo" <${process.env.USER_EMAIL}>`,
+            from: `"Eduardo" <${process.env.USER_EMAIL_GITYP}>`,
             to: para.split(','),
             cc: cc?.split(','),
             bcc: cco?.split(','),
