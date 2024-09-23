@@ -26,19 +26,7 @@ export default function EmailForm(){
         const img = document.createElement('img');
         const parrafo = document.createElement('p');
         const parrafoTotal = document.createElement('p');
-        const dataProveedor = `<p class="font-semibold">RFC: 
-                    <span class="font-normal">REGE6003152Q7</span>
-                </p>
-                <p class="font-semibold">Nombre: 
-                    <span class="font-normal">Eduardo Reynoso González</span>
-                </p>
-                <p class="font-semibold">Tel: 
-                    <span class="font-normal">56 2791 1151</span>
-                </p>
-                <p class="font-semibold">Email: 
-                    <span class="font-normal">eduardo47@hotmail.com</span>
-                </p>
-                `
+        const dataProveedor = ``;
 
         const presupuestoHtmlStr = document.querySelector('#imp-presupuesto-detalles')!;
         const estadoHtml = document.querySelector('#imp-estado')!;
