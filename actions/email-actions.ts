@@ -4,21 +4,9 @@ import nodemailer from "nodemailer";
 
 export async function sendEmail( dataSend: Email, htmlString: string ){
     try{
-        const respuesta = await fetch("https://transform-to-string.onrender.com/transform", {
-            method: "POST",
-            body: JSON.stringify({ htmlString }),
-            headers: {
-                "content-type": "application/json; charset=utf-8"
-            }
-        });
-        console.log("Respuesta", respuesta);
-        const resultado = await respuesta.json();          
-        console.log("Resultado", resultado);       
-        const data = resultado.data;
-        console.log("Data", data);   
-        const pdf = Buffer.from(data, "base64");
-        console.log("PDF", pdf);   
-    
+
+        const pdf = Buffer.from(htmlString, "base64");
+        
         const { para, cc, cco, asunto, mensaje } = dataSend;
 
         const transportador = nodemailer.createTransport({
