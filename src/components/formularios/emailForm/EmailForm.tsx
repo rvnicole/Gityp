@@ -22,8 +22,8 @@ export default function EmailForm(){
         const head = document.createElement('head');
         const script = document.createElement('script');
         const body = document.createElement('body');
-        const contenedorImg = document.createElement('div');
-        const img = document.createElement('img');
+        //const contenedorImg = document.createElement('div');
+        //const img = document.createElement('img');
         const parrafo = document.createElement('p');
         const parrafoTotal = document.createElement('p');
         const dataProveedor = ``;
@@ -62,20 +62,20 @@ export default function EmailForm(){
         columnasHtml.parentElement!.className = '';
         script.setAttribute('src', "https://cdn.tailwindcss.com");
         parrafo.textContent = 'Se requiere Orden de compra antes del servicio';
-        parrafo.classList.add('font-semibold', 'text-slate-600', 'text-center');
+        parrafo.classList.add('font-semibold', 'text-slate-600', 'text-center', 'mt-10');
         parrafoTotal.classList.add('p-5', 'text-center', 'font-semibold', 'uppercase', 'col-span-6');
         parrafoTotal.textContent = numberToWords(Math.floor(total)) + ` ${centavos}/100 M.N.`;
-        parrafoTotalHtml.classList.add('text-lg');
+        parrafoTotalHtml.classList.add('text-base');
         divTotales.className = "grid grid-cols-8";
         body.classList.add('px-5');
-        contenedorImg.classList.add('w-full','flex','justify-center', 'mb-3');
+        //contenedorImg.classList.add('w-full','flex','justify-center', 'mb-3');
         //img.className = 'w-64';
-        img.src = location.origin+"/logo.png";
+        //img.src = location.origin+"/logo.png";
 
         divTotales.insertBefore(parrafoTotal,divTotales.firstChild);
         head.appendChild(script);
-        contenedorImg.appendChild(img);
-        body.appendChild(contenedorImg);
+        //contenedorImg.appendChild(img);
+        //body.appendChild(contenedorImg);
         body.appendChild(presupuestoHtmlStr);
         body.appendChild(parrafo);
         html.appendChild(head);

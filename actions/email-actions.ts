@@ -1,26 +1,20 @@
 "use server";
 import { Email } from "@/src/types";
 import nodemailer from "nodemailer";
-import puppeteer from "puppeteer";
 
 export async function sendEmail( dataSend: Email, htmlString: string ){
     try{
-
-        const navegador = await puppeteer.launch();
-        const paginaWeb = await navegador.newPage();
-        await paginaWeb.setContent(htmlString, { waitUntil: 'domcontentloaded' });
-        const pdf = await paginaWeb.pdf({
-            format: 'A4',
-            printBackground: true,
-            margin: {
-                top: '20mm',
-                bottom: '20mm',
-                left: '10mm',
-                right: '10mm' 
+        const respuesta = await fetch("https://transform-to-string.onrender.com/transform", {
+            method: "POST",
+            body: JSON.stringify({ htmlString }),
+            headers: {
+                "content-type": "application/json; charset=utf-8"
             }
-        }) as Buffer;
-        await navegador.close();
-
+        });
+        const resultado = await respuesta.json();                 
+        const data = resultado.data;
+        const pdf = Buffer.from(data, "base64");
+    
         const { para, cc, cco, asunto, mensaje } = dataSend;
 
         const transportador = nodemailer.createTransport({
@@ -32,7 +26,7 @@ export async function sendEmail( dataSend: Email, htmlString: string ){
         })
 
         await transportador.sendMail({
-            from: `"Eduardo" <${process.env.USER_EMAIL_GITYP}>`,
+            from: `<${process.env.USER_EMAIL_GITYP}>`,
             to: para.split(','),
             cc: cc?.split(','),
             bcc: cco?.split(','),
