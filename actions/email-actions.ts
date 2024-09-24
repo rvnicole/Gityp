@@ -11,9 +11,13 @@ export async function sendEmail( dataSend: Email, htmlString: string ){
                 "content-type": "application/json; charset=utf-8"
             }
         });
-        const resultado = await respuesta.json();                 
+        console.log("Respuesta", respuesta);
+        const resultado = await respuesta.json();          
+        console.log("Resultado", resultado);       
         const data = resultado.data;
+        console.log("Data", data);   
         const pdf = Buffer.from(data, "base64");
+        console.log("PDF", pdf);   
     
         const { para, cc, cco, asunto, mensaje } = dataSend;
 
