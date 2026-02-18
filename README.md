@@ -23,7 +23,7 @@ Gityp centraliza toda la información y automatiza el seguimiento del proceso co
 
 ---
 
-## 🧩 Flujo del proceso
+### 🧩 Flujo del proceso
 
 1. 📞 Solicitud del servicio
 2. 📄 Generación y envío de presupuesto
@@ -32,7 +32,7 @@ Gityp centraliza toda la información y automatiza el seguimiento del proceso co
 5. 🧾 Facturación
 6. 💵 Gestión de cobros
 
-## 🗂️ Módulos principales
+### 🗂️ Módulos principales
 
 ### 📄 Presupuestos
 - Crear, editar, eliminar y buscar presupuestos
@@ -64,3 +64,30 @@ Gityp centraliza toda la información y automatiza el seguimiento del proceso co
 - Gestión de conductores
 - Importación de facturas vía XML
 
+---
+
+### 🛠️ Tecnologías utilizadas
+
+### Frontend
+- React
+- Next.js
+- TypeScript
+- Tailwind CSS
+- React Hook Form
+- Zod
+- Zustand
+- Headless UI
+- Heroicons
+
+### Backend / Lógica
+- Node.js
+- Mongoose (MongoDB)
+- Nodemailer
+- Puppeteer
+
+### Desktop & Tools
+- Electron
+- ESLint
+- TypeScript
+
+---
