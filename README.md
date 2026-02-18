@@ -6,6 +6,13 @@ La aplicación fue desarrollada como una **aplicación web con Next.js y React**
 
 Adicionalmente, se dejó una versión pública desplegada en **https://gityp-sand.vercel.app/** con fines demostrativos.
 
+### Desarrolladores
+👨‍💻 Jose Carlos Reynoso Vera
+https://github.com/rvjosecarlos
+
+👩‍💻 Nicole Rosas Vallejo
+https://github.com/rvnicole
+
 ---
 
 ### 🎯 Problema que resuelve
