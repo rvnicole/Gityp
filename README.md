@@ -70,7 +70,7 @@ Gityp centraliza toda la información y automatiza el seguimiento del proceso co
 
 ### ⚡​Stack tecnológico
 
-### Frontend
+### ⭐ Frontend
 - React
 - Next.js
 - TypeScript
@@ -79,13 +79,30 @@ Gityp centraliza toda la información y automatiza el seguimiento del proceso co
 - Zod
 - Zustand
 
-### Backend / Lógica
+### 💡 Backend / Lógica
 - Node.js
 - Mongoose (MongoDB)
 - Nodemailer
 - Puppeteer
 
-### Desktop & Tools
+### ⚙️Desktop & Tools
 - Electron
 
 ---
+
+### 🚀 Características destacadas
+
+- Validaciones con Zod
+- Manejo de estado global con Zustand
+- Generación y envío de correos automáticos
+- Generación de documentos PDF para presupuestos
+- Control de estados y flujos administrativos
+- Aplicación multiplataforma (Web y Desktop)
+
+---
+
+### 💻 Tipo de proyecto
+
+- Aplicación Web + Aplicación de Escritorio
+- Proyecto real entregado a cliente
+- Arquitectura modular y escalable
