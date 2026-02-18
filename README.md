@@ -9,7 +9,7 @@ Adicionalmente, se dejó una versión pública desplegada en **https://gityp-san
 ### 👥 Desarrolladores
 👨‍💻 **Jose Carlos Reynoso Vera**  
 Full Stack JavaScript Developer (MERN/PERN) | Construyendo apps con React, Node.js y TypeScript
-https://github.com/rvnicole
+https://github.com/rvjosecarlos
 
 👩‍💻 **Nicole Rosas Vallejo**  
 Desarrolladora Fullstack (MERN / PERN) con enfoque en Frontend
