@@ -8,7 +8,7 @@ Adicionalmente, se dejó una versión pública desplegada en **https://gityp-san
 
 ---
 
-### 🎯 Problema que resuelve
+## 🎯 Problema que resuelve
 
 Antes de Gityp, la gestión de servicios se realizaba de forma manual (WhatsApp, correo y llamadas), lo que generaba problemas como:
 
@@ -23,7 +23,7 @@ Gityp centraliza toda la información y automatiza el seguimiento del proceso co
 
 ---
 
-### 🧩 Flujo del proceso
+## 🧩 Flujo del proceso
 
 1. 📞 Solicitud del servicio
 2. 📄 Generación y envío de presupuesto
@@ -31,6 +31,8 @@ Gityp centraliza toda la información y automatiza el seguimiento del proceso co
 4. 🚚 Ejecución del servicio
 5. 🧾 Facturación
 6. 💵 Gestión de cobros
+
+---
 
 ### 🗂️ Módulos principales
 
