@@ -12,7 +12,7 @@ Full Stack JavaScript Developer (MERN/PERN) | Construyendo apps con React, Node.
 https://github.com/rvjosecarlos
 
 👩‍💻 **Nicole Rosas Vallejo**  
-Desarrolladora Fullstack (MERN / PERN) con enfoque en Frontend
+Desarrolladora Fullstack (MERN / PERN) con enfoque en Frontend 
 https://github.com/rvnicole
 
 ---
