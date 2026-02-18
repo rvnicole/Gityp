@@ -6,13 +6,15 @@ La aplicación fue desarrollada como una **aplicación web con Next.js y React**
 
 Adicionalmente, se dejó una versión pública desplegada en **https://gityp-sand.vercel.app/** con fines demostrativos.
 
+---
+
 ### 👥 Desarrolladores
 👨‍💻 **Jose Carlos Reynoso Vera**  
 Full Stack JavaScript Developer (MERN/PERN) | Construyendo apps con React, Node.js y TypeScript
 https://github.com/rvjosecarlos
 
 👩‍💻 **Nicole Rosas Vallejo**  
-Desarrolladora Fullstack (MERN / PERN) con enfoque en Frontend 
+Desarrolladora Fullstack (MERN / PERN) con enfoque en Frontend  
 https://github.com/rvnicole
 
 ---
