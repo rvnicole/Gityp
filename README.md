@@ -6,6 +6,10 @@ La aplicación fue desarrollada como una **aplicación web con Next.js y React**
 
 Adicionalmente, se dejó una versión pública desplegada en **https://gityp-sand.vercel.app/** con fines demostrativos.
 
+![Demo](./public/inicio.gif)
+![Demo](./public/presupuesto.gif)
+![Demo](./public/ejemplo.gif)
+
 ---
 
 ### 👥 Desarrolladores
